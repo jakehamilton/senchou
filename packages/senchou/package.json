@@ -19,6 +19,11 @@
     ],
     "author": "Jake Hamilton <jake.hamilton@hey.com>",
     "license": "Apache-2.0",
+    "files": [
+        "bin/**/*",
+        "dist/**/*",
+        "CHANGELOG.md"
+    ],
     "dependencies": {
         "vite": "^2.8.0-beta.3",
         "typescript": "^4.6.0-dev.20220120",

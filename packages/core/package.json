@@ -17,6 +17,11 @@
     ],
     "author": "Jake Hamilton <jake.hamilton@hey.com>",
     "license": "Apache-2.0",
+    "files": [
+        "bin/**/*",
+        "dist/**/*",
+        "CHANGELOG.md"
+    ],
     "exports": {
         "import": "./dist/core.es.js",
         "require": "./dist/core.cjs.js",
