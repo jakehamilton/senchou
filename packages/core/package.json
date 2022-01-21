@@ -1,0 +1,31 @@
+{
+    "name": "@senchou/core",
+    "version": "1.0.0",
+    "description": "A library for generating Kubernetes manifests.",
+    "main": "src/index.js",
+    "scripts": {
+        "clean": "rimraf ./dist",
+        "build": "vite build",
+        "build:types": "tsc ./src/index.ts --declaration --emitDeclarationOnly --outDir ./dist"
+    },
+    "keywords": [
+        "kubernetes",
+        "k8s",
+        "cli",
+        "generate",
+        "leverage"
+    ],
+    "author": "Jake Hamilton <jake.hamilton@hey.com>",
+    "license": "Apache-2.0",
+    "exports": {
+        "import": "./dist/core.es.js",
+        "require": "./dist/core.cjs.js",
+        "node": "./dist/core.cjs.js"
+    },
+    "dependencies": {
+        "vite": "^2.8.0-beta.3",
+        "typescript": "^4.6.0-dev.20220120",
+        "@types/node": "^17.0.10",
+        "rimraf": "^3.0.2"
+    }
+}
