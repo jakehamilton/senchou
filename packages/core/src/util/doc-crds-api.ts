@@ -33,7 +33,11 @@ export const get = (path: string) =>
 					);
 				}
 
-				resolve(value);
+				const valid = Array.isArray(value)
+					? value.filter((item) => item !== null)
+					: value;
+
+				resolve(valid);
 			});
 
 			response.on("error", (error) => {
