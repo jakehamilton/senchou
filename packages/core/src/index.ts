@@ -16,3 +16,6 @@ const core = {
 };
 
 export default core;
+
+export { isCRD } from "./util/crd";
+export type { CustomResourceDefinition } from "./util/crd";

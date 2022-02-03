@@ -1,7 +1,5 @@
 import { JSONSchema4 } from "json-schema";
 
-import log from "../../../util/log";
-
 import { parseAPIName } from "./api-name";
 import getObjectName, { GroupVersionKind } from "./get-api-object-name";
 

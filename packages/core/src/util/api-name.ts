@@ -58,7 +58,7 @@ export const parseAPIName = (fullName: string) => {
 			? {
 					raw: match[0],
 					major: parseInt(match.groups!.major),
-					minor: parseInt(match.groups!.minor ?? 0),
+					minor: parseInt(match.groups!.minor ?? "0"),
 					level: match.groups!.level ?? APILevel.Stable,
 			  }
 			: null,
