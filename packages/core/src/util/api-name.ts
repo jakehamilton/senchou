@@ -1,4 +1,3 @@
-import log from "../../../util/log";
 import { APILevel } from "./api-levels";
 
 export interface APIName {
@@ -16,6 +15,7 @@ export interface APIName {
 /**
  * Matches an API version of the forms:
  *
+ * @example
  * v1
  * v1stable1
  */
@@ -24,11 +24,18 @@ const VERSION_REGEX = /^v(?<major>[0-9]+)((?<level>[a-z]+)(?<minor>[0-9]+))?$/;
 /**
  * Parses Kubernetes API names to a standard object format.
  *
- * @param fullName
  * @example
  * parseAPIName("io.k8s.api.scheduling.v1alpha1.PriorityClass")
  * {
- *
+ * 	fullName: "io.k8s.api.scheduling.v1alpha1.PriorityClass",
+ * 	kind: "PriorityClass",
+ * 	namespace: "io.k8s.api.scheduling",
+ * 	version: {
+ * 		raw: "v1alpha1",
+ * 		major: 1,
+ * 		minor: 1,
+ * 		level: "alpha"
+ * 	},
  * }
  */
 export const parseAPIName = (fullName: string) => {

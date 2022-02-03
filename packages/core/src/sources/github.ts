@@ -1,6 +1,6 @@
-import { Specifier } from "../../types/specifier";
-import * as api from "../../util/doc-crds-api";
-import log from "../../util/log";
+import log from "../util/log";
+import * as api from "../api/github";
+import { CustomResourceDefinition } from "../util/crd";
 
 /**
  * A regex that will match:
@@ -23,13 +23,7 @@ import log from "../../util/log";
  * github:jakehamilton/packages@1.0.1
  */
 const GITHUB_REGEX =
-	/^github:(?<owner>[A-Za-z0-9_.-]+)\/(?<name>[A-Za-z0-9_.-]+)(?:\@(?<major>[0-9]+)\.(?<minor>[0-9]+)(?:\.(?<patch>[0-9]+))?)?$/;
-
-export const isGitHub = (
-	specifier: string
-): specifier is Specifier<typeof specifier> => {
-	return GITHUB_REGEX.test(specifier);
-};
+	/^(?<owner>[A-Za-z0-9_.-]+)\/(?<name>[A-Za-z0-9_.-]+)(?:\@(?<major>[0-9]+)\.(?<minor>[0-9]+)(?:\.(?<patch>[0-9]+))?)?$/;
 
 const getDocPath = (specifier: string) => {
 	const match = GITHUB_REGEX.exec(specifier);
@@ -53,14 +47,16 @@ const getDocPath = (specifier: string) => {
 	}
 };
 
-const importer = async <T extends string>(specifier: Specifier<T>) => {
-	const path = getDocPath(specifier);
+const source = {
+	import: async (specifier: string) => {
+		const path = getDocPath(specifier);
 
-	log.trace({ resolved: path });
+		log.trace({ resolved: path });
 
-	const data = await api.get(path);
+		const data = await api.get(path);
 
-	return data;
+		return data;
+	},
 };
 
-export default importer;
+export default source;

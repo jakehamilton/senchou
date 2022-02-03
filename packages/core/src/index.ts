@@ -1,21 +1,18 @@
-import fs from "fs";
-import path from "path";
-import Schemer from "@littlethings/schemer";
-import importer from "./importers";
-import generator from "./generators";
+import crd from "./sources/crd";
+import helm from "./sources/helm";
+import github from "./sources/github";
+import kubernetes from "./sources/kubernetes";
 
-const main = async () => {
-	const doc = await importer(process.argv[2]);
-	const result = generator(doc);
-	// console.log(result);
-	fs.writeFileSync(path.resolve(__dirname, "k8s.ts"), result ?? "");
+const core = {
+	import: {
+		helm: helm.import,
+		github: github.import,
+		kubernetes: kubernetes.import,
+	},
+	generate: {
+		crd: crd.generate,
+		kubernetes: kubernetes.generate,
+	},
 };
 
-main();
-
-// const core = {
-// 	import: importer,
-// 	generate: generator,
-// };
-
-// export default core;
+export default core;

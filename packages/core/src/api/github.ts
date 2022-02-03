@@ -1,11 +1,13 @@
 import https from "https";
 import yaml from "js-yaml";
-import log from "./log";
+
+import log from "../util/log";
+import { CustomResourceDefinition, isCRD } from "../util/crd";
 
 const DOC_ROOT = "https://doc.crds.dev/raw";
 
 export const get = (path: string) =>
-	new Promise<object | Array<unknown>>((resolve, reject) => {
+	new Promise<Array<CustomResourceDefinition>>((resolve, reject) => {
 		const url = `${DOC_ROOT}/${path}`;
 
 		log.debug({ status: "fetching", method: "get", url });
@@ -22,22 +24,9 @@ export const get = (path: string) =>
 
 				const value = yaml.loadAll(data);
 
-				if (
-					value === null ||
-					(typeof value !== "object" && !Array.isArray(value))
-				) {
-					throw new Error(
-						`Received type other than object or array from doc.crds.dev. Type "${
-							value === null ? "null" : typeof value
-						}" is not supported.`
-					);
-				}
+				const crds = value.filter(isCRD);
 
-				const valid = Array.isArray(value)
-					? value.filter((item) => item !== null)
-					: value;
-
-				resolve(valid);
+				resolve(crds);
 			});
 
 			response.on("error", (error) => {

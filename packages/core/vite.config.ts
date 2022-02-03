@@ -10,7 +10,10 @@ export default defineConfig({
 		},
 		rollupOptions: {
 			external: [
+				"os",
 				"fs",
+				"fs/promises",
+				"child_process",
 				"path",
 				"https",
 				"@littlethings/log",

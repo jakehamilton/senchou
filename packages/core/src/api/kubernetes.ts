@@ -1,12 +1,13 @@
 import https from "https";
-import log from "./log";
+import { JSONSchema4 } from "json-schema";
+import log from "../util/log";
 
 const getURL = (version: string) => {
 	return `https://raw.githubusercontent.com/jakehamilton/senchou/main/schemas/${version}/_definitions.json`;
 };
 
 export const get = (version: string) =>
-	new Promise<object | Array<unknown>>((resolve, reject) => {
+	new Promise<JSONSchema4>((resolve, reject) => {
 		const url = getURL(version);
 
 		log.debug({ status: "fetching", method: "get", url });
@@ -25,10 +26,11 @@ export const get = (version: string) =>
 
 				if (
 					value === null ||
-					(typeof value !== "object" && !Array.isArray(value))
+					typeof value !== "object" ||
+					Array.isArray(value)
 				) {
 					throw new Error(
-						`Received type other than object or array. Type "${
+						`Received type other than object. Type "${
 							value === null ? "null" : typeof value
 						}" is not supported.`
 					);
