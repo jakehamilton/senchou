@@ -1,5 +1,17 @@
 # Change Log
 
+## 1.0.1
+
+### Fixes
+
+- add schemer patch for date serializer
+
+
+### Other
+
+- write documentation and update description
+
+
 ## 1.0.0
 
 ### Features
