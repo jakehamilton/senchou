@@ -35,7 +35,7 @@
         "@types/json-schema": "^7.0.9",
         "@littlethings/coder": "^1.0.1",
         "@littlethings/log": "^2.5.0",
-        "@littlethings/schemer": "^1.2.2",
+        "@littlethings/schemer": "^1.2.3",
         "node-fetch": "^2.6.1",
         "js-yaml": "^4.1.0",
         "json-schema": "^0.4.0"
