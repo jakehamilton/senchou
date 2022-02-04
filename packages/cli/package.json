@@ -1,7 +1,7 @@
 {
     "name": "@senchou/cli",
     "version": "1.0.0",
-    "description": "A tool for generating Kubernetes manifests.",
+    "description": "Generate TypeScript for Kubernetes resources.",
     "main": "src/index.js",
     "bin": {
         "senchou": "./bin/senchou.js"
