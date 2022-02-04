@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.0.0
+
+### Chores
+
+-   **BREAKING CHANGE** bump and align versions for initial release
+
 ## 0.1.0
 
 ### Features
