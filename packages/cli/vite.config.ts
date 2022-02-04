@@ -8,7 +8,15 @@ export default defineConfig({
 			fileName: (format) => `cli.${format}.js`,
 		},
 		rollupOptions: {
-			external: ["https"],
+			external: [
+				"@littlethings/log",
+				"@senchou/core",
+				"arg",
+				"kleur",
+				"path",
+				"fs",
+				"mkdirp",
+			],
 		},
 	},
 });

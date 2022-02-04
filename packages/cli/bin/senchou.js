@@ -1,5 +1,8 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 
-const cli = require("../dist/cli.cjs.js");
-
-cli.run();
+try {
+	require("@senchou/cli");
+} catch (error) {
+	console.error(error);
+	console.error(error.stack);
+}
