@@ -2,6 +2,32 @@
 
 ## 1.0.0
 
+### Features
+
+- configure base module
+
+- add base cli
+
+- working imports and generation
+
+- working builder
+
+
+### Chores
+
+- npm install
+
+- _(release)_: publish
+
+- **BREAKING CHANGE** bump and align versions for initial release
+
+- _(release)_: publish
+
+- remove unwanted dependency
+
+
+## 1.0.0
+
 ### Chores
 
 -   **BREAKING CHANGE** bump and align versions for initial release

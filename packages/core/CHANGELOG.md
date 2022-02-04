@@ -2,6 +2,37 @@
 
 ## 1.0.0
 
+### Features
+
+- add base cli
+
+- cleanup core and add helm support
+
+- working imports and generation
+
+- working builder
+
+
+### Fixes
+
+- setup type generation for project
+
+
+### Chores
+
+- update titan
+
+- _(release)_: publish
+
+- **BREAKING CHANGE** bump and align versions for initial release
+
+- _(release)_: publish
+
+- remove unwanted dependency
+
+
+## 1.0.0
+
 ### Chores
 
 -   **BREAKING CHANGE** bump and align versions for initial release
