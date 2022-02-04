@@ -8,7 +8,7 @@ export default defineConfig({
 			fileName: (format) => `senchou.${format}.js`,
 		},
 		rollupOptions: {
-			external: ["https"],
+			external: ["@senchou/core", "@senchou/cli", "@littlethings/log"],
 		},
 	},
 });

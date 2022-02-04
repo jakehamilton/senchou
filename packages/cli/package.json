@@ -3,6 +3,9 @@
     "version": "0.0.1",
     "description": "A tool for generating Kubernetes manifests.",
     "main": "src/index.js",
+    "bin": {
+        "senchou": "./bin/senchou.js"
+    },
     "scripts": {
         "clean": "rimraf ./dist",
         "build": "vite build",
