@@ -8,9 +8,10 @@
 	"scripts": {
 		"bootstrap": "titan install --no-save",
 		"bootstrap:changed": "titan install --changed --no-save",
-		"build": "titan run build",
-		"build:changed": "titan run build --changed",
-		"publish": "titan publish"
+		"build": "titan run build --ordered",
+		"build:changed": "titan run build --changed --ordered",
+		"publish": "titan publish",
+		"version": "titan version"
 	},
 	"titan": {
 		"packages": [
