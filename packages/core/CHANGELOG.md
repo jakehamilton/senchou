@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.1.0
+
+### Features
+
+- add assertion helpers and use double quotes
+
+
 ## 1.0.2
 
 ### Fixes
