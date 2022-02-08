@@ -119,6 +119,10 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 		const defaultProps = hasRequired ? "" : " = {}";
 
 		const emit = () => {
+			const apiVersion = `${
+				apiObject.group ? `${apiObject.group}/` : ""
+			}${apiObject.version}`;
+
 			coder.openBlock(`export type Serialized${name} =`);
 			coder.line(
 				`apiVersion: "${apiObject.group ? `${apiObject.group}/` : ""}${
@@ -127,6 +131,19 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 			);
 			coder.line(`kind: "${apiObject.kind}";`);
 			coder.closeBlock(` & ${propsTypeName.serializedType};`);
+
+			coder.openBlock(
+				`export const is${name} = (input: any): input is Serialized${name} =>`
+			);
+			coder.line(`return (`);
+			coder.indent();
+			coder.line(`typeof input === "object" &&  `);
+			coder.line(`input !== null &&`);
+			coder.line(`input.apiVersion === "${apiVersion}" &&`);
+			coder.line(`input.kind === "${apiObject.kind}"`);
+			coder.dedent();
+			coder.line(`);`);
+			coder.closeBlock(";");
 
 			coder.line("/**");
 			coder.line(` * ${apiObject.schema?.description ?? ""}`);
@@ -139,12 +156,8 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 
 			coder.line("return {");
 			coder.indent();
-			coder.line(
-				`apiVersion: '${apiObject.group ? `${apiObject.group}/` : ""}${
-					apiObject.version
-				}' as const,`
-			);
-			coder.line(`kind: '${apiObject.kind}' as const,`);
+			coder.line(`apiVersion: "${apiVersion}" as const,`);
+			coder.line(`kind: "${apiObject.kind}" as const,`);
 			coder.line(`...serialize${propsTypeName.type}(props),`);
 			coder.dedent();
 			coder.line("};");
