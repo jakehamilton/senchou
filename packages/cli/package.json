@@ -2,7 +2,7 @@
     "name": "@senchou/cli",
     "version": "1.0.1",
     "description": "Generate TypeScript for Kubernetes resources.",
-    "main": "src/index.js",
+    "main": "dist/cli.cjs.js",
     "bin": {
         "senchou": "./bin/senchou.js"
     },

@@ -2,7 +2,8 @@
     "name": "senchou",
     "version": "1.0.1",
     "description": "Generate TypeScript for Kubernetes resources.",
-    "main": "src/index.js",
+    "main": "dist/senchou.cjs.js",
+    "types": "dist/index.d.ts",
     "bin": {
         "senchou": "./bin/senchou.js"
     },
