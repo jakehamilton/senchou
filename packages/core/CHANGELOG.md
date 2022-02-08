@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.1.1
+
+### Fixes
+
+- correct main and types paths
+
+
 ## 1.1.0
 
 ### Features
