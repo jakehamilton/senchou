@@ -119,6 +119,15 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 		const defaultProps = hasRequired ? "" : " = {}";
 
 		const emit = () => {
+			coder.openBlock(`export type Serialized${name} =`);
+			coder.line(
+				`apiVersion: "${apiObject.group ? `${apiObject.group}/` : ""}${
+					apiObject.version
+				}";`
+			);
+			coder.line(`kind: "${apiObject.kind}";`);
+			coder.closeBlock(` & ${propsTypeName.serializedType};`);
+
 			coder.line("/**");
 			coder.line(` * ${apiObject.schema?.description ?? ""}`);
 			coder.line(" *");
@@ -148,6 +157,7 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 		return {
 			type: propsTypeName.type,
 			serialize: (identifier) => `${name}(${identifier})`,
+			serializedType: `Serialized${name}`,
 		};
 	});
 };
