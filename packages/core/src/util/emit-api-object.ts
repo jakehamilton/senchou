@@ -69,7 +69,6 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 				},
 			},
 		});
-		// typeGenerator.emitCustomType("ApiObjectMetadata", () => {});
 	}
 
 	schemer.emit(name, (coder) => {
