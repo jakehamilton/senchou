@@ -29,7 +29,7 @@ const prelude = {
 	): T extends undefined ? undefined : U => {
 		// @ts-ignore
 		if (x === undefined) return undefined;
-		//@ts-ignore
+		// @ts-ignore
 		return f(x);
 	},
 };
@@ -4026,7 +4026,9 @@ export function serializeStorageVersionV1Alpha1Props(
 	if (options === undefined) return undefined;
 	const result: SerializedStorageVersionV1Alpha1Props = {
 		metadata: serializeObjectMeta(options.metadata),
-		spec: options.spec,
+		spec: prelude.serialize(options.spec, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -4094,9 +4096,13 @@ export function serializeControllerRevisionProps(
 ): SerializedControllerRevisionProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedControllerRevisionProps = {
-		data: options.data,
+		data: prelude.serialize(options.data, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeObjectMeta(options.metadata),
-		revision: options.revision,
+		revision: prelude.serialize(options.revision, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -5273,7 +5279,19 @@ export function serializeConfigMapProps(
 						options.binaryData,
 						Object.entries(options.binaryData).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -5284,11 +5302,25 @@ export function serializeConfigMapProps(
 						options.data,
 						Object.entries(options.data).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		immutable: options.immutable,
+		immutable: prelude.serialize(options.immutable, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeObjectMeta(options.metadata),
 	};
 
@@ -5449,22 +5481,38 @@ export function serializeEventProps(
 ): SerializedEventProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEventProps = {
-		action: options.action,
-		deprecatedCount: options.deprecatedCount,
+		action: prelude.serialize(options.action, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		deprecatedCount: prelude.serialize(options.deprecatedCount, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		deprecatedFirstTimestamp:
 			options.deprecatedFirstTimestamp?.toISOString(),
 		deprecatedLastTimestamp: options.deprecatedLastTimestamp?.toISOString(),
 		deprecatedSource: serializeEventSource(options.deprecatedSource),
 		eventTime: options.eventTime?.toISOString(),
 		metadata: serializeObjectMeta(options.metadata),
-		note: options.note,
-		reason: options.reason,
+		note: prelude.serialize(options.note, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		reason: prelude.serialize(options.reason, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		regarding: serializeObjectReference(options.regarding),
 		related: serializeObjectReference(options.related),
-		reportingController: options.reportingController,
-		reportingInstance: options.reportingInstance,
+		reportingController: prelude.serialize(
+			options.reportingController,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		reportingInstance: prelude.serialize(
+			options.reportingInstance,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		series: serializeEventSeries(options.series),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -6126,11 +6174,25 @@ export function serializeSecretProps(
 						options.data,
 						Object.entries(options.data).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		immutable: options.immutable,
+		immutable: prelude.serialize(options.immutable, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeObjectMeta(options.metadata),
 		stringData:
 			options.stringData === undefined
@@ -6139,11 +6201,25 @@ export function serializeSecretProps(
 						options.stringData,
 						Object.entries(options.stringData).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -6238,7 +6314,10 @@ export function serializeServiceAccountProps(
 ): SerializedServiceAccountProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedServiceAccountProps = {
-		automountServiceAccountToken: options.automountServiceAccountToken,
+		automountServiceAccountToken: prelude.serialize(
+			options.automountServiceAccountToken,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		imagePullSecrets: prelude.serialize(options.imagePullSecrets, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -6359,7 +6438,9 @@ export function serializeEndpointSliceProps(
 ): SerializedEndpointSliceProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEndpointSliceProps = {
-		addressType: options.addressType,
+		addressType: prelude.serialize(options.addressType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		endpoints: prelude.serialize(options.endpoints, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -6446,7 +6527,9 @@ export function serializeEndpointSliceV1Beta1Props(
 ): SerializedEndpointSliceV1Beta1Props | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEndpointSliceV1Beta1Props = {
-		addressType: options.addressType,
+		addressType: prelude.serialize(options.addressType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		endpoints: prelude.serialize(options.endpoints, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -6555,22 +6638,38 @@ export function serializeEventV1Beta1Props(
 ): SerializedEventV1Beta1Props | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEventV1Beta1Props = {
-		action: options.action,
-		deprecatedCount: options.deprecatedCount,
+		action: prelude.serialize(options.action, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		deprecatedCount: prelude.serialize(options.deprecatedCount, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		deprecatedFirstTimestamp:
 			options.deprecatedFirstTimestamp?.toISOString(),
 		deprecatedLastTimestamp: options.deprecatedLastTimestamp?.toISOString(),
 		deprecatedSource: serializeEventSource(options.deprecatedSource),
 		eventTime: options.eventTime?.toISOString(),
 		metadata: serializeObjectMeta(options.metadata),
-		note: options.note,
-		reason: options.reason,
+		note: prelude.serialize(options.note, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		reason: prelude.serialize(options.reason, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		regarding: serializeObjectReference(options.regarding),
 		related: serializeObjectReference(options.related),
-		reportingController: options.reportingController,
-		reportingInstance: options.reportingInstance,
+		reportingController: prelude.serialize(
+			options.reportingController,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		reportingInstance: prelude.serialize(
+			options.reportingInstance,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		series: serializeEventSeriesV1Beta1(options.series),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -6969,7 +7068,9 @@ export function serializeRuntimeClassProps(
 ): SerializedRuntimeClassProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedRuntimeClassProps = {
-		handler: options.handler,
+		handler: prelude.serialize(options.handler, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeObjectMeta(options.metadata),
 		overhead: serializeOverhead(options.overhead),
 		scheduling: serializeScheduling(options.scheduling),
@@ -7111,7 +7212,9 @@ export function serializeRuntimeClassV1Beta1Props(
 ): SerializedRuntimeClassV1Beta1Props | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedRuntimeClassV1Beta1Props = {
-		handler: options.handler,
+		handler: prelude.serialize(options.handler, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeObjectMeta(options.metadata),
 		overhead: serializeOverheadV1Beta1(options.overhead),
 		scheduling: serializeSchedulingV1Beta1(options.scheduling),
@@ -8028,11 +8131,19 @@ export function serializePriorityClassProps(
 ): SerializedPriorityClassProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPriorityClassProps = {
-		description: options.description,
-		globalDefault: options.globalDefault,
+		description: prelude.serialize(options.description, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		globalDefault: prelude.serialize(options.globalDefault, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeObjectMeta(options.metadata),
-		preemptionPolicy: options.preemptionPolicy,
-		value: options.value,
+		preemptionPolicy: prelude.serialize(options.preemptionPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -8104,11 +8215,19 @@ export function serializePriorityClassV1Alpha1Props(
 ): SerializedPriorityClassV1Alpha1Props | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPriorityClassV1Alpha1Props = {
-		description: options.description,
-		globalDefault: options.globalDefault,
+		description: prelude.serialize(options.description, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		globalDefault: prelude.serialize(options.globalDefault, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeObjectMeta(options.metadata),
-		preemptionPolicy: options.preemptionPolicy,
-		value: options.value,
+		preemptionPolicy: prelude.serialize(options.preemptionPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -8316,7 +8435,10 @@ export function serializeStorageClassProps(
 ): SerializedStorageClassProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedStorageClassProps = {
-		allowVolumeExpansion: options.allowVolumeExpansion,
+		allowVolumeExpansion: prelude.serialize(
+			options.allowVolumeExpansion,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		allowedTopologies: prelude.serialize(
 			options.allowedTopologies,
 			(items) =>
@@ -8331,7 +8453,13 @@ export function serializeStorageClassProps(
 		mountOptions: prelude.serialize(options.mountOptions, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		parameters:
@@ -8341,13 +8469,32 @@ export function serializeStorageClassProps(
 						options.parameters,
 						Object.entries(options.parameters).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		provisioner: options.provisioner,
-		reclaimPolicy: options.reclaimPolicy,
-		volumeBindingMode: options.volumeBindingMode,
+		provisioner: prelude.serialize(options.provisioner, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		reclaimPolicy: prelude.serialize(options.reclaimPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeBindingMode: prelude.serialize(
+			options.volumeBindingMode,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -8490,7 +8637,9 @@ export function serializeCSIStorageCapacityV1Alpha1Props(
 		maximumVolumeSize: options.maximumVolumeSize,
 		metadata: serializeObjectMeta(options.metadata),
 		nodeTopology: serializeLabelSelector(options.nodeTopology),
-		storageClassName: options.storageClassName,
+		storageClassName: prelude.serialize(options.storageClassName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -8637,7 +8786,9 @@ export function serializeCSIStorageCapacityV1Beta1Props(
 		maximumVolumeSize: options.maximumVolumeSize,
 		metadata: serializeObjectMeta(options.metadata),
 		nodeTopology: serializeLabelSelector(options.nodeTopology),
-		storageClassName: options.storageClassName,
+		storageClassName: prelude.serialize(options.storageClassName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -8778,11 +8929,17 @@ export function serializeStatusProps(
 ): SerializedStatusProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedStatusProps = {
-		code: options.code,
+		code: prelude.serialize(options.code, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		details: serializeStatusDetails(options.details),
-		message: options.message,
+		message: prelude.serialize(options.message, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metadata: serializeListMeta(options.metadata),
-		reason: options.reason,
+		reason: prelude.serialize(options.reason, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -8908,22 +9065,49 @@ export function serializeObjectMeta(
 						options.annotations,
 						Object.entries(options.annotations).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		clusterName: options.clusterName,
+		clusterName: prelude.serialize(options.clusterName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		creationTimestamp: options.creationTimestamp?.toISOString(),
-		deletionGracePeriodSeconds: options.deletionGracePeriodSeconds,
+		deletionGracePeriodSeconds: prelude.serialize(
+			options.deletionGracePeriodSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		deletionTimestamp: options.deletionTimestamp?.toISOString(),
 		finalizers: prelude.serialize(options.finalizers, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		generateName: options.generateName,
-		generation: options.generation,
+		generateName: prelude.serialize(options.generateName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		generation: prelude.serialize(options.generation, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		labels:
 			options.labels === undefined
 				? undefined
@@ -8931,7 +9115,19 @@ export function serializeObjectMeta(
 						options.labels,
 						Object.entries(options.labels).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -8943,8 +9139,12 @@ export function serializeObjectMeta(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		name: options.name,
-		namespace: options.namespace,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		ownerReferences: prelude.serialize(options.ownerReferences, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -8953,9 +9153,15 @@ export function serializeObjectMeta(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		resourceVersion: options.resourceVersion,
-		selfLink: options.selfLink,
-		uid: options.uid,
+		resourceVersion: prelude.serialize(options.resourceVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		selfLink: prelude.serialize(options.selfLink, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9006,16 +9212,31 @@ export function serializeMutatingWebhook(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		clientConfig: serializeWebhookClientConfig(options.clientConfig),
-		failurePolicy: options.failurePolicy,
-		matchPolicy: options.matchPolicy,
-		name: options.name,
+		failurePolicy: prelude.serialize(options.failurePolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		matchPolicy: prelude.serialize(options.matchPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		namespaceSelector: serializeLabelSelector(options.namespaceSelector),
 		objectSelector: serializeLabelSelector(options.objectSelector),
-		reinvocationPolicy: options.reinvocationPolicy,
+		reinvocationPolicy: prelude.serialize(
+			options.reinvocationPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		rules: prelude.serialize(options.rules, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -9024,8 +9245,12 @@ export function serializeMutatingWebhook(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		sideEffects: options.sideEffects,
-		timeoutSeconds: options.timeoutSeconds,
+		sideEffects: prelude.serialize(options.sideEffects, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		timeoutSeconds: prelude.serialize(options.timeoutSeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9055,10 +9280,19 @@ export function serializeListMeta(
 ): SerializedListMeta | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedListMeta = {
-		continue: options.continue,
-		remainingItemCount: options.remainingItemCount,
-		resourceVersion: options.resourceVersion,
-		selfLink: options.selfLink,
+		continue: prelude.serialize(options.continue, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		remainingItemCount: prelude.serialize(
+			options.remainingItemCount,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		resourceVersion: prelude.serialize(options.resourceVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		selfLink: prelude.serialize(options.selfLink, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9107,13 +9341,25 @@ export function serializeValidatingWebhook(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		clientConfig: serializeWebhookClientConfig(options.clientConfig),
-		failurePolicy: options.failurePolicy,
-		matchPolicy: options.matchPolicy,
-		name: options.name,
+		failurePolicy: prelude.serialize(options.failurePolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		matchPolicy: prelude.serialize(options.matchPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		namespaceSelector: serializeLabelSelector(options.namespaceSelector),
 		objectSelector: serializeLabelSelector(options.objectSelector),
 		rules: prelude.serialize(options.rules, (items) =>
@@ -9124,8 +9370,12 @@ export function serializeValidatingWebhook(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		sideEffects: options.sideEffects,
-		timeoutSeconds: options.timeoutSeconds,
+		sideEffects: prelude.serialize(options.sideEffects, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		timeoutSeconds: prelude.serialize(options.timeoutSeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9159,8 +9409,13 @@ export function serializeDaemonSetSpec(
 ): SerializedDaemonSetSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedDaemonSetSpec = {
-		minReadySeconds: options.minReadySeconds,
-		revisionHistoryLimit: options.revisionHistoryLimit,
+		minReadySeconds: prelude.serialize(options.minReadySeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		revisionHistoryLimit: prelude.serialize(
+			options.revisionHistoryLimit,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
 		template: serializePodTemplateSpec(options.template),
 		updateStrategy: serializeDaemonSetUpdateStrategy(
@@ -9205,11 +9460,23 @@ export function serializeDeploymentSpec(
 ): SerializedDeploymentSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedDeploymentSpec = {
-		minReadySeconds: options.minReadySeconds,
-		paused: options.paused,
-		progressDeadlineSeconds: options.progressDeadlineSeconds,
-		replicas: options.replicas,
-		revisionHistoryLimit: options.revisionHistoryLimit,
+		minReadySeconds: prelude.serialize(options.minReadySeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		paused: prelude.serialize(options.paused, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		progressDeadlineSeconds: prelude.serialize(
+			options.progressDeadlineSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		replicas: prelude.serialize(options.replicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		revisionHistoryLimit: prelude.serialize(
+			options.revisionHistoryLimit,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
 		strategy: serializeDeploymentStrategy(options.strategy),
 		template: serializePodTemplateSpec(options.template),
@@ -9244,8 +9511,12 @@ export function serializeReplicaSetSpec(
 ): SerializedReplicaSetSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedReplicaSetSpec = {
-		minReadySeconds: options.minReadySeconds,
-		replicas: options.replicas,
+		minReadySeconds: prelude.serialize(options.minReadySeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		replicas: prelude.serialize(options.replicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
 		template: serializePodTemplateSpec(options.template),
 	};
@@ -9289,12 +9560,24 @@ export function serializeStatefulSetSpec(
 ): SerializedStatefulSetSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedStatefulSetSpec = {
-		minReadySeconds: options.minReadySeconds,
-		podManagementPolicy: options.podManagementPolicy,
-		replicas: options.replicas,
-		revisionHistoryLimit: options.revisionHistoryLimit,
+		minReadySeconds: prelude.serialize(options.minReadySeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		podManagementPolicy: prelude.serialize(
+			options.podManagementPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		replicas: prelude.serialize(options.replicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		revisionHistoryLimit: prelude.serialize(
+			options.revisionHistoryLimit,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
-		serviceName: options.serviceName,
+		serviceName: prelude.serialize(options.serviceName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		template: serializePodTemplateSpec(options.template),
 		updateStrategy: serializeStatefulSetUpdateStrategy(
 			options.updateStrategy
@@ -9341,11 +9624,20 @@ export function serializeTokenRequestSpec(
 		audiences: prelude.serialize(options.audiences, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		boundObjectRef: serializeBoundObjectReference(options.boundObjectRef),
-		expirationSeconds: options.expirationSeconds,
+		expirationSeconds: prelude.serialize(
+			options.expirationSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9376,10 +9668,18 @@ export function serializeTokenReviewSpec(
 		audiences: prelude.serialize(options.audiences, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		token: options.token,
+		token: prelude.serialize(options.token, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9432,7 +9732,16 @@ export function serializeSubjectAccessReviewSpec(
 													senchou.wrapTemplate(
 														items,
 														items
-															.map((item) => item)
+															.map((item) =>
+																prelude.serialize(
+																	item,
+																	(value) =>
+																		senchou.wrapTemplate(
+																			value,
+																			value
+																		)
+																)
+															)
 															.filter(
 																prelude.isNotUndefined
 															)
@@ -9445,7 +9754,13 @@ export function serializeSubjectAccessReviewSpec(
 		groups: prelude.serialize(options.groups, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		nonResourceAttributes: serializeNonResourceAttributes(
@@ -9454,8 +9769,12 @@ export function serializeSubjectAccessReviewSpec(
 		resourceAttributes: serializeResourceAttributes(
 			options.resourceAttributes
 		),
-		uid: options.uid,
-		user: options.user,
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		user: prelude.serialize(options.user, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9518,7 +9837,9 @@ export function serializeSelfSubjectRulesReviewSpec(
 ): SerializedSelfSubjectRulesReviewSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSelfSubjectRulesReviewSpec = {
-		namespace: options.namespace,
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9552,12 +9873,19 @@ export function serializeHorizontalPodAutoscalerSpec(
 ): SerializedHorizontalPodAutoscalerSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedHorizontalPodAutoscalerSpec = {
-		maxReplicas: options.maxReplicas,
-		minReplicas: options.minReplicas,
+		maxReplicas: prelude.serialize(options.maxReplicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		minReplicas: prelude.serialize(options.minReplicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		scaleTargetRef: serializeCrossVersionObjectReference(
 			options.scaleTargetRef
 		),
-		targetCPUUtilizationPercentage: options.targetCPUUtilizationPercentage,
+		targetCPUUtilizationPercentage: prelude.serialize(
+			options.targetCPUUtilizationPercentage,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9581,7 +9909,9 @@ export function serializeScaleSpec(
 ): SerializedScaleSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedScaleSpec = {
-		replicas: options.replicas,
+		replicas: prelude.serialize(options.replicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9615,7 +9945,9 @@ export function serializeHorizontalPodAutoscalerSpecV2Beta1(
 ): SerializedHorizontalPodAutoscalerSpecV2Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedHorizontalPodAutoscalerSpecV2Beta1 = {
-		maxReplicas: options.maxReplicas,
+		maxReplicas: prelude.serialize(options.maxReplicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metrics: prelude.serialize(options.metrics, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -9624,7 +9956,9 @@ export function serializeHorizontalPodAutoscalerSpecV2Beta1(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		minReplicas: options.minReplicas,
+		minReplicas: prelude.serialize(options.minReplicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		scaleTargetRef: serializeCrossVersionObjectReferenceV2Beta1(
 			options.scaleTargetRef
 		),
@@ -9666,7 +10000,9 @@ export function serializeHorizontalPodAutoscalerSpecV2Beta2(
 		behavior: serializeHorizontalPodAutoscalerBehaviorV2Beta2(
 			options.behavior
 		),
-		maxReplicas: options.maxReplicas,
+		maxReplicas: prelude.serialize(options.maxReplicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metrics: prelude.serialize(options.metrics, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -9675,7 +10011,9 @@ export function serializeHorizontalPodAutoscalerSpecV2Beta2(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		minReplicas: options.minReplicas,
+		minReplicas: prelude.serialize(options.minReplicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		scaleTargetRef: serializeCrossVersionObjectReferenceV2Beta2(
 			options.scaleTargetRef
 		),
@@ -9716,13 +10054,29 @@ export function serializeCronJobSpec(
 ): SerializedCronJobSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCronJobSpec = {
-		concurrencyPolicy: options.concurrencyPolicy,
-		failedJobsHistoryLimit: options.failedJobsHistoryLimit,
+		concurrencyPolicy: prelude.serialize(
+			options.concurrencyPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		failedJobsHistoryLimit: prelude.serialize(
+			options.failedJobsHistoryLimit,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		jobTemplate: serializeJobTemplateSpec(options.jobTemplate),
-		schedule: options.schedule,
-		startingDeadlineSeconds: options.startingDeadlineSeconds,
-		successfulJobsHistoryLimit: options.successfulJobsHistoryLimit,
-		suspend: options.suspend,
+		schedule: prelude.serialize(options.schedule, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		startingDeadlineSeconds: prelude.serialize(
+			options.startingDeadlineSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		successfulJobsHistoryLimit: prelude.serialize(
+			options.successfulJobsHistoryLimit,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		suspend: prelude.serialize(options.suspend, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9764,16 +10118,34 @@ export function serializeJobSpec(
 ): SerializedJobSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedJobSpec = {
-		activeDeadlineSeconds: options.activeDeadlineSeconds,
-		backoffLimit: options.backoffLimit,
-		completionMode: options.completionMode,
-		completions: options.completions,
-		manualSelector: options.manualSelector,
-		parallelism: options.parallelism,
+		activeDeadlineSeconds: prelude.serialize(
+			options.activeDeadlineSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		backoffLimit: prelude.serialize(options.backoffLimit, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		completionMode: prelude.serialize(options.completionMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		completions: prelude.serialize(options.completions, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		manualSelector: prelude.serialize(options.manualSelector, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		parallelism: prelude.serialize(options.parallelism, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
-		suspend: options.suspend,
+		suspend: prelude.serialize(options.suspend, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		template: serializePodTemplateSpec(options.template),
-		ttlSecondsAfterFinished: options.ttlSecondsAfterFinished,
+		ttlSecondsAfterFinished: prelude.serialize(
+			options.ttlSecondsAfterFinished,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9811,13 +10183,29 @@ export function serializeCronJobSpecV1Beta1(
 ): SerializedCronJobSpecV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCronJobSpecV1Beta1 = {
-		concurrencyPolicy: options.concurrencyPolicy,
-		failedJobsHistoryLimit: options.failedJobsHistoryLimit,
+		concurrencyPolicy: prelude.serialize(
+			options.concurrencyPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		failedJobsHistoryLimit: prelude.serialize(
+			options.failedJobsHistoryLimit,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		jobTemplate: serializeJobTemplateSpecV1Beta1(options.jobTemplate),
-		schedule: options.schedule,
-		startingDeadlineSeconds: options.startingDeadlineSeconds,
-		successfulJobsHistoryLimit: options.successfulJobsHistoryLimit,
-		suspend: options.suspend,
+		schedule: prelude.serialize(options.schedule, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		startingDeadlineSeconds: prelude.serialize(
+			options.startingDeadlineSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		successfulJobsHistoryLimit: prelude.serialize(
+			options.successfulJobsHistoryLimit,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		suspend: prelude.serialize(options.suspend, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9859,7 +10247,10 @@ export function serializeCertificateSigningRequestSpec(
 ): SerializedCertificateSigningRequestSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCertificateSigningRequestSpec = {
-		expirationSeconds: options.expirationSeconds,
+		expirationSeconds: prelude.serialize(
+			options.expirationSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		extra:
 			options.extra === undefined
 				? undefined
@@ -9877,7 +10268,16 @@ export function serializeCertificateSigningRequestSpec(
 													senchou.wrapTemplate(
 														items,
 														items
-															.map((item) => item)
+															.map((item) =>
+																prelude.serialize(
+																	item,
+																	(value) =>
+																		senchou.wrapTemplate(
+																			value,
+																			value
+																		)
+																)
+															)
 															.filter(
 																prelude.isNotUndefined
 															)
@@ -9890,19 +10290,39 @@ export function serializeCertificateSigningRequestSpec(
 		groups: prelude.serialize(options.groups, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		request: options.request,
-		signerName: options.signerName,
-		uid: options.uid,
+		request: prelude.serialize(options.request, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		signerName: prelude.serialize(options.signerName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		usages: prelude.serialize(options.usages, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		username: options.username,
+		username: prelude.serialize(options.username, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -9935,9 +10355,16 @@ export function serializeLeaseSpec(
 	if (options === undefined) return undefined;
 	const result: SerializedLeaseSpec = {
 		acquireTime: options.acquireTime?.toISOString(),
-		holderIdentity: options.holderIdentity,
-		leaseDurationSeconds: options.leaseDurationSeconds,
-		leaseTransitions: options.leaseTransitions,
+		holderIdentity: prelude.serialize(options.holderIdentity, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		leaseDurationSeconds: prelude.serialize(
+			options.leaseDurationSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		leaseTransitions: prelude.serialize(options.leaseTransitions, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		renewTime: options.renewTime?.toISOString(),
 	};
 
@@ -9976,13 +10403,27 @@ export function serializeObjectReference(
 ): SerializedObjectReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedObjectReference = {
-		apiVersion: options.apiVersion,
-		fieldPath: options.fieldPath,
-		kind: options.kind,
-		name: options.name,
-		namespace: options.namespace,
-		resourceVersion: options.resourceVersion,
-		uid: options.uid,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fieldPath: prelude.serialize(options.fieldPath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		resourceVersion: prelude.serialize(options.resourceVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -10014,10 +10455,18 @@ export function serializeComponentCondition(
 ): SerializedComponentCondition | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedComponentCondition = {
-		error: options.error,
-		message: options.message,
-		status: options.status,
-		type: options.type,
+		error: prelude.serialize(options.error, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		message: prelude.serialize(options.message, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		status: prelude.serialize(options.status, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -10100,8 +10549,12 @@ export function serializeEventSource(
 ): SerializedEventSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEventSource = {
-		component: options.component,
-		host: options.host,
+		component: prelude.serialize(options.component, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		host: prelude.serialize(options.host, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -10129,7 +10582,9 @@ export function serializeEventSeries(
 ): SerializedEventSeries | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEventSeries = {
-		count: options.count,
+		count: prelude.serialize(options.count, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		lastObservedTime: options.lastObservedTime?.toISOString(),
 	};
 
@@ -10192,7 +10647,13 @@ export function serializeNamespaceSpec(
 		finalizers: prelude.serialize(options.finalizers, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -10231,15 +10692,27 @@ export function serializeNodeSpec(
 	if (options === undefined) return undefined;
 	const result: SerializedNodeSpec = {
 		configSource: serializeNodeConfigSource(options.configSource),
-		externalID: options.externalID,
-		podCIDR: options.podCIDR,
+		externalID: prelude.serialize(options.externalID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		podCIDR: prelude.serialize(options.podCIDR, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		podCIDRs: prelude.serialize(options.podCIDRs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		providerID: options.providerID,
+		providerID: prelude.serialize(options.providerID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		taints: prelude.serialize(options.taints, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -10248,7 +10721,9 @@ export function serializeNodeSpec(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		unschedulable: options.unschedulable,
+		unschedulable: prelude.serialize(options.unschedulable, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -10335,7 +10810,13 @@ export function serializePersistentVolumeSpec(
 		accessModes: prelude.serialize(options.accessModes, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		awsElasticBlockStore: serializeAWSElasticBlockStoreVolumeSource(
@@ -10371,12 +10852,21 @@ export function serializePersistentVolumeSpec(
 		mountOptions: prelude.serialize(options.mountOptions, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		nfs: serializeNFSVolumeSource(options.nfs),
 		nodeAffinity: serializeVolumeNodeAffinity(options.nodeAffinity),
-		persistentVolumeReclaimPolicy: options.persistentVolumeReclaimPolicy,
+		persistentVolumeReclaimPolicy: prelude.serialize(
+			options.persistentVolumeReclaimPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		photonPersistentDisk: serializePhotonPersistentDiskVolumeSource(
 			options.photonPersistentDisk
 		),
@@ -10384,9 +10874,13 @@ export function serializePersistentVolumeSpec(
 		quobyte: serializeQuobyteVolumeSource(options.quobyte),
 		rbd: serializeRBDPersistentVolumeSource(options.rbd),
 		scaleIO: serializeScaleIOPersistentVolumeSource(options.scaleIO),
-		storageClassName: options.storageClassName,
+		storageClassName: prelude.serialize(options.storageClassName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		storageos: serializeStorageOSPersistentVolumeSource(options.storageos),
-		volumeMode: options.volumeMode,
+		volumeMode: prelude.serialize(options.volumeMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		vsphereVolume: serializeVsphereVirtualDiskVolumeSource(
 			options.vsphereVolume
 		),
@@ -10434,7 +10928,13 @@ export function serializePersistentVolumeClaimSpec(
 		accessModes: prelude.serialize(options.accessModes, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		dataSource: serializeTypedLocalObjectReference(options.dataSource),
@@ -10443,9 +10943,15 @@ export function serializePersistentVolumeClaimSpec(
 		),
 		resources: serializeResourceRequirements(options.resources),
 		selector: serializeLabelSelector(options.selector),
-		storageClassName: options.storageClassName,
-		volumeMode: options.volumeMode,
-		volumeName: options.volumeName,
+		storageClassName: prelude.serialize(options.storageClassName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeMode: prelude.serialize(options.volumeMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeName: prelude.serialize(options.volumeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -10537,9 +11043,15 @@ export function serializePodSpec(
 ): SerializedPodSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPodSpec = {
-		activeDeadlineSeconds: options.activeDeadlineSeconds,
+		activeDeadlineSeconds: prelude.serialize(
+			options.activeDeadlineSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		affinity: serializeAffinity(options.affinity),
-		automountServiceAccountToken: options.automountServiceAccountToken,
+		automountServiceAccountToken: prelude.serialize(
+			options.automountServiceAccountToken,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		containers: prelude.serialize(options.containers, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -10549,8 +11061,13 @@ export function serializePodSpec(
 			)
 		),
 		dnsConfig: serializePodDNSConfig(options.dnsConfig),
-		dnsPolicy: options.dnsPolicy,
-		enableServiceLinks: options.enableServiceLinks,
+		dnsPolicy: prelude.serialize(options.dnsPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		enableServiceLinks: prelude.serialize(
+			options.enableServiceLinks,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		ephemeralContainers: prelude.serialize(
 			options.ephemeralContainers,
 			(items) =>
@@ -10569,10 +11086,18 @@ export function serializePodSpec(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		hostIPC: options.hostIPC,
-		hostNetwork: options.hostNetwork,
-		hostPID: options.hostPID,
-		hostname: options.hostname,
+		hostIPC: prelude.serialize(options.hostIPC, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		hostNetwork: prelude.serialize(options.hostNetwork, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		hostPID: prelude.serialize(options.hostPID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		hostname: prelude.serialize(options.hostname, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		imagePullSecrets: prelude.serialize(options.imagePullSecrets, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -10589,7 +11114,9 @@ export function serializePodSpec(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		nodeName: options.nodeName,
+		nodeName: prelude.serialize(options.nodeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		nodeSelector:
 			options.nodeSelector === undefined
 				? undefined
@@ -10597,7 +11124,19 @@ export function serializePodSpec(
 						options.nodeSelector,
 						Object.entries(options.nodeSelector).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -10612,9 +11151,16 @@ export function serializePodSpec(
 							{}
 						)
 				  ),
-		preemptionPolicy: options.preemptionPolicy,
-		priority: options.priority,
-		priorityClassName: options.priorityClassName,
+		preemptionPolicy: prelude.serialize(options.preemptionPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		priority: prelude.serialize(options.priority, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		priorityClassName: prelude.serialize(
+			options.priorityClassName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		readinessGates: prelude.serialize(options.readinessGates, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -10623,16 +11169,38 @@ export function serializePodSpec(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		restartPolicy: options.restartPolicy,
-		runtimeClassName: options.runtimeClassName,
-		schedulerName: options.schedulerName,
+		restartPolicy: prelude.serialize(options.restartPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		runtimeClassName: prelude.serialize(options.runtimeClassName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		schedulerName: prelude.serialize(options.schedulerName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		securityContext: serializePodSecurityContext(options.securityContext),
-		serviceAccount: options.serviceAccount,
-		serviceAccountName: options.serviceAccountName,
-		setHostnameAsFQDN: options.setHostnameAsFQDN,
-		shareProcessNamespace: options.shareProcessNamespace,
-		subdomain: options.subdomain,
-		terminationGracePeriodSeconds: options.terminationGracePeriodSeconds,
+		serviceAccount: prelude.serialize(options.serviceAccount, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		serviceAccountName: prelude.serialize(
+			options.serviceAccountName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		setHostnameAsFQDN: prelude.serialize(
+			options.setHostnameAsFQDN,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		shareProcessNamespace: prelude.serialize(
+			options.shareProcessNamespace,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		subdomain: prelude.serialize(options.subdomain, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		terminationGracePeriodSeconds: prelude.serialize(
+			options.terminationGracePeriodSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		tolerations: prelude.serialize(options.tolerations, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -10721,8 +11289,12 @@ export function serializeReplicationControllerSpec(
 ): SerializedReplicationControllerSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedReplicationControllerSpec = {
-		minReadySeconds: options.minReadySeconds,
-		replicas: options.replicas,
+		minReadySeconds: prelude.serialize(options.minReadySeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		replicas: prelude.serialize(options.replicas, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		selector:
 			options.selector === undefined
 				? undefined
@@ -10730,7 +11302,19 @@ export function serializeReplicationControllerSpec(
 						options.selector,
 						Object.entries(options.selector).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -10779,7 +11363,13 @@ export function serializeResourceQuotaSpec(
 		scopes: prelude.serialize(options.scopes, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -10843,39 +11433,86 @@ export function serializeServiceSpec(
 ): SerializedServiceSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedServiceSpec = {
-		allocateLoadBalancerNodePorts: options.allocateLoadBalancerNodePorts,
-		clusterIP: options.clusterIP,
+		allocateLoadBalancerNodePorts: prelude.serialize(
+			options.allocateLoadBalancerNodePorts,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		clusterIP: prelude.serialize(options.clusterIP, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		clusterIPs: prelude.serialize(options.clusterIPs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		externalIPs: prelude.serialize(options.externalIPs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		externalName: options.externalName,
-		externalTrafficPolicy: options.externalTrafficPolicy,
-		healthCheckNodePort: options.healthCheckNodePort,
-		internalTrafficPolicy: options.internalTrafficPolicy,
+		externalName: prelude.serialize(options.externalName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		externalTrafficPolicy: prelude.serialize(
+			options.externalTrafficPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		healthCheckNodePort: prelude.serialize(
+			options.healthCheckNodePort,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		internalTrafficPolicy: prelude.serialize(
+			options.internalTrafficPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		ipFamilies: prelude.serialize(options.ipFamilies, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		ipFamilyPolicy: options.ipFamilyPolicy,
-		loadBalancerClass: options.loadBalancerClass,
-		loadBalancerIP: options.loadBalancerIP,
+		ipFamilyPolicy: prelude.serialize(options.ipFamilyPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		loadBalancerClass: prelude.serialize(
+			options.loadBalancerClass,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		loadBalancerIP: prelude.serialize(options.loadBalancerIP, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		loadBalancerSourceRanges: prelude.serialize(
 			options.loadBalancerSourceRanges,
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		ports: prelude.serialize(options.ports, (items) =>
@@ -10886,7 +11523,10 @@ export function serializeServiceSpec(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		publishNotReadyAddresses: options.publishNotReadyAddresses,
+		publishNotReadyAddresses: prelude.serialize(
+			options.publishNotReadyAddresses,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		selector:
 			options.selector === undefined
 				? undefined
@@ -10894,15 +11534,31 @@ export function serializeServiceSpec(
 						options.selector,
 						Object.entries(options.selector).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		sessionAffinity: options.sessionAffinity,
+		sessionAffinity: prelude.serialize(options.sessionAffinity, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		sessionAffinityConfig: serializeSessionAffinityConfig(
 			options.sessionAffinityConfig
 		),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -10928,7 +11584,9 @@ export function serializeLocalObjectReference(
 ): SerializedLocalObjectReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedLocalObjectReference = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -10969,7 +11627,13 @@ export function serializeEndpoint(
 		addresses: prelude.serialize(options.addresses, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		conditions: serializeEndpointConditions(options.conditions),
@@ -10980,15 +11644,33 @@ export function serializeEndpoint(
 						options.deprecatedTopology,
 						Object.entries(options.deprecatedTopology).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
 		hints: serializeEndpointHints(options.hints),
-		hostname: options.hostname,
-		nodeName: options.nodeName,
+		hostname: prelude.serialize(options.hostname, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		nodeName: prelude.serialize(options.nodeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		targetRef: serializeObjectReference(options.targetRef),
-		zone: options.zone,
+		zone: prelude.serialize(options.zone, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -11020,10 +11702,18 @@ export function serializeEndpointPort(
 ): SerializedEndpointPort | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEndpointPort = {
-		appProtocol: options.appProtocol,
-		name: options.name,
-		port: options.port,
-		protocol: options.protocol,
+		appProtocol: prelude.serialize(options.appProtocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		port: prelude.serialize(options.port, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		protocol: prelude.serialize(options.protocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -11064,13 +11754,23 @@ export function serializeEndpointV1Beta1(
 		addresses: prelude.serialize(options.addresses, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		conditions: serializeEndpointConditionsV1Beta1(options.conditions),
 		hints: serializeEndpointHintsV1Beta1(options.hints),
-		hostname: options.hostname,
-		nodeName: options.nodeName,
+		hostname: prelude.serialize(options.hostname, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		nodeName: prelude.serialize(options.nodeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		targetRef: serializeObjectReference(options.targetRef),
 		topology:
 			options.topology === undefined
@@ -11079,7 +11779,19 @@ export function serializeEndpointV1Beta1(
 						options.topology,
 						Object.entries(options.topology).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -11114,10 +11826,18 @@ export function serializeEndpointPortV1Beta1(
 ): SerializedEndpointPortV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEndpointPortV1Beta1 = {
-		appProtocol: options.appProtocol,
-		name: options.name,
-		port: options.port,
-		protocol: options.protocol,
+		appProtocol: prelude.serialize(options.appProtocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		port: prelude.serialize(options.port, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		protocol: prelude.serialize(options.protocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -11145,7 +11865,9 @@ export function serializeEventSeriesV1Beta1(
 ): SerializedEventSeriesV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEventSeriesV1Beta1 = {
-		count: options.count,
+		count: prelude.serialize(options.count, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		lastObservedTime: options.lastObservedTime?.toISOString(),
 	};
 
@@ -11181,7 +11903,10 @@ export function serializeFlowSchemaSpecV1Beta1(
 		distinguisherMethod: serializeFlowDistinguisherMethodV1Beta1(
 			options.distinguisherMethod
 		),
-		matchingPrecedence: options.matchingPrecedence,
+		matchingPrecedence: prelude.serialize(
+			options.matchingPrecedence,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		priorityLevelConfiguration:
 			serializePriorityLevelConfigurationReferenceV1Beta1(
 				options.priorityLevelConfiguration
@@ -11228,7 +11953,9 @@ export function serializePriorityLevelConfigurationSpecV1Beta1(
 		limited: serializeLimitedPriorityLevelConfigurationV1Beta1(
 			options.limited
 		),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -11261,7 +11988,9 @@ export function serializeIngressSpec(
 	if (options === undefined) return undefined;
 	const result: SerializedIngressSpec = {
 		defaultBackend: serializeIngressBackend(options.defaultBackend),
-		ingressClassName: options.ingressClassName,
+		ingressClassName: prelude.serialize(options.ingressClassName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		rules: prelude.serialize(options.rules, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -11305,7 +12034,9 @@ export function serializeIngressClassSpec(
 ): SerializedIngressClassSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedIngressClassSpec = {
-		controller: options.controller,
+		controller: prelude.serialize(options.controller, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		parameters: serializeIngressClassParametersReference(
 			options.parameters
 		),
@@ -11360,7 +12091,13 @@ export function serializeNetworkPolicySpec(
 		policyTypes: prelude.serialize(options.policyTypes, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -11429,7 +12166,19 @@ export function serializeScheduling(
 						options.nodeSelector,
 						Object.entries(options.nodeSelector).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -11473,7 +12222,9 @@ export function serializeRuntimeClassSpecV1Alpha1(
 	if (options === undefined) return undefined;
 	const result: SerializedRuntimeClassSpecV1Alpha1 = {
 		overhead: serializeOverheadV1Alpha1(options.overhead),
-		runtimeHandler: options.runtimeHandler,
+		runtimeHandler: prelude.serialize(options.runtimeHandler, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		scheduling: serializeSchedulingV1Alpha1(options.scheduling),
 	};
 
@@ -11545,7 +12296,19 @@ export function serializeSchedulingV1Beta1(
 						options.nodeSelector,
 						Object.entries(options.nodeSelector).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -11594,18 +12357,34 @@ export function serializeDeleteOptions(
 ): SerializedDeleteOptions | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedDeleteOptions = {
-		apiVersion: options.apiVersion,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		dryRun: prelude.serialize(options.dryRun, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		gracePeriodSeconds: options.gracePeriodSeconds,
+		gracePeriodSeconds: prelude.serialize(
+			options.gracePeriodSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		kind: options.kind,
-		orphanDependents: options.orphanDependents,
+		orphanDependents: prelude.serialize(options.orphanDependents, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		preconditions: serializePreconditions(options.preconditions),
-		propagationPolicy: options.propagationPolicy,
+		propagationPolicy: prelude.serialize(
+			options.propagationPolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -11745,7 +12524,10 @@ export function serializePodSecurityPolicySpecV1Beta1(
 ): SerializedPodSecurityPolicySpecV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPodSecurityPolicySpecV1Beta1 = {
-		allowPrivilegeEscalation: options.allowPrivilegeEscalation,
+		allowPrivilegeEscalation: prelude.serialize(
+			options.allowPrivilegeEscalation,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		allowedCSIDrivers: prelude.serialize(
 			options.allowedCSIDrivers,
 			(items) =>
@@ -11761,7 +12543,13 @@ export function serializePodSecurityPolicySpecV1Beta1(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		allowedFlexVolumes: prelude.serialize(
@@ -11787,7 +12575,13 @@ export function serializePodSecurityPolicySpecV1Beta1(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		allowedUnsafeSysctls: prelude.serialize(
@@ -11795,7 +12589,13 @@ export function serializePodSecurityPolicySpecV1Beta1(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		defaultAddCapabilities: prelude.serialize(
@@ -11803,21 +12603,41 @@ export function serializePodSecurityPolicySpecV1Beta1(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
-		defaultAllowPrivilegeEscalation:
+		defaultAllowPrivilegeEscalation: prelude.serialize(
 			options.defaultAllowPrivilegeEscalation,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		forbiddenSysctls: prelude.serialize(options.forbiddenSysctls, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		fsGroup: serializeFSGroupStrategyOptionsV1Beta1(options.fsGroup),
-		hostIPC: options.hostIPC,
-		hostNetwork: options.hostNetwork,
-		hostPID: options.hostPID,
+		hostIPC: prelude.serialize(options.hostIPC, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		hostNetwork: prelude.serialize(options.hostNetwork, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		hostPID: prelude.serialize(options.hostPID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		hostPorts: prelude.serialize(options.hostPorts, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -11826,14 +12646,25 @@ export function serializePodSecurityPolicySpecV1Beta1(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		privileged: options.privileged,
-		readOnlyRootFilesystem: options.readOnlyRootFilesystem,
+		privileged: prelude.serialize(options.privileged, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnlyRootFilesystem: prelude.serialize(
+			options.readOnlyRootFilesystem,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		requiredDropCapabilities: prelude.serialize(
 			options.requiredDropCapabilities,
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		runAsGroup: serializeRunAsGroupStrategyOptionsV1Beta1(
@@ -11850,7 +12681,13 @@ export function serializePodSecurityPolicySpecV1Beta1(
 		volumes: prelude.serialize(options.volumes, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -11922,31 +12759,61 @@ export function serializePolicyRule(
 		apiGroups: prelude.serialize(options.apiGroups, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		nonResourceURLs: prelude.serialize(options.nonResourceURLs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		resourceNames: prelude.serialize(options.resourceNames, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		resources: prelude.serialize(options.resources, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		verbs: prelude.serialize(options.verbs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -11976,9 +12843,15 @@ export function serializeRoleRef(
 ): SerializedRoleRef | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedRoleRef = {
-		apiGroup: options.apiGroup,
-		kind: options.kind,
-		name: options.name,
+		apiGroup: prelude.serialize(options.apiGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12008,10 +12881,18 @@ export function serializeSubject(
 ): SerializedSubject | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSubject = {
-		apiGroup: options.apiGroup,
-		kind: options.kind,
-		name: options.name,
-		namespace: options.namespace,
+		apiGroup: prelude.serialize(options.apiGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12083,31 +12964,61 @@ export function serializePolicyRuleV1Alpha1(
 		apiGroups: prelude.serialize(options.apiGroups, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		nonResourceURLs: prelude.serialize(options.nonResourceURLs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		resourceNames: prelude.serialize(options.resourceNames, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		resources: prelude.serialize(options.resources, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		verbs: prelude.serialize(options.verbs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -12139,9 +13050,15 @@ export function serializeRoleRefV1Alpha1(
 ): SerializedRoleRefV1Alpha1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedRoleRefV1Alpha1 = {
-		apiGroup: options.apiGroup,
-		kind: options.kind,
-		name: options.name,
+		apiGroup: prelude.serialize(options.apiGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12173,10 +13090,18 @@ export function serializeSubjectV1Alpha1(
 ): SerializedSubjectV1Alpha1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSubjectV1Alpha1 = {
-		apiVersion: options.apiVersion,
-		kind: options.kind,
-		name: options.name,
-		namespace: options.namespace,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12214,11 +13139,22 @@ export function serializeCSIDriverSpec(
 ): SerializedCSIDriverSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCSIDriverSpec = {
-		attachRequired: options.attachRequired,
-		fsGroupPolicy: options.fsGroupPolicy,
-		podInfoOnMount: options.podInfoOnMount,
-		requiresRepublish: options.requiresRepublish,
-		storageCapacity: options.storageCapacity,
+		attachRequired: prelude.serialize(options.attachRequired, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsGroupPolicy: prelude.serialize(options.fsGroupPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		podInfoOnMount: prelude.serialize(options.podInfoOnMount, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		requiresRepublish: prelude.serialize(
+			options.requiresRepublish,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		storageCapacity: prelude.serialize(options.storageCapacity, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		tokenRequests: prelude.serialize(options.tokenRequests, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -12232,7 +13168,13 @@ export function serializeCSIDriverSpec(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 	};
@@ -12334,8 +13276,12 @@ export function serializeVolumeAttachmentSpec(
 ): SerializedVolumeAttachmentSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedVolumeAttachmentSpec = {
-		attacher: options.attacher,
-		nodeName: options.nodeName,
+		attacher: prelude.serialize(options.attacher, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		nodeName: prelude.serialize(options.nodeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		source: serializeVolumeAttachmentSource(options.source),
 	};
 
@@ -12384,7 +13330,19 @@ export function serializeLabelSelector(
 						options.matchLabels,
 						Object.entries(options.matchLabels).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -12419,8 +13377,12 @@ export function serializeVolumeAttachmentSpecV1Alpha1(
 ): SerializedVolumeAttachmentSpecV1Alpha1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedVolumeAttachmentSpecV1Alpha1 = {
-		attacher: options.attacher,
-		nodeName: options.nodeName,
+		attacher: prelude.serialize(options.attacher, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		nodeName: prelude.serialize(options.nodeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		source: serializeVolumeAttachmentSourceV1Alpha1(options.source),
 	};
 
@@ -12460,10 +13422,17 @@ export function serializeCustomResourceDefinitionSpec(
 	if (options === undefined) return undefined;
 	const result: SerializedCustomResourceDefinitionSpec = {
 		conversion: serializeCustomResourceConversion(options.conversion),
-		group: options.group,
+		group: prelude.serialize(options.group, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		names: serializeCustomResourceDefinitionNames(options.names),
-		preserveUnknownFields: options.preserveUnknownFields,
-		scope: options.scope,
+		preserveUnknownFields: prelude.serialize(
+			options.preserveUnknownFields,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		scope: prelude.serialize(options.scope, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		versions: prelude.serialize(options.versions, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -12517,11 +13486,22 @@ export function serializeStatusDetails(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		group: options.group,
-		kind: options.kind,
-		name: options.name,
-		retryAfterSeconds: options.retryAfterSeconds,
-		uid: options.uid,
+		group: prelude.serialize(options.group, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		retryAfterSeconds: prelude.serialize(
+			options.retryAfterSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12559,13 +13539,27 @@ export function serializeAPIServiceSpec(
 ): SerializedAPIServiceSpec | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAPIServiceSpec = {
-		caBundle: options.caBundle,
-		group: options.group,
-		groupPriorityMinimum: options.groupPriorityMinimum,
-		insecureSkipTLSVerify: options.insecureSkipTLSVerify,
+		caBundle: prelude.serialize(options.caBundle, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		group: prelude.serialize(options.group, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		groupPriorityMinimum: prelude.serialize(
+			options.groupPriorityMinimum,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		insecureSkipTLSVerify: prelude.serialize(
+			options.insecureSkipTLSVerify,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		service: serializeServiceReference(options.service),
-		version: options.version,
-		versionPriority: options.versionPriority,
+		version: prelude.serialize(options.version, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		versionPriority: prelude.serialize(options.versionPriority, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12603,12 +13597,24 @@ export function serializeManagedFieldsEntry(
 ): SerializedManagedFieldsEntry | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedManagedFieldsEntry = {
-		apiVersion: options.apiVersion,
-		fieldsType: options.fieldsType,
-		fieldsV1: options.fieldsV1,
-		manager: options.manager,
-		operation: options.operation,
-		subresource: options.subresource,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fieldsType: prelude.serialize(options.fieldsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fieldsV1: prelude.serialize(options.fieldsV1, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		manager: prelude.serialize(options.manager, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		operation: prelude.serialize(options.operation, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		subresource: prelude.serialize(options.subresource, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		time: options.time?.toISOString(),
 	};
 
@@ -12645,12 +13651,25 @@ export function serializeOwnerReference(
 ): SerializedOwnerReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedOwnerReference = {
-		apiVersion: options.apiVersion,
-		blockOwnerDeletion: options.blockOwnerDeletion,
-		controller: options.controller,
-		kind: options.kind,
-		name: options.name,
-		uid: options.uid,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		blockOwnerDeletion: prelude.serialize(
+			options.blockOwnerDeletion,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		controller: prelude.serialize(options.controller, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12680,9 +13699,13 @@ export function serializeWebhookClientConfig(
 ): SerializedWebhookClientConfig | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedWebhookClientConfig = {
-		caBundle: options.caBundle,
+		caBundle: prelude.serialize(options.caBundle, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		service: serializeServiceReference(options.service),
-		url: options.url,
+		url: prelude.serialize(options.url, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12719,28 +13742,54 @@ export function serializeRuleWithOperations(
 		apiGroups: prelude.serialize(options.apiGroups, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		apiVersions: prelude.serialize(options.apiVersions, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		operations: prelude.serialize(options.operations, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		resources: prelude.serialize(options.resources, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		scope: options.scope,
+		scope: prelude.serialize(options.scope, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12769,7 +13818,9 @@ export function serializeDaemonSetUpdateStrategy(
 	if (options === undefined) return undefined;
 	const result: SerializedDaemonSetUpdateStrategy = {
 		rollingUpdate: serializeRollingUpdateDaemonSet(options.rollingUpdate),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12798,7 +13849,9 @@ export function serializeDeploymentStrategy(
 	if (options === undefined) return undefined;
 	const result: SerializedDeploymentStrategy = {
 		rollingUpdate: serializeRollingUpdateDeployment(options.rollingUpdate),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12831,7 +13884,9 @@ export function serializeStatefulSetUpdateStrategy(
 		rollingUpdate: serializeRollingUpdateStatefulSetStrategy(
 			options.rollingUpdate
 		),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12863,10 +13918,18 @@ export function serializeBoundObjectReference(
 ): SerializedBoundObjectReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedBoundObjectReference = {
-		apiVersion: options.apiVersion,
-		kind: options.kind,
-		name: options.name,
-		uid: options.uid,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12894,8 +13957,12 @@ export function serializeNonResourceAttributes(
 ): SerializedNonResourceAttributes | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedNonResourceAttributes = {
-		path: options.path,
-		verb: options.verb,
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		verb: prelude.serialize(options.verb, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12933,13 +14000,27 @@ export function serializeResourceAttributes(
 ): SerializedResourceAttributes | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedResourceAttributes = {
-		group: options.group,
-		name: options.name,
-		namespace: options.namespace,
-		resource: options.resource,
-		subresource: options.subresource,
-		verb: options.verb,
-		version: options.version,
+		group: prelude.serialize(options.group, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		resource: prelude.serialize(options.resource, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		subresource: prelude.serialize(options.subresource, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		verb: prelude.serialize(options.verb, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		version: prelude.serialize(options.version, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -12971,9 +14052,15 @@ export function serializeCrossVersionObjectReference(
 ): SerializedCrossVersionObjectReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCrossVersionObjectReference = {
-		apiVersion: options.apiVersion,
-		kind: options.kind,
-		name: options.name,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13016,7 +14103,9 @@ export function serializeMetricSpecV2Beta1(
 		object: serializeObjectMetricSourceV2Beta1(options.object),
 		pods: serializePodsMetricSourceV2Beta1(options.pods),
 		resource: serializeResourceMetricSourceV2Beta1(options.resource),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13048,9 +14137,15 @@ export function serializeCrossVersionObjectReferenceV2Beta1(
 ): SerializedCrossVersionObjectReferenceV2Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCrossVersionObjectReferenceV2Beta1 = {
-		apiVersion: options.apiVersion,
-		kind: options.kind,
-		name: options.name,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13124,7 +14219,9 @@ export function serializeMetricSpecV2Beta2(
 		object: serializeObjectMetricSourceV2Beta2(options.object),
 		pods: serializePodsMetricSourceV2Beta2(options.pods),
 		resource: serializeResourceMetricSourceV2Beta2(options.resource),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13156,9 +14253,15 @@ export function serializeCrossVersionObjectReferenceV2Beta2(
 ): SerializedCrossVersionObjectReferenceV2Beta2 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCrossVersionObjectReferenceV2Beta2 = {
-		apiVersion: options.apiVersion,
-		kind: options.kind,
-		name: options.name,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13248,9 +14351,15 @@ export function serializeEndpointAddress(
 ): SerializedEndpointAddress | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEndpointAddress = {
-		hostname: options.hostname,
-		ip: options.ip,
-		nodeName: options.nodeName,
+		hostname: prelude.serialize(options.hostname, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		ip: prelude.serialize(options.ip, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		nodeName: prelude.serialize(options.nodeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		targetRef: serializeObjectReference(options.targetRef),
 	};
 
@@ -13342,7 +14451,9 @@ export function serializeLimitRangeItem(
 							{}
 						)
 				  ),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13398,10 +14509,16 @@ export function serializeTaint(
 ): SerializedTaint | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedTaint = {
-		effect: options.effect,
-		key: options.key,
+		effect: prelude.serialize(options.effect, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		timeAdded: options.timeAdded?.toISOString(),
-		value: options.value,
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13435,10 +14552,18 @@ export function serializeAWSElasticBlockStoreVolumeSource(
 ): SerializedAWSElasticBlockStoreVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAWSElasticBlockStoreVolumeSource = {
-		fsType: options.fsType,
-		partition: options.partition,
-		readOnly: options.readOnly,
-		volumeID: options.volumeID,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		partition: prelude.serialize(options.partition, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeID: prelude.serialize(options.volumeID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13474,12 +14599,24 @@ export function serializeAzureDiskVolumeSource(
 ): SerializedAzureDiskVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAzureDiskVolumeSource = {
-		cachingMode: options.cachingMode,
-		diskName: options.diskName,
-		diskURI: options.diskURI,
-		fsType: options.fsType,
-		kind: options.kind,
-		readOnly: options.readOnly,
+		cachingMode: prelude.serialize(options.cachingMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		diskName: prelude.serialize(options.diskName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		diskURI: prelude.serialize(options.diskURI, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13513,10 +14650,18 @@ export function serializeAzureFilePersistentVolumeSource(
 ): SerializedAzureFilePersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAzureFilePersistentVolumeSource = {
-		readOnly: options.readOnly,
-		secretName: options.secretName,
-		secretNamespace: options.secretNamespace,
-		shareName: options.shareName,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		secretName: prelude.serialize(options.secretName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		secretNamespace: prelude.serialize(options.secretNamespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		shareName: prelude.serialize(options.shareName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13557,14 +14702,28 @@ export function serializeCephFSPersistentVolumeSource(
 		monitors: prelude.serialize(options.monitors, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		path: options.path,
-		readOnly: options.readOnly,
-		secretFile: options.secretFile,
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		secretFile: prelude.serialize(options.secretFile, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeSecretReference(options.secretRef),
-		user: options.user,
+		user: prelude.serialize(options.user, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13598,10 +14757,16 @@ export function serializeCinderPersistentVolumeSource(
 ): SerializedCinderPersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCinderPersistentVolumeSource = {
-		fsType: options.fsType,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeSecretReference(options.secretRef),
-		volumeID: options.volumeID,
+		volumeID: prelude.serialize(options.volumeID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13651,15 +14816,21 @@ export function serializeCSIPersistentVolumeSource(
 		controllerPublishSecretRef: serializeSecretReference(
 			options.controllerPublishSecretRef
 		),
-		driver: options.driver,
-		fsType: options.fsType,
+		driver: prelude.serialize(options.driver, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		nodePublishSecretRef: serializeSecretReference(
 			options.nodePublishSecretRef
 		),
 		nodeStageSecretRef: serializeSecretReference(
 			options.nodeStageSecretRef
 		),
-		readOnly: options.readOnly,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		volumeAttributes:
 			options.volumeAttributes === undefined
 				? undefined
@@ -13667,11 +14838,25 @@ export function serializeCSIPersistentVolumeSource(
 						options.volumeAttributes,
 						Object.entries(options.volumeAttributes).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		volumeHandle: options.volumeHandle,
+		volumeHandle: prelude.serialize(options.volumeHandle, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13705,19 +14890,37 @@ export function serializeFCVolumeSource(
 ): SerializedFCVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedFCVolumeSource = {
-		fsType: options.fsType,
-		lun: options.lun,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		lun: prelude.serialize(options.lun, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		targetWWNs: prelude.serialize(options.targetWWNs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		wwids: prelude.serialize(options.wwids, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -13755,8 +14958,12 @@ export function serializeFlexPersistentVolumeSource(
 ): SerializedFlexPersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedFlexPersistentVolumeSource = {
-		driver: options.driver,
-		fsType: options.fsType,
+		driver: prelude.serialize(options.driver, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		options:
 			options.options === undefined
 				? undefined
@@ -13764,11 +14971,25 @@ export function serializeFlexPersistentVolumeSource(
 						options.options,
 						Object.entries(options.options).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		readOnly: options.readOnly,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeSecretReference(options.secretRef),
 	};
 
@@ -13797,8 +15018,12 @@ export function serializeFlockerVolumeSource(
 ): SerializedFlockerVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedFlockerVolumeSource = {
-		datasetName: options.datasetName,
-		datasetUUID: options.datasetUUID,
+		datasetName: prelude.serialize(options.datasetName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		datasetUUID: prelude.serialize(options.datasetUUID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13832,10 +15057,18 @@ export function serializeGCEPersistentDiskVolumeSource(
 ): SerializedGCEPersistentDiskVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedGCEPersistentDiskVolumeSource = {
-		fsType: options.fsType,
-		partition: options.partition,
-		pdName: options.pdName,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		partition: prelude.serialize(options.partition, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		pdName: prelude.serialize(options.pdName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13869,10 +15102,19 @@ export function serializeGlusterfsPersistentVolumeSource(
 ): SerializedGlusterfsPersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedGlusterfsPersistentVolumeSource = {
-		endpoints: options.endpoints,
-		endpointsNamespace: options.endpointsNamespace,
-		path: options.path,
-		readOnly: options.readOnly,
+		endpoints: prelude.serialize(options.endpoints, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		endpointsNamespace: prelude.serialize(
+			options.endpointsNamespace,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13900,8 +15142,12 @@ export function serializeHostPathVolumeSource(
 ): SerializedHostPathVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedHostPathVolumeSource = {
-		path: options.path,
-		type: options.type,
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13949,22 +15195,47 @@ export function serializeISCSIPersistentVolumeSource(
 ): SerializedISCSIPersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedISCSIPersistentVolumeSource = {
-		chapAuthDiscovery: options.chapAuthDiscovery,
-		chapAuthSession: options.chapAuthSession,
-		fsType: options.fsType,
-		initiatorName: options.initiatorName,
-		iqn: options.iqn,
-		iscsiInterface: options.iscsiInterface,
-		lun: options.lun,
+		chapAuthDiscovery: prelude.serialize(
+			options.chapAuthDiscovery,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		chapAuthSession: prelude.serialize(options.chapAuthSession, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		initiatorName: prelude.serialize(options.initiatorName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		iqn: prelude.serialize(options.iqn, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		iscsiInterface: prelude.serialize(options.iscsiInterface, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		lun: prelude.serialize(options.lun, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		portals: prelude.serialize(options.portals, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		readOnly: options.readOnly,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeSecretReference(options.secretRef),
-		targetPortal: options.targetPortal,
+		targetPortal: prelude.serialize(options.targetPortal, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -13992,8 +15263,12 @@ export function serializeLocalVolumeSource(
 ): SerializedLocalVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedLocalVolumeSource = {
-		fsType: options.fsType,
-		path: options.path,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14023,9 +15298,15 @@ export function serializeNFSVolumeSource(
 ): SerializedNFSVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedNFSVolumeSource = {
-		path: options.path,
-		readOnly: options.readOnly,
-		server: options.server,
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		server: prelude.serialize(options.server, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14081,8 +15362,12 @@ export function serializePhotonPersistentDiskVolumeSource(
 ): SerializedPhotonPersistentDiskVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPhotonPersistentDiskVolumeSource = {
-		fsType: options.fsType,
-		pdID: options.pdID,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		pdID: prelude.serialize(options.pdID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14112,9 +15397,15 @@ export function serializePortworxVolumeSource(
 ): SerializedPortworxVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPortworxVolumeSource = {
-		fsType: options.fsType,
-		readOnly: options.readOnly,
-		volumeID: options.volumeID,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeID: prelude.serialize(options.volumeID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14150,12 +15441,24 @@ export function serializeQuobyteVolumeSource(
 ): SerializedQuobyteVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedQuobyteVolumeSource = {
-		group: options.group,
-		readOnly: options.readOnly,
-		registry: options.registry,
-		tenant: options.tenant,
-		user: options.user,
-		volume: options.volume,
+		group: prelude.serialize(options.group, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		registry: prelude.serialize(options.registry, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		tenant: prelude.serialize(options.tenant, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		user: prelude.serialize(options.user, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volume: prelude.serialize(options.volume, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14197,19 +15500,37 @@ export function serializeRBDPersistentVolumeSource(
 ): SerializedRBDPersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedRBDPersistentVolumeSource = {
-		fsType: options.fsType,
-		image: options.image,
-		keyring: options.keyring,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		image: prelude.serialize(options.image, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		keyring: prelude.serialize(options.keyring, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		monitors: prelude.serialize(options.monitors, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		pool: options.pool,
-		readOnly: options.readOnly,
+		pool: prelude.serialize(options.pool, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeSecretReference(options.secretRef),
-		user: options.user,
+		user: prelude.serialize(options.user, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14255,16 +15576,34 @@ export function serializeScaleIOPersistentVolumeSource(
 ): SerializedScaleIOPersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedScaleIOPersistentVolumeSource = {
-		fsType: options.fsType,
-		gateway: options.gateway,
-		protectionDomain: options.protectionDomain,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		gateway: prelude.serialize(options.gateway, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		protectionDomain: prelude.serialize(options.protectionDomain, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeSecretReference(options.secretRef),
-		sslEnabled: options.sslEnabled,
-		storageMode: options.storageMode,
-		storagePool: options.storagePool,
-		system: options.system,
-		volumeName: options.volumeName,
+		sslEnabled: prelude.serialize(options.sslEnabled, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		storageMode: prelude.serialize(options.storageMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		storagePool: prelude.serialize(options.storagePool, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		system: prelude.serialize(options.system, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeName: prelude.serialize(options.volumeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14300,11 +15639,19 @@ export function serializeStorageOSPersistentVolumeSource(
 ): SerializedStorageOSPersistentVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedStorageOSPersistentVolumeSource = {
-		fsType: options.fsType,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeObjectReference(options.secretRef),
-		volumeName: options.volumeName,
-		volumeNamespace: options.volumeNamespace,
+		volumeName: prelude.serialize(options.volumeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeNamespace: prelude.serialize(options.volumeNamespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14338,10 +15685,19 @@ export function serializeVsphereVirtualDiskVolumeSource(
 ): SerializedVsphereVirtualDiskVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedVsphereVirtualDiskVolumeSource = {
-		fsType: options.fsType,
-		storagePolicyID: options.storagePolicyID,
-		storagePolicyName: options.storagePolicyName,
-		volumePath: options.volumePath,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		storagePolicyID: prelude.serialize(options.storagePolicyID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		storagePolicyName: prelude.serialize(
+			options.storagePolicyName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		volumePath: prelude.serialize(options.volumePath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14373,9 +15729,15 @@ export function serializeTypedLocalObjectReference(
 ): SerializedTypedLocalObjectReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedTypedLocalObjectReference = {
-		apiGroup: options.apiGroup,
-		kind: options.kind,
-		name: options.name,
+		apiGroup: prelude.serialize(options.apiGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14523,13 +15885,25 @@ export function serializeContainer(
 		args: prelude.serialize(options.args, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		command: prelude.serialize(options.command, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		env: prelude.serialize(options.env, (items) =>
@@ -14548,11 +15922,17 @@ export function serializeContainer(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		image: options.image,
-		imagePullPolicy: options.imagePullPolicy,
+		image: prelude.serialize(options.image, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		imagePullPolicy: prelude.serialize(options.imagePullPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		lifecycle: serializeLifecycle(options.lifecycle),
 		livenessProbe: serializeProbe(options.livenessProbe),
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		ports: prelude.serialize(options.ports, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -14565,11 +15945,23 @@ export function serializeContainer(
 		resources: serializeResourceRequirements(options.resources),
 		securityContext: serializeSecurityContext(options.securityContext),
 		startupProbe: serializeProbe(options.startupProbe),
-		stdin: options.stdin,
-		stdinOnce: options.stdinOnce,
-		terminationMessagePath: options.terminationMessagePath,
-		terminationMessagePolicy: options.terminationMessagePolicy,
-		tty: options.tty,
+		stdin: prelude.serialize(options.stdin, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		stdinOnce: prelude.serialize(options.stdinOnce, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		terminationMessagePath: prelude.serialize(
+			options.terminationMessagePath,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		terminationMessagePolicy: prelude.serialize(
+			options.terminationMessagePolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		tty: prelude.serialize(options.tty, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		volumeDevices: prelude.serialize(options.volumeDevices, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -14586,7 +15978,9 @@ export function serializeContainer(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		workingDir: options.workingDir,
+		workingDir: prelude.serialize(options.workingDir, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14619,7 +16013,13 @@ export function serializePodDNSConfig(
 		nameservers: prelude.serialize(options.nameservers, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		options: prelude.serialize(options.options, (items) =>
@@ -14633,7 +16033,13 @@ export function serializePodDNSConfig(
 		searches: prelude.serialize(options.searches, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -14708,13 +16114,25 @@ export function serializeEphemeralContainer(
 		args: prelude.serialize(options.args, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		command: prelude.serialize(options.command, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		env: prelude.serialize(options.env, (items) =>
@@ -14733,11 +16151,17 @@ export function serializeEphemeralContainer(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		image: options.image,
-		imagePullPolicy: options.imagePullPolicy,
+		image: prelude.serialize(options.image, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		imagePullPolicy: prelude.serialize(options.imagePullPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		lifecycle: serializeLifecycle(options.lifecycle),
 		livenessProbe: serializeProbe(options.livenessProbe),
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		ports: prelude.serialize(options.ports, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -14750,12 +16174,27 @@ export function serializeEphemeralContainer(
 		resources: serializeResourceRequirements(options.resources),
 		securityContext: serializeSecurityContext(options.securityContext),
 		startupProbe: serializeProbe(options.startupProbe),
-		stdin: options.stdin,
-		stdinOnce: options.stdinOnce,
-		targetContainerName: options.targetContainerName,
-		terminationMessagePath: options.terminationMessagePath,
-		terminationMessagePolicy: options.terminationMessagePolicy,
-		tty: options.tty,
+		stdin: prelude.serialize(options.stdin, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		stdinOnce: prelude.serialize(options.stdinOnce, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		targetContainerName: prelude.serialize(
+			options.targetContainerName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		terminationMessagePath: prelude.serialize(
+			options.terminationMessagePath,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		terminationMessagePolicy: prelude.serialize(
+			options.terminationMessagePolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		tty: prelude.serialize(options.tty, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		volumeDevices: prelude.serialize(options.volumeDevices, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -14772,7 +16211,9 @@ export function serializeEphemeralContainer(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		workingDir: options.workingDir,
+		workingDir: prelude.serialize(options.workingDir, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14801,10 +16242,18 @@ export function serializeHostAlias(
 		hostnames: prelude.serialize(options.hostnames, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		ip: options.ip,
+		ip: prelude.serialize(options.ip, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14830,7 +16279,9 @@ export function serializePodReadinessGate(
 ): SerializedPodReadinessGate | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPodReadinessGate = {
-		conditionType: options.conditionType,
+		conditionType: prelude.serialize(options.conditionType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14874,11 +16325,22 @@ export function serializePodSecurityContext(
 ): SerializedPodSecurityContext | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPodSecurityContext = {
-		fsGroup: options.fsGroup,
-		fsGroupChangePolicy: options.fsGroupChangePolicy,
-		runAsGroup: options.runAsGroup,
-		runAsNonRoot: options.runAsNonRoot,
-		runAsUser: options.runAsUser,
+		fsGroup: prelude.serialize(options.fsGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsGroupChangePolicy: prelude.serialize(
+			options.fsGroupChangePolicy,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		runAsGroup: prelude.serialize(options.runAsGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		runAsNonRoot: prelude.serialize(options.runAsNonRoot, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		runAsUser: prelude.serialize(options.runAsUser, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		seLinuxOptions: serializeSELinuxOptions(options.seLinuxOptions),
 		seccompProfile: serializeSeccompProfile(options.seccompProfile),
 		supplementalGroups: prelude.serialize(
@@ -14886,7 +16348,13 @@ export function serializePodSecurityContext(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 		sysctls: prelude.serialize(options.sysctls, (items) =>
@@ -14931,11 +16399,22 @@ export function serializeToleration(
 ): SerializedToleration | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedToleration = {
-		effect: options.effect,
-		key: options.key,
-		operator: options.operator,
-		tolerationSeconds: options.tolerationSeconds,
-		value: options.value,
+		effect: prelude.serialize(options.effect, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		operator: prelude.serialize(options.operator, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		tolerationSeconds: prelude.serialize(
+			options.tolerationSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -14970,9 +16449,16 @@ export function serializeTopologySpreadConstraint(
 	if (options === undefined) return undefined;
 	const result: SerializedTopologySpreadConstraint = {
 		labelSelector: serializeLabelSelector(options.labelSelector),
-		maxSkew: options.maxSkew,
-		topologyKey: options.topologyKey,
-		whenUnsatisfiable: options.whenUnsatisfiable,
+		maxSkew: prelude.serialize(options.maxSkew, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		topologyKey: prelude.serialize(options.topologyKey, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		whenUnsatisfiable: prelude.serialize(
+			options.whenUnsatisfiable,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15076,7 +16562,9 @@ export function serializeVolume(
 		glusterfs: serializeGlusterfsVolumeSource(options.glusterfs),
 		hostPath: serializeHostPathVolumeSource(options.hostPath),
 		iscsi: serializeISCSIVolumeSource(options.iscsi),
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		nfs: serializeNFSVolumeSource(options.nfs),
 		persistentVolumeClaim: serializePersistentVolumeClaimVolumeSource(
 			options.persistentVolumeClaim
@@ -15164,11 +16652,21 @@ export function serializeServicePort(
 ): SerializedServicePort | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedServicePort = {
-		appProtocol: options.appProtocol,
-		name: options.name,
-		nodePort: options.nodePort,
-		port: options.port,
-		protocol: options.protocol,
+		appProtocol: prelude.serialize(options.appProtocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		nodePort: prelude.serialize(options.nodePort, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		port: prelude.serialize(options.port, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		protocol: prelude.serialize(options.protocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		targetPort: options.targetPort,
 	};
 
@@ -15225,9 +16723,15 @@ export function serializeEndpointConditions(
 ): SerializedEndpointConditions | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEndpointConditions = {
-		ready: options.ready,
-		serving: options.serving,
-		terminating: options.terminating,
+		ready: prelude.serialize(options.ready, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		serving: prelude.serialize(options.serving, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		terminating: prelude.serialize(options.terminating, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15292,9 +16796,15 @@ export function serializeEndpointConditionsV1Beta1(
 ): SerializedEndpointConditionsV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEndpointConditionsV1Beta1 = {
-		ready: options.ready,
-		serving: options.serving,
-		terminating: options.terminating,
+		ready: prelude.serialize(options.ready, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		serving: prelude.serialize(options.serving, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		terminating: prelude.serialize(options.terminating, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15355,7 +16865,9 @@ export function serializeFlowDistinguisherMethodV1Beta1(
 ): SerializedFlowDistinguisherMethodV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedFlowDistinguisherMethodV1Beta1 = {
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15383,7 +16895,9 @@ export function serializePriorityLevelConfigurationReferenceV1Beta1(
 ): SerializedPriorityLevelConfigurationReferenceV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPriorityLevelConfigurationReferenceV1Beta1 = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15468,7 +16982,10 @@ export function serializeLimitedPriorityLevelConfigurationV1Beta1(
 ): SerializedLimitedPriorityLevelConfigurationV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedLimitedPriorityLevelConfigurationV1Beta1 = {
-		assuredConcurrencyShares: options.assuredConcurrencyShares,
+		assuredConcurrencyShares: prelude.serialize(
+			options.assuredConcurrencyShares,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		limitResponse: serializeLimitResponseV1Beta1(options.limitResponse),
 	};
 
@@ -15526,7 +17043,9 @@ export function serializeIngressRule(
 ): SerializedIngressRule | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedIngressRule = {
-		host: options.host,
+		host: prelude.serialize(options.host, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		http: serializeHTTPIngressRuleValue(options.http),
 	};
 
@@ -15556,10 +17075,18 @@ export function serializeIngressTLS(
 		hosts: prelude.serialize(options.hosts, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		secretName: options.secretName,
+		secretName: prelude.serialize(options.secretName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15595,11 +17122,21 @@ export function serializeIngressClassParametersReference(
 ): SerializedIngressClassParametersReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedIngressClassParametersReference = {
-		apiGroup: options.apiGroup,
-		kind: options.kind,
-		name: options.name,
-		namespace: options.namespace,
-		scope: options.scope,
+		apiGroup: prelude.serialize(options.apiGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		scope: prelude.serialize(options.scope, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15758,7 +17295,19 @@ export function serializeSchedulingV1Alpha1(
 						options.nodeSelector,
 						Object.entries(options.nodeSelector).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -15801,8 +17350,12 @@ export function serializePreconditions(
 ): SerializedPreconditions | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPreconditions = {
-		resourceVersion: options.resourceVersion,
-		uid: options.uid,
+		resourceVersion: prelude.serialize(options.resourceVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15833,7 +17386,9 @@ export function serializeAllowedCSIDriverV1Beta1(
 ): SerializedAllowedCSIDriverV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAllowedCSIDriverV1Beta1 = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15861,7 +17416,9 @@ export function serializeAllowedFlexVolumeV1Beta1(
 ): SerializedAllowedFlexVolumeV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAllowedFlexVolumeV1Beta1 = {
-		driver: options.driver,
+		driver: prelude.serialize(options.driver, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15889,8 +17446,12 @@ export function serializeAllowedHostPathV1Beta1(
 ): SerializedAllowedHostPathV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAllowedHostPathV1Beta1 = {
-		pathPrefix: options.pathPrefix,
-		readOnly: options.readOnly,
+		pathPrefix: prelude.serialize(options.pathPrefix, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15928,7 +17489,9 @@ export function serializeFSGroupStrategyOptionsV1Beta1(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		rule: options.rule,
+		rule: prelude.serialize(options.rule, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15956,8 +17519,12 @@ export function serializeHostPortRangeV1Beta1(
 ): SerializedHostPortRangeV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedHostPortRangeV1Beta1 = {
-		max: options.max,
-		min: options.min,
+		max: prelude.serialize(options.max, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		min: prelude.serialize(options.min, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -15995,7 +17562,9 @@ export function serializeRunAsGroupStrategyOptionsV1Beta1(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		rule: options.rule,
+		rule: prelude.serialize(options.rule, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16033,7 +17602,9 @@ export function serializeRunAsUserStrategyOptionsV1Beta1(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		rule: options.rule,
+		rule: prelude.serialize(options.rule, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16068,10 +17639,19 @@ export function serializeRuntimeClassStrategyOptionsV1Beta1(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
-		defaultRuntimeClassName: options.defaultRuntimeClassName,
+		defaultRuntimeClassName: prelude.serialize(
+			options.defaultRuntimeClassName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16101,7 +17681,9 @@ export function serializeSELinuxStrategyOptionsV1Beta1(
 ): SerializedSELinuxStrategyOptionsV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSELinuxStrategyOptionsV1Beta1 = {
-		rule: options.rule,
+		rule: prelude.serialize(options.rule, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		seLinuxOptions: serializeSELinuxOptions(options.seLinuxOptions),
 	};
 
@@ -16140,7 +17722,9 @@ export function serializeSupplementalGroupsStrategyOptionsV1Beta1(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		rule: options.rule,
+		rule: prelude.serialize(options.rule, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16173,12 +17757,22 @@ export function serializeCSINodeDriver(
 	if (options === undefined) return undefined;
 	const result: SerializedCSINodeDriver = {
 		allocatable: serializeVolumeNodeResources(options.allocatable),
-		name: options.name,
-		nodeID: options.nodeID,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		nodeID: prelude.serialize(options.nodeID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		topologyKeys: prelude.serialize(options.topologyKeys, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -16210,11 +17804,19 @@ export function serializeTopologySelectorLabelRequirement(
 ): SerializedTopologySelectorLabelRequirement | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedTopologySelectorLabelRequirement = {
-		key: options.key,
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		values: prelude.serialize(options.values, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -16247,7 +17849,10 @@ export function serializeVolumeAttachmentSource(
 		inlineVolumeSpec: serializePersistentVolumeSpec(
 			options.inlineVolumeSpec
 		),
-		persistentVolumeName: options.persistentVolumeName,
+		persistentVolumeName: prelude.serialize(
+			options.persistentVolumeName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16279,12 +17884,22 @@ export function serializeLabelSelectorRequirement(
 ): SerializedLabelSelectorRequirement | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedLabelSelectorRequirement = {
-		key: options.key,
-		operator: options.operator,
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		operator: prelude.serialize(options.operator, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		values: prelude.serialize(options.values, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -16319,7 +17934,10 @@ export function serializeVolumeAttachmentSourceV1Alpha1(
 		inlineVolumeSpec: serializePersistentVolumeSpec(
 			options.inlineVolumeSpec
 		),
-		persistentVolumeName: options.persistentVolumeName,
+		persistentVolumeName: prelude.serialize(
+			options.persistentVolumeName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16349,7 +17967,9 @@ export function serializeCustomResourceConversion(
 ): SerializedCustomResourceConversion | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCustomResourceConversion = {
-		strategy: options.strategy,
+		strategy: prelude.serialize(options.strategy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		webhook: serializeWebhookConversion(options.webhook),
 	};
 
@@ -16391,19 +18011,39 @@ export function serializeCustomResourceDefinitionNames(
 		categories: prelude.serialize(options.categories, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		kind: options.kind,
-		listKind: options.listKind,
-		plural: options.plural,
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		listKind: prelude.serialize(options.listKind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		plural: prelude.serialize(options.plural, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		shortNames: prelude.serialize(options.shortNames, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		singular: options.singular,
+		singular: prelude.serialize(options.singular, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16457,12 +18097,23 @@ export function serializeCustomResourceDefinitionVersion(
 						.filter(prelude.isNotUndefined)
 				)
 		),
-		deprecated: options.deprecated,
-		deprecationWarning: options.deprecationWarning,
-		name: options.name,
+		deprecated: prelude.serialize(options.deprecated, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		deprecationWarning: prelude.serialize(
+			options.deprecationWarning,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		schema: serializeCustomResourceValidation(options.schema),
-		served: options.served,
-		storage: options.storage,
+		served: prelude.serialize(options.served, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		storage: prelude.serialize(options.storage, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		subresources: serializeCustomResourceSubresources(options.subresources),
 	};
 
@@ -16493,9 +18144,15 @@ export function serializeStatusCause(
 ): SerializedStatusCause | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedStatusCause = {
-		field: options.field,
-		message: options.message,
-		reason: options.reason,
+		field: prelude.serialize(options.field, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		message: prelude.serialize(options.message, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		reason: prelude.serialize(options.reason, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16527,10 +18184,18 @@ export function serializeServiceReference(
 ): SerializedServiceReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedServiceReference = {
-		name: options.name,
-		namespace: options.namespace,
-		path: options.path,
-		port: options.port,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		port: prelude.serialize(options.port, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16616,7 +18281,9 @@ export function serializeRollingUpdateStatefulSetStrategy(
 ): SerializedRollingUpdateStatefulSetStrategy | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedRollingUpdateStatefulSetStrategy = {
-		partition: options.partition,
+		partition: prelude.serialize(options.partition, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16650,9 +18317,16 @@ export function serializeContainerResourceMetricSourceV2Beta1(
 ): SerializedContainerResourceMetricSourceV2Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedContainerResourceMetricSourceV2Beta1 = {
-		container: options.container,
-		name: options.name,
-		targetAverageUtilization: options.targetAverageUtilization,
+		container: prelude.serialize(options.container, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		targetAverageUtilization: prelude.serialize(
+			options.targetAverageUtilization,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		targetAverageValue: options.targetAverageValue,
 	};
 
@@ -16687,7 +18361,9 @@ export function serializeExternalMetricSourceV2Beta1(
 ): SerializedExternalMetricSourceV2Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedExternalMetricSourceV2Beta1 = {
-		metricName: options.metricName,
+		metricName: prelude.serialize(options.metricName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		metricSelector: serializeLabelSelector(options.metricSelector),
 		targetAverageValue: options.targetAverageValue,
 		targetValue: options.targetValue,
@@ -16727,7 +18403,9 @@ export function serializeObjectMetricSourceV2Beta1(
 	if (options === undefined) return undefined;
 	const result: SerializedObjectMetricSourceV2Beta1 = {
 		averageValue: options.averageValue,
-		metricName: options.metricName,
+		metricName: prelude.serialize(options.metricName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
 		target: serializeCrossVersionObjectReferenceV2Beta1(options.target),
 		targetValue: options.targetValue,
@@ -16760,7 +18438,9 @@ export function serializePodsMetricSourceV2Beta1(
 ): SerializedPodsMetricSourceV2Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPodsMetricSourceV2Beta1 = {
-		metricName: options.metricName,
+		metricName: prelude.serialize(options.metricName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
 		targetAverageValue: options.targetAverageValue,
 	};
@@ -16794,8 +18474,13 @@ export function serializeResourceMetricSourceV2Beta1(
 ): SerializedResourceMetricSourceV2Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedResourceMetricSourceV2Beta1 = {
-		name: options.name,
-		targetAverageUtilization: options.targetAverageUtilization,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		targetAverageUtilization: prelude.serialize(
+			options.targetAverageUtilization,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		targetAverageValue: options.targetAverageValue,
 	};
 
@@ -16834,8 +18519,13 @@ export function serializeHPAScalingRulesV2Beta2(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		selectPolicy: options.selectPolicy,
-		stabilizationWindowSeconds: options.stabilizationWindowSeconds,
+		selectPolicy: prelude.serialize(options.selectPolicy, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		stabilizationWindowSeconds: prelude.serialize(
+			options.stabilizationWindowSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -16867,8 +18557,12 @@ export function serializeContainerResourceMetricSourceV2Beta2(
 ): SerializedContainerResourceMetricSourceV2Beta2 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedContainerResourceMetricSourceV2Beta2 = {
-		container: options.container,
-		name: options.name,
+		container: prelude.serialize(options.container, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		target: serializeMetricTargetV2Beta2(options.target),
 	};
 
@@ -16995,7 +18689,9 @@ export function serializeResourceMetricSourceV2Beta2(
 ): SerializedResourceMetricSourceV2Beta2 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedResourceMetricSourceV2Beta2 = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		target: serializeMetricTargetV2Beta2(options.target),
 	};
 
@@ -17032,11 +18728,21 @@ export function serializeConfigMapNodeConfigSource(
 ): SerializedConfigMapNodeConfigSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedConfigMapNodeConfigSource = {
-		kubeletConfigKey: options.kubeletConfigKey,
-		name: options.name,
-		namespace: options.namespace,
-		resourceVersion: options.resourceVersion,
-		uid: options.uid,
+		kubeletConfigKey: prelude.serialize(options.kubeletConfigKey, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		resourceVersion: prelude.serialize(options.resourceVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uid: prelude.serialize(options.uid, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17064,8 +18770,12 @@ export function serializeSecretReference(
 ): SerializedSecretReference | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSecretReference = {
-		name: options.name,
-		namespace: options.namespace,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17262,8 +18972,12 @@ export function serializeEnvVar(
 ): SerializedEnvVar | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEnvVar = {
-		name: options.name,
-		value: options.value,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		valueFrom: serializeEnvVarSource(options.valueFrom),
 	};
 
@@ -17295,7 +19009,9 @@ export function serializeEnvFromSource(
 	if (options === undefined) return undefined;
 	const result: SerializedEnvFromSource = {
 		configMapRef: serializeConfigMapEnvSource(options.configMapRef),
-		prefix: options.prefix,
+		prefix: prelude.serialize(options.prefix, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeSecretEnvSource(options.secretRef),
 	};
 
@@ -17364,14 +19080,28 @@ export function serializeProbe(
 	if (options === undefined) return undefined;
 	const result: SerializedProbe = {
 		exec: serializeExecAction(options.exec),
-		failureThreshold: options.failureThreshold,
+		failureThreshold: prelude.serialize(options.failureThreshold, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		httpGet: serializeHTTPGetAction(options.httpGet),
-		initialDelaySeconds: options.initialDelaySeconds,
-		periodSeconds: options.periodSeconds,
-		successThreshold: options.successThreshold,
+		initialDelaySeconds: prelude.serialize(
+			options.initialDelaySeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		periodSeconds: prelude.serialize(options.periodSeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		successThreshold: prelude.serialize(options.successThreshold, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		tcpSocket: serializeTCPSocketAction(options.tcpSocket),
-		terminationGracePeriodSeconds: options.terminationGracePeriodSeconds,
-		timeoutSeconds: options.timeoutSeconds,
+		terminationGracePeriodSeconds: prelude.serialize(
+			options.terminationGracePeriodSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		timeoutSeconds: prelude.serialize(options.timeoutSeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17405,11 +19135,21 @@ export function serializeContainerPort(
 ): SerializedContainerPort | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedContainerPort = {
-		containerPort: options.containerPort,
-		hostIP: options.hostIP,
-		hostPort: options.hostPort,
-		name: options.name,
-		protocol: options.protocol,
+		containerPort: prelude.serialize(options.containerPort, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		hostIP: prelude.serialize(options.hostIP, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		hostPort: prelude.serialize(options.hostPort, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		protocol: prelude.serialize(options.protocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17455,14 +19195,30 @@ export function serializeSecurityContext(
 ): SerializedSecurityContext | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSecurityContext = {
-		allowPrivilegeEscalation: options.allowPrivilegeEscalation,
+		allowPrivilegeEscalation: prelude.serialize(
+			options.allowPrivilegeEscalation,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		capabilities: serializeCapabilities(options.capabilities),
-		privileged: options.privileged,
-		procMount: options.procMount,
-		readOnlyRootFilesystem: options.readOnlyRootFilesystem,
-		runAsGroup: options.runAsGroup,
-		runAsNonRoot: options.runAsNonRoot,
-		runAsUser: options.runAsUser,
+		privileged: prelude.serialize(options.privileged, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		procMount: prelude.serialize(options.procMount, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnlyRootFilesystem: prelude.serialize(
+			options.readOnlyRootFilesystem,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		runAsGroup: prelude.serialize(options.runAsGroup, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		runAsNonRoot: prelude.serialize(options.runAsNonRoot, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		runAsUser: prelude.serialize(options.runAsUser, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		seLinuxOptions: serializeSELinuxOptions(options.seLinuxOptions),
 		seccompProfile: serializeSeccompProfile(options.seccompProfile),
 		windowsOptions: serializeWindowsSecurityContextOptions(
@@ -17495,8 +19251,12 @@ export function serializeVolumeDevice(
 ): SerializedVolumeDevice | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedVolumeDevice = {
-		devicePath: options.devicePath,
-		name: options.name,
+		devicePath: prelude.serialize(options.devicePath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17532,12 +19292,24 @@ export function serializeVolumeMount(
 ): SerializedVolumeMount | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedVolumeMount = {
-		mountPath: options.mountPath,
-		mountPropagation: options.mountPropagation,
-		name: options.name,
-		readOnly: options.readOnly,
-		subPath: options.subPath,
-		subPathExpr: options.subPathExpr,
+		mountPath: prelude.serialize(options.mountPath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		mountPropagation: prelude.serialize(options.mountPropagation, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		subPath: prelude.serialize(options.subPath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		subPathExpr: prelude.serialize(options.subPathExpr, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17565,8 +19337,12 @@ export function serializePodDNSConfigOption(
 ): SerializedPodDNSConfigOption | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPodDNSConfigOption = {
-		name: options.name,
-		value: options.value,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17598,10 +19374,18 @@ export function serializeSELinuxOptions(
 ): SerializedSELinuxOptions | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSELinuxOptions = {
-		level: options.level,
-		role: options.role,
-		type: options.type,
-		user: options.user,
+		level: prelude.serialize(options.level, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		role: prelude.serialize(options.role, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		user: prelude.serialize(options.user, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17629,8 +19413,12 @@ export function serializeSeccompProfile(
 ): SerializedSeccompProfile | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSeccompProfile = {
-		localhostProfile: options.localhostProfile,
-		type: options.type,
+		localhostProfile: prelude.serialize(options.localhostProfile, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17656,8 +19444,12 @@ export function serializeSysctl(
 ): SerializedSysctl | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSysctl = {
-		name: options.name,
-		value: options.value,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17691,10 +19483,20 @@ export function serializeWindowsSecurityContextOptions(
 ): SerializedWindowsSecurityContextOptions | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedWindowsSecurityContextOptions = {
-		gmsaCredentialSpec: options.gmsaCredentialSpec,
-		gmsaCredentialSpecName: options.gmsaCredentialSpecName,
-		hostProcess: options.hostProcess,
-		runAsUserName: options.runAsUserName,
+		gmsaCredentialSpec: prelude.serialize(
+			options.gmsaCredentialSpec,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		gmsaCredentialSpecName: prelude.serialize(
+			options.gmsaCredentialSpecName,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		hostProcess: prelude.serialize(options.hostProcess, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		runAsUserName: prelude.serialize(options.runAsUserName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17724,9 +19526,15 @@ export function serializeAzureFileVolumeSource(
 ): SerializedAzureFileVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedAzureFileVolumeSource = {
-		readOnly: options.readOnly,
-		secretName: options.secretName,
-		shareName: options.shareName,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		secretName: prelude.serialize(options.secretName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		shareName: prelude.serialize(options.shareName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17765,14 +19573,28 @@ export function serializeCephFSVolumeSource(
 		monitors: prelude.serialize(options.monitors, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		path: options.path,
-		readOnly: options.readOnly,
-		secretFile: options.secretFile,
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		secretFile: prelude.serialize(options.secretFile, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeLocalObjectReference(options.secretRef),
-		user: options.user,
+		user: prelude.serialize(options.user, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17804,10 +19626,16 @@ export function serializeCinderVolumeSource(
 ): SerializedCinderVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCinderVolumeSource = {
-		fsType: options.fsType,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeLocalObjectReference(options.secretRef),
-		volumeID: options.volumeID,
+		volumeID: prelude.serialize(options.volumeID, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17839,7 +19667,9 @@ export function serializeConfigMapVolumeSource(
 ): SerializedConfigMapVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedConfigMapVolumeSource = {
-		defaultMode: options.defaultMode,
+		defaultMode: prelude.serialize(options.defaultMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		items: prelude.serialize(options.items, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -17848,8 +19678,12 @@ export function serializeConfigMapVolumeSource(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		name: options.name,
-		optional: options.optional,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -17883,12 +19717,18 @@ export function serializeCSIVolumeSource(
 ): SerializedCSIVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCSIVolumeSource = {
-		driver: options.driver,
-		fsType: options.fsType,
+		driver: prelude.serialize(options.driver, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		nodePublishSecretRef: serializeLocalObjectReference(
 			options.nodePublishSecretRef
 		),
-		readOnly: options.readOnly,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		volumeAttributes:
 			options.volumeAttributes === undefined
 				? undefined
@@ -17896,7 +19736,19 @@ export function serializeCSIVolumeSource(
 						options.volumeAttributes,
 						Object.entries(options.volumeAttributes).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
@@ -17927,7 +19779,9 @@ export function serializeDownwardAPIVolumeSource(
 ): SerializedDownwardAPIVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedDownwardAPIVolumeSource = {
-		defaultMode: options.defaultMode,
+		defaultMode: prelude.serialize(options.defaultMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		items: prelude.serialize(options.items, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -17963,7 +19817,9 @@ export function serializeEmptyDirVolumeSource(
 ): SerializedEmptyDirVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedEmptyDirVolumeSource = {
-		medium: options.medium,
+		medium: prelude.serialize(options.medium, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		sizeLimit: options.sizeLimit,
 	};
 
@@ -18026,8 +19882,12 @@ export function serializeFlexVolumeSource(
 ): SerializedFlexVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedFlexVolumeSource = {
-		driver: options.driver,
-		fsType: options.fsType,
+		driver: prelude.serialize(options.driver, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		options:
 			options.options === undefined
 				? undefined
@@ -18035,11 +19895,25 @@ export function serializeFlexVolumeSource(
 						options.options,
 						Object.entries(options.options).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		readOnly: options.readOnly,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeLocalObjectReference(options.secretRef),
 	};
 
@@ -18070,9 +19944,15 @@ export function serializeGitRepoVolumeSource(
 ): SerializedGitRepoVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedGitRepoVolumeSource = {
-		directory: options.directory,
-		repository: options.repository,
-		revision: options.revision,
+		directory: prelude.serialize(options.directory, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		repository: prelude.serialize(options.repository, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		revision: prelude.serialize(options.revision, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18102,9 +19982,15 @@ export function serializeGlusterfsVolumeSource(
 ): SerializedGlusterfsVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedGlusterfsVolumeSource = {
-		endpoints: options.endpoints,
-		path: options.path,
-		readOnly: options.readOnly,
+		endpoints: prelude.serialize(options.endpoints, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18150,22 +20036,47 @@ export function serializeISCSIVolumeSource(
 ): SerializedISCSIVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedISCSIVolumeSource = {
-		chapAuthDiscovery: options.chapAuthDiscovery,
-		chapAuthSession: options.chapAuthSession,
-		fsType: options.fsType,
-		initiatorName: options.initiatorName,
-		iqn: options.iqn,
-		iscsiInterface: options.iscsiInterface,
-		lun: options.lun,
+		chapAuthDiscovery: prelude.serialize(
+			options.chapAuthDiscovery,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		chapAuthSession: prelude.serialize(options.chapAuthSession, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		initiatorName: prelude.serialize(options.initiatorName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		iqn: prelude.serialize(options.iqn, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		iscsiInterface: prelude.serialize(options.iscsiInterface, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		lun: prelude.serialize(options.lun, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		portals: prelude.serialize(options.portals, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		readOnly: options.readOnly,
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeLocalObjectReference(options.secretRef),
-		targetPortal: options.targetPortal,
+		targetPortal: prelude.serialize(options.targetPortal, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18195,8 +20106,12 @@ export function serializePersistentVolumeClaimVolumeSource(
 ): SerializedPersistentVolumeClaimVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedPersistentVolumeClaimVolumeSource = {
-		claimName: options.claimName,
-		readOnly: options.readOnly,
+		claimName: prelude.serialize(options.claimName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18224,7 +20139,9 @@ export function serializeProjectedVolumeSource(
 ): SerializedProjectedVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedProjectedVolumeSource = {
-		defaultMode: options.defaultMode,
+		defaultMode: prelude.serialize(options.defaultMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		sources: prelude.serialize(options.sources, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -18272,19 +20189,37 @@ export function serializeRBDVolumeSource(
 ): SerializedRBDVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedRBDVolumeSource = {
-		fsType: options.fsType,
-		image: options.image,
-		keyring: options.keyring,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		image: prelude.serialize(options.image, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		keyring: prelude.serialize(options.keyring, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		monitors: prelude.serialize(options.monitors, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		pool: options.pool,
-		readOnly: options.readOnly,
+		pool: prelude.serialize(options.pool, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeLocalObjectReference(options.secretRef),
-		user: options.user,
+		user: prelude.serialize(options.user, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18328,16 +20263,34 @@ export function serializeScaleIOVolumeSource(
 ): SerializedScaleIOVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedScaleIOVolumeSource = {
-		fsType: options.fsType,
-		gateway: options.gateway,
-		protectionDomain: options.protectionDomain,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		gateway: prelude.serialize(options.gateway, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		protectionDomain: prelude.serialize(options.protectionDomain, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeLocalObjectReference(options.secretRef),
-		sslEnabled: options.sslEnabled,
-		storageMode: options.storageMode,
-		storagePool: options.storagePool,
-		system: options.system,
-		volumeName: options.volumeName,
+		sslEnabled: prelude.serialize(options.sslEnabled, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		storageMode: prelude.serialize(options.storageMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		storagePool: prelude.serialize(options.storagePool, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		system: prelude.serialize(options.system, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeName: prelude.serialize(options.volumeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18369,7 +20322,9 @@ export function serializeSecretVolumeSource(
 ): SerializedSecretVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSecretVolumeSource = {
-		defaultMode: options.defaultMode,
+		defaultMode: prelude.serialize(options.defaultMode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		items: prelude.serialize(options.items, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -18378,8 +20333,12 @@ export function serializeSecretVolumeSource(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		optional: options.optional,
-		secretName: options.secretName,
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		secretName: prelude.serialize(options.secretName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18413,11 +20372,19 @@ export function serializeStorageOSVolumeSource(
 ): SerializedStorageOSVolumeSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedStorageOSVolumeSource = {
-		fsType: options.fsType,
-		readOnly: options.readOnly,
+		fsType: prelude.serialize(options.fsType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		readOnly: prelude.serialize(options.readOnly, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		secretRef: serializeLocalObjectReference(options.secretRef),
-		volumeName: options.volumeName,
-		volumeNamespace: options.volumeNamespace,
+		volumeName: prelude.serialize(options.volumeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		volumeNamespace: prelude.serialize(options.volumeNamespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18449,12 +20416,22 @@ export function serializeScopedResourceSelectorRequirement(
 ): SerializedScopedResourceSelectorRequirement | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedScopedResourceSelectorRequirement = {
-		operator: options.operator,
-		scopeName: options.scopeName,
+		operator: prelude.serialize(options.operator, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		scopeName: prelude.serialize(options.scopeName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		values: prelude.serialize(options.values, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -18482,7 +20459,9 @@ export function serializeClientIPConfig(
 ): SerializedClientIPConfig | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedClientIPConfig = {
-		timeoutSeconds: options.timeoutSeconds,
+		timeoutSeconds: prelude.serialize(options.timeoutSeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18506,7 +20485,9 @@ export function serializeForZone(
 ): SerializedForZone | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedForZone = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18532,7 +20513,9 @@ export function serializeForZoneV1Beta1(
 ): SerializedForZoneV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedForZoneV1Beta1 = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18565,13 +20548,25 @@ export function serializeNonResourcePolicyRuleV1Beta1(
 		nonResourceURLs: prelude.serialize(options.nonResourceURLs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		verbs: prelude.serialize(options.verbs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -18612,26 +20607,52 @@ export function serializeResourcePolicyRuleV1Beta1(
 		apiGroups: prelude.serialize(options.apiGroups, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		clusterScope: options.clusterScope,
+		clusterScope: prelude.serialize(options.clusterScope, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		namespaces: prelude.serialize(options.namespaces, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		resources: prelude.serialize(options.resources, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		verbs: prelude.serialize(options.verbs, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -18666,7 +20687,9 @@ export function serializeSubjectV1Beta1(
 	if (options === undefined) return undefined;
 	const result: SerializedSubjectV1Beta1 = {
 		group: serializeGroupSubjectV1Beta1(options.group),
-		kind: options.kind,
+		kind: prelude.serialize(options.kind, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		serviceAccount: serializeServiceAccountSubjectV1Beta1(
 			options.serviceAccount
 		),
@@ -18699,7 +20722,9 @@ export function serializeLimitResponseV1Beta1(
 	if (options === undefined) return undefined;
 	const result: SerializedLimitResponseV1Beta1 = {
 		queuing: serializeQueuingConfigurationV1Beta1(options.queuing),
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18727,7 +20752,9 @@ export function serializeIngressServiceBackend(
 ): SerializedIngressServiceBackend | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedIngressServiceBackend = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		port: serializeServiceBackendPort(options.port),
 	};
 
@@ -18791,9 +20818,13 @@ export function serializeNetworkPolicyPort(
 ): SerializedNetworkPolicyPort | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedNetworkPolicyPort = {
-		endPort: options.endPort,
+		endPort: prelude.serialize(options.endPort, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		port: options.port,
-		protocol: options.protocol,
+		protocol: prelude.serialize(options.protocol, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18853,8 +20884,12 @@ export function serializeIDRangeV1Beta1(
 ): SerializedIDRangeV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedIDRangeV1Beta1 = {
-		max: options.max,
-		min: options.min,
+		max: prelude.serialize(options.max, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		min: prelude.serialize(options.min, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18880,7 +20915,9 @@ export function serializeVolumeNodeResources(
 ): SerializedVolumeNodeResources | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedVolumeNodeResources = {
-		count: options.count,
+		count: prelude.serialize(options.count, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -18914,7 +20951,13 @@ export function serializeWebhookConversion(
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
 	};
@@ -18954,12 +20997,24 @@ export function serializeCustomResourceColumnDefinition(
 ): SerializedCustomResourceColumnDefinition | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCustomResourceColumnDefinition = {
-		description: options.description,
-		format: options.format,
-		jsonPath: options.jsonPath,
-		name: options.name,
-		priority: options.priority,
-		type: options.type,
+		description: prelude.serialize(options.description, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		format: prelude.serialize(options.format, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		jsonPath: prelude.serialize(options.jsonPath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		priority: prelude.serialize(options.priority, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19018,7 +21073,9 @@ export function serializeCustomResourceSubresources(
 	if (options === undefined) return undefined;
 	const result: SerializedCustomResourceSubresources = {
 		scale: serializeCustomResourceSubresourceScale(options.scale),
-		status: options.status,
+		status: prelude.serialize(options.status, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19048,9 +21105,15 @@ export function serializeHPAScalingPolicyV2Beta2(
 ): SerializedHPAScalingPolicyV2Beta2 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedHPAScalingPolicyV2Beta2 = {
-		periodSeconds: options.periodSeconds,
-		type: options.type,
-		value: options.value,
+		periodSeconds: prelude.serialize(options.periodSeconds, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19082,9 +21145,14 @@ export function serializeMetricTargetV2Beta2(
 ): SerializedMetricTargetV2Beta2 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedMetricTargetV2Beta2 = {
-		averageUtilization: options.averageUtilization,
+		averageUtilization: prelude.serialize(
+			options.averageUtilization,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		averageValue: options.averageValue,
-		type: options.type,
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		value: options.value,
 	};
 
@@ -19113,7 +21181,9 @@ export function serializeMetricIdentifierV2Beta2(
 ): SerializedMetricIdentifierV2Beta2 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedMetricIdentifierV2Beta2 = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		selector: serializeLabelSelector(options.selector),
 	};
 
@@ -19186,7 +21256,9 @@ export function serializePreferredSchedulingTerm(
 	if (options === undefined) return undefined;
 	const result: SerializedPreferredSchedulingTerm = {
 		preference: serializeNodeSelectorTerm(options.preference),
-		weight: options.weight,
+		weight: prelude.serialize(options.weight, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19215,7 +21287,9 @@ export function serializeWeightedPodAffinityTerm(
 	if (options === undefined) return undefined;
 	const result: SerializedWeightedPodAffinityTerm = {
 		podAffinityTerm: serializePodAffinityTerm(options.podAffinityTerm),
-		weight: options.weight,
+		weight: prelude.serialize(options.weight, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19252,10 +21326,18 @@ export function serializePodAffinityTerm(
 		namespaces: prelude.serialize(options.namespaces, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		topologyKey: options.topologyKey,
+		topologyKey: prelude.serialize(options.topologyKey, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19320,8 +21402,12 @@ export function serializeConfigMapEnvSource(
 ): SerializedConfigMapEnvSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedConfigMapEnvSource = {
-		name: options.name,
-		optional: options.optional,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19349,8 +21435,12 @@ export function serializeSecretEnvSource(
 ): SerializedSecretEnvSource | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSecretEnvSource = {
-		name: options.name,
-		optional: options.optional,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19407,7 +21497,13 @@ export function serializeExecAction(
 		command: prelude.serialize(options.command, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -19443,7 +21539,9 @@ export function serializeHTTPGetAction(
 ): SerializedHTTPGetAction | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedHTTPGetAction = {
-		host: options.host,
+		host: prelude.serialize(options.host, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		httpHeaders: prelude.serialize(options.httpHeaders, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -19452,9 +21550,13 @@ export function serializeHTTPGetAction(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		path: options.path,
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		port: options.port,
-		scheme: options.scheme,
+		scheme: prelude.serialize(options.scheme, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19482,7 +21584,9 @@ export function serializeTCPSocketAction(
 ): SerializedTCPSocketAction | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedTCPSocketAction = {
-		host: options.host,
+		host: prelude.serialize(options.host, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		port: options.port,
 	};
 
@@ -19514,13 +21618,25 @@ export function serializeCapabilities(
 		add: prelude.serialize(options.add, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 		drop: prelude.serialize(options.drop, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -19550,9 +21666,15 @@ export function serializeKeyToPath(
 ): SerializedKeyToPath | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedKeyToPath = {
-		key: options.key,
-		mode: options.mode,
-		path: options.path,
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		mode: prelude.serialize(options.mode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19585,8 +21707,12 @@ export function serializeDownwardAPIVolumeFile(
 	if (options === undefined) return undefined;
 	const result: SerializedDownwardAPIVolumeFile = {
 		fieldRef: serializeObjectFieldSelector(options.fieldRef),
-		mode: options.mode,
-		path: options.path,
+		mode: prelude.serialize(options.mode, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		resourceFieldRef: serializeResourceFieldSelector(
 			options.resourceFieldRef
 		),
@@ -19683,7 +21809,9 @@ export function serializeGroupSubjectV1Beta1(
 ): SerializedGroupSubjectV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedGroupSubjectV1Beta1 = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19713,8 +21841,12 @@ export function serializeServiceAccountSubjectV1Beta1(
 ): SerializedServiceAccountSubjectV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedServiceAccountSubjectV1Beta1 = {
-		name: options.name,
-		namespace: options.namespace,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		namespace: prelude.serialize(options.namespace, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19740,7 +21872,9 @@ export function serializeUserSubjectV1Beta1(
 ): SerializedUserSubjectV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedUserSubjectV1Beta1 = {
-		name: options.name,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19772,9 +21906,15 @@ export function serializeQueuingConfigurationV1Beta1(
 ): SerializedQueuingConfigurationV1Beta1 | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedQueuingConfigurationV1Beta1 = {
-		handSize: options.handSize,
-		queueLengthLimit: options.queueLengthLimit,
-		queues: options.queues,
+		handSize: prelude.serialize(options.handSize, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		queueLengthLimit: prelude.serialize(options.queueLengthLimit, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		queues: prelude.serialize(options.queues, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19802,8 +21942,12 @@ export function serializeServiceBackendPort(
 ): SerializedServiceBackendPort | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedServiceBackendPort = {
-		name: options.name,
-		number: options.number,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		number: prelude.serialize(options.number, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19834,8 +21978,12 @@ export function serializeHTTPIngressPath(
 	if (options === undefined) return undefined;
 	const result: SerializedHTTPIngressPath = {
 		backend: serializeIngressBackend(options.backend),
-		path: options.path,
-		pathType: options.pathType,
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		pathType: prelude.serialize(options.pathType, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -19861,11 +22009,19 @@ export function serializeIPBlock(
 ): SerializedIPBlock | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedIPBlock = {
-		cidr: options.cidr,
+		cidr: prelude.serialize(options.cidr, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		except: prelude.serialize(options.except, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -19977,10 +22133,19 @@ export function serializeJSONSchemaProps(
 ): SerializedJSONSchemaProps | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedJSONSchemaProps = {
-		$ref: options.$ref,
-		$schema: options.$schema,
-		additionalItems: options.additionalItems,
-		additionalProperties: options.additionalProperties,
+		$ref: prelude.serialize(options.$ref, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		$schema: prelude.serialize(options.$schema, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		additionalItems: prelude.serialize(options.additionalItems, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		additionalProperties: prelude.serialize(
+			options.additionalProperties,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		allOf: prelude.serialize(options.allOf, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -19997,7 +22162,9 @@ export function serializeJSONSchemaProps(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		default: options.default,
+		default: prelude.serialize(options.default, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		definitions:
 			options.definitions === undefined
 				? undefined
@@ -20023,35 +22190,87 @@ export function serializeJSONSchemaProps(
 						options.dependencies,
 						Object.entries(options.dependencies).reduce(
 							(r, i) =>
-								i[1] === undefined ? r : { ...r, [i[0]]: i[1] },
+								i[1] === undefined
+									? r
+									: {
+											...r,
+											[i[0]]: prelude.serialize(
+												i[1],
+												(value) =>
+													senchou.wrapTemplate(
+														value,
+														value
+													)
+											),
+									  },
 							{}
 						)
 				  ),
-		description: options.description,
+		description: prelude.serialize(options.description, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		enum: prelude.serialize(options.enum, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		example: options.example,
-		exclusiveMaximum: options.exclusiveMaximum,
-		exclusiveMinimum: options.exclusiveMinimum,
+		example: prelude.serialize(options.example, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		exclusiveMaximum: prelude.serialize(options.exclusiveMaximum, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		exclusiveMinimum: prelude.serialize(options.exclusiveMinimum, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		externalDocs: serializeExternalDocumentation(options.externalDocs),
-		format: options.format,
-		id: options.id,
-		items: options.items,
-		maxItems: options.maxItems,
-		maxLength: options.maxLength,
-		maxProperties: options.maxProperties,
-		maximum: options.maximum,
-		minItems: options.minItems,
-		minLength: options.minLength,
-		minProperties: options.minProperties,
-		minimum: options.minimum,
-		multipleOf: options.multipleOf,
+		format: prelude.serialize(options.format, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		id: prelude.serialize(options.id, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		items: prelude.serialize(options.items, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		maxItems: prelude.serialize(options.maxItems, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		maxLength: prelude.serialize(options.maxLength, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		maxProperties: prelude.serialize(options.maxProperties, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		maximum: prelude.serialize(options.maximum, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		minItems: prelude.serialize(options.minItems, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		minLength: prelude.serialize(options.minLength, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		minProperties: prelude.serialize(options.minProperties, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		minimum: prelude.serialize(options.minimum, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		multipleOf: prelude.serialize(options.multipleOf, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		not: serializeJSONSchemaProps(options.not),
-		nullable: options.nullable,
+		nullable: prelude.serialize(options.nullable, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		oneOf: prelude.serialize(options.oneOf, (items) =>
 			senchou.wrapTemplate(
 				items,
@@ -20060,7 +22279,9 @@ export function serializeJSONSchemaProps(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		pattern: options.pattern,
+		pattern: prelude.serialize(options.pattern, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		patternProperties:
 			options.patternProperties === undefined
 				? undefined
@@ -20100,26 +22321,58 @@ export function serializeJSONSchemaProps(
 		required: prelude.serialize(options.required, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
-		title: options.title,
-		type: options.type,
-		uniqueItems: options.uniqueItems,
-		"x-kubernetes-embedded-resource": options.xKubernetesEmbeddedResource,
-		"x-kubernetes-int-or-string": options.xKubernetesIntOrString,
+		title: prelude.serialize(options.title, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		type: prelude.serialize(options.type, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		uniqueItems: prelude.serialize(options.uniqueItems, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		"x-kubernetes-embedded-resource": prelude.serialize(
+			options.xKubernetesEmbeddedResource,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		"x-kubernetes-int-or-string": prelude.serialize(
+			options.xKubernetesIntOrString,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 		"x-kubernetes-list-map-keys": prelude.serialize(
 			options.xKubernetesListMapKeys,
 			(items) =>
 				senchou.wrapTemplate(
 					items,
-					items.map((item) => item).filter(prelude.isNotUndefined)
+					items
+						.map((item) =>
+							prelude.serialize(item, (value) =>
+								senchou.wrapTemplate(value, value)
+							)
+						)
+						.filter(prelude.isNotUndefined)
 				)
 		),
-		"x-kubernetes-list-type": options.xKubernetesListType,
-		"x-kubernetes-map-type": options.xKubernetesMapType,
-		"x-kubernetes-preserve-unknown-fields":
+		"x-kubernetes-list-type": prelude.serialize(
+			options.xKubernetesListType,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		"x-kubernetes-map-type": prelude.serialize(
+			options.xKubernetesMapType,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		"x-kubernetes-preserve-unknown-fields": prelude.serialize(
 			options.xKubernetesPreserveUnknownFields,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20151,9 +22404,17 @@ export function serializeCustomResourceSubresourceScale(
 ): SerializedCustomResourceSubresourceScale | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedCustomResourceSubresourceScale = {
-		labelSelectorPath: options.labelSelectorPath,
-		specReplicasPath: options.specReplicasPath,
-		statusReplicasPath: options.statusReplicasPath,
+		labelSelectorPath: prelude.serialize(
+			options.labelSelectorPath,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		specReplicasPath: prelude.serialize(options.specReplicasPath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		statusReplicasPath: prelude.serialize(
+			options.statusReplicasPath,
+			(value) => senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20183,12 +22444,22 @@ export function serializeNodeSelectorRequirement(
 ): SerializedNodeSelectorRequirement | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedNodeSelectorRequirement = {
-		key: options.key,
-		operator: options.operator,
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		operator: prelude.serialize(options.operator, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		values: prelude.serialize(options.values, (items) =>
 			senchou.wrapTemplate(
 				items,
-				items.map((item) => item).filter(prelude.isNotUndefined)
+				items
+					.map((item) =>
+						prelude.serialize(item, (value) =>
+							senchou.wrapTemplate(value, value)
+						)
+					)
+					.filter(prelude.isNotUndefined)
 			)
 		),
 	};
@@ -20220,9 +22491,15 @@ export function serializeConfigMapKeySelector(
 ): SerializedConfigMapKeySelector | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedConfigMapKeySelector = {
-		key: options.key,
-		name: options.name,
-		optional: options.optional,
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20250,8 +22527,12 @@ export function serializeObjectFieldSelector(
 ): SerializedObjectFieldSelector | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedObjectFieldSelector = {
-		apiVersion: options.apiVersion,
-		fieldPath: options.fieldPath,
+		apiVersion: prelude.serialize(options.apiVersion, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		fieldPath: prelude.serialize(options.fieldPath, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20281,9 +22562,13 @@ export function serializeResourceFieldSelector(
 ): SerializedResourceFieldSelector | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedResourceFieldSelector = {
-		containerName: options.containerName,
+		containerName: prelude.serialize(options.containerName, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 		divisor: options.divisor,
-		resource: options.resource,
+		resource: prelude.serialize(options.resource, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20313,9 +22598,15 @@ export function serializeSecretKeySelector(
 ): SerializedSecretKeySelector | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedSecretKeySelector = {
-		key: options.key,
-		name: options.name,
-		optional: options.optional,
+		key: prelude.serialize(options.key, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20341,8 +22632,12 @@ export function serializeHTTPHeader(
 ): SerializedHTTPHeader | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedHTTPHeader = {
-		name: options.name,
-		value: options.value,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		value: prelude.serialize(options.value, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20380,8 +22675,12 @@ export function serializeConfigMapProjection(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		name: options.name,
-		optional: options.optional,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20452,8 +22751,12 @@ export function serializeSecretProjection(
 					.filter(prelude.isNotUndefined)
 			)
 		),
-		name: options.name,
-		optional: options.optional,
+		name: prelude.serialize(options.name, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		optional: prelude.serialize(options.optional, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20485,9 +22788,16 @@ export function serializeServiceAccountTokenProjection(
 ): SerializedServiceAccountTokenProjection | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedServiceAccountTokenProjection = {
-		audience: options.audience,
-		expirationSeconds: options.expirationSeconds,
-		path: options.path,
+		audience: prelude.serialize(options.audience, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		expirationSeconds: prelude.serialize(
+			options.expirationSeconds,
+			(value) => senchou.wrapTemplate(value, value)
+		),
+		path: prelude.serialize(options.path, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);
@@ -20515,8 +22825,12 @@ export function serializeExternalDocumentation(
 ): SerializedExternalDocumentation | undefined {
 	if (options === undefined) return undefined;
 	const result: SerializedExternalDocumentation = {
-		description: options.description,
-		url: options.url,
+		description: prelude.serialize(options.description, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
+		url: prelude.serialize(options.url, (value) =>
+			senchou.wrapTemplate(value, value)
+		),
 	};
 
 	return senchou.wrapTemplate(options, result);

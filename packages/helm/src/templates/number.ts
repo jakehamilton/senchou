@@ -9,7 +9,9 @@ export type NumberTemplate = number & {
 
 export const isNumberTemplate = (value: any): value is NumberTemplate => {
 	return (
-		typeof value === "number" &&
+		value !== null &&
+		typeof value === "object" &&
+		value.constructor === Number &&
 		(value as NumberTemplate).__templateType === "number"
 	);
 };

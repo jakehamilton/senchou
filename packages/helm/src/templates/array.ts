@@ -13,6 +13,7 @@ export type ArrayTemplate<T> = Array<TemplatedValue<T>> & {
 
 export const isArrayTemplate = <T>(value: any): value is ArrayTemplate<T> => {
 	return (
+		value !== null &&
 		Array.isArray(value) &&
 		(value as ArrayTemplate<T>).__templateType === "array"
 	);
@@ -24,8 +25,18 @@ export const serialize = <T>(
 ): ArrayTemplate<T> => {
 	const output = [...(items ?? [])] as unknown as ArrayTemplate<T>;
 
-	output.__templateType = "array";
-	output.__data = { key, items };
+	Object.defineProperty(output, "__templateType", {
+		value: "array",
+		enumerable: false,
+		configurable: true,
+		writable: true,
+	});
+
+	Object.defineProperty(output, "__data", {
+		value: { key, items },
+		enumerable: false,
+		configurable: true,
+	});
 
 	return output;
 };

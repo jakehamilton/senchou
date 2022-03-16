@@ -9,7 +9,9 @@ export type BooleanTemplate = boolean & {
 
 export const isBooleanTemplate = (value: any): value is BooleanTemplate => {
 	return (
-		typeof value === "boolean" &&
+		value !== null &&
+		typeof value === "object" &&
+		value.constructor === Boolean &&
 		(value as BooleanTemplate).__templateType === "boolean"
 	);
 };
@@ -17,8 +19,18 @@ export const isBooleanTemplate = (value: any): value is BooleanTemplate => {
 export const serialize = (key: string): BooleanTemplate => {
 	const output = new Boolean() as BooleanTemplate;
 
-	output.__templateType = "boolean";
-	output.__data = { key };
+	Object.defineProperty(output, "__templateType", {
+		value: "boolean",
+		enumerable: false,
+		configurable: true,
+		writable: true,
+	});
+
+	Object.defineProperty(output, "__data", {
+		value: { key },
+		enumerable: false,
+		configurable: true,
+	});
 
 	return output;
 };

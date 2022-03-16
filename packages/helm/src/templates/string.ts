@@ -10,6 +10,7 @@ export type StringTemplate = string & {
 
 export const isStringTemplate = (value: any): value is StringTemplate => {
 	return (
+		value !== null &&
 		typeof value === "object" &&
 		value.constructor === String &&
 		(value as StringTemplate).__templateType === "string"

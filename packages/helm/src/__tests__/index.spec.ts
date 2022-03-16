@@ -15,8 +15,19 @@ describe("Helm", () => {
 				),
 			},
 			spec: {
+				hostNetwork: template.boolean(".Values.hostNetwork"),
 				containers: template.array<Container>(".Values.containers", [
-					{ name: "always-included-container", image: "nginx" },
+					{
+						name: "always-included-container",
+						image: "nginx",
+						ports: [
+							{
+								containerPort: template.number(
+									".Values.containerPort"
+								),
+							},
+						],
+					},
 				]),
 			},
 		});
@@ -35,9 +46,15 @@ describe("Helm", () => {
 			    \\"containers\\": [
 			      {
 			        \\"image\\": \\"nginx\\",
-			        \\"name\\": \\"always-included-container\\"
+			        \\"name\\": \\"always-included-container\\",
+			        \\"ports\\": [
+			          {
+			            \\"containerPort\\": 0
+			          }
+			        ]
 			      }
-			    ]
+			    ],
+			    \\"hostNetwork\\": false
 			  }
 			}"
 		`);
@@ -59,7 +76,11 @@ describe("Helm", () => {
 			    -
 			      name: always-included-container
 			      image: nginx
+			      ports:
+			        -
+			          containerPort: {{ .Values.containerPort }}
 			    {{- toYaml .Values.containers | nindent 4 }}
+			  hostNetwork: {{ .Values.hostNetwork }}
 			"
 		`);
 	});

@@ -12,8 +12,8 @@ export type ObjectTemplate<T> = {
 
 export const isObjectTemplate = <T>(value: any): value is ObjectTemplate<T> => {
 	return (
-		typeof value === "object" &&
 		value !== null &&
+		typeof value === "object" &&
 		!Array.isArray(value) &&
 		(value as ObjectTemplate<T>).__templateType === "object"
 	);
@@ -28,11 +28,6 @@ export const serialize = <
 ): ObjectTemplate<T> => {
 	const output = ({ ...value } ?? {}) as ObjectTemplate<T>;
 
-	// @NOTE(jakehamilton): We're using `Object.defineProperty`
-	// here in order to set `enumerable` to false. This keeps
-	// things clean when serializing templates and can help
-	// avoid confusion around templated values when calling
-	// things like `JSON.stringify`.
 	Object.defineProperty(output, "__templateType", {
 		value: "object",
 		enumerable: false,
@@ -55,6 +50,7 @@ export const deserialize = <T>(coder: Coder, value: ObjectTemplate<T>) => {
 	if (props) {
 		render(props, coder);
 	}
+
 	coder.line(`{{- with ${key} }}`);
 	coder.line(
 		`{{- toYaml . | nindent ${coder.currentIndent * coder.indentAmount} }}`
