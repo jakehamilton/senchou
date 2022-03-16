@@ -64,6 +64,48 @@ describe("Helm", () => {
 		`);
 	});
 
+	it("should template objects", () => {
+		const podTemplate = template(Pod, {
+			metadata: {
+				name: template.string(".Values.name"),
+				labels: template.object<Record<string, string>>(
+					".Values.labels",
+					{
+						"x-generated-by": "senchou",
+					}
+				),
+			},
+			spec: {
+				containers: [
+					{
+						name: "{{ .Values.name }}-container",
+						image: template.string(".Values.image"),
+					},
+				],
+			},
+		});
+
+		const manifest = render(podTemplate);
+
+		expect(manifest).toMatchInlineSnapshot(`
+			"apiVersion: v1
+			kind: Pod
+			metadata:
+			  labels:
+			    x-generated-by: senchou
+			    {{- with .Values.labels }}
+			    {{- toYaml . | nindent 4 }}
+			    {{- end }}
+			  name: {{ .Values.name | quote }}
+			spec:
+			  containers:
+			    -
+			      image: {{ .Values.image | quote }}
+			      name: {{ .Values.name }}-container
+			"
+		`);
+	});
+
 	it("supports conditionals", () => {
 		const podTemplate = template(Pod, {
 			metadata: {
