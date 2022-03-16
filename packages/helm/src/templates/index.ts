@@ -46,6 +46,18 @@ import {
 	deserialize as deserializeRange,
 	isRangeTemplate,
 } from "./range";
+import {
+	DefineTemplate,
+	serialize as serializeDefine,
+	deserialize as deserializeDefine,
+	isDefineTemplate,
+} from "./define";
+import {
+	IncludeTemplate,
+	serialize as serializeInclude,
+	deserialize as deserializeInclude,
+	isIncludeTemplate,
+} from "./include";
 import Coder from "@littlethings/coder";
 
 export type BaseTemplateInput = object | string | number | boolean | null;
@@ -83,6 +95,8 @@ template.array = serializeArray;
 template.if = serializeIf;
 template.elseif = serializeElseIf;
 template.range = serializeRange;
+template.define = serializeDefine;
+template.include = serializeInclude;
 
 const isPrimitive = (
 	input: any
@@ -133,6 +147,11 @@ const render = (
 		// practice. Might need to consider rearranging or
 		// restructuring this piece.
 		deserializeRange(coder, input);
+	} else if (isDefineTemplate(input)) {
+		// @ts-expect-error
+		deserializeDefine(coder, input);
+	} else if (isIncludeTemplate(input)) {
+		deserializeInclude(coder, input);
 	} else if (Array.isArray(input)) {
 		if (isArrayTemplate(input)) {
 			deserializeArray(coder, input);
@@ -162,7 +181,6 @@ const render = (
 			}
 		}
 	} else if (typeof input === "object") {
-		// console.log("object input", input, (input as any).__templateType);
 		if (isIfTemplate<any>(input)) {
 			deserializeIf(coder, input as IfTemplate<any>);
 		} else if (isObjectTemplate(input)) {
@@ -184,9 +202,6 @@ const render = (
 					render(value, coder);
 					coder.dedent();
 				} else if (typeof value === "object") {
-					if (key === "labels") {
-						// console.log("got an object for labels");
-					}
 					coder.line(`${key}:`);
 
 					coder.indent();

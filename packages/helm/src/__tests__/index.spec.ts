@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, template } from "..";
-import { Container, Pod, serializeContainer } from "./util/k8s";
+import { Affinity, Container, ContainerPort, Pod } from "./util/k8s";
 
 describe("Helm", () => {
 	it("should work", () => {
@@ -187,6 +187,87 @@ describe("Helm", () => {
 			      name: {{ .name | quote }}
 			      image: {{ .image | quote }}
 			    {{- end }}
+			"
+		`);
+	});
+
+	it("supports define", () => {
+		const podTemplate = template(
+			Pod,
+			template.define({
+				type: Object,
+				name: "my.pod",
+				body: {
+					metadata: {
+						name: template.string(".Values.name"),
+					},
+					spec: {
+						containers: [
+							{
+								name: template.string(".Values.name"),
+								image: "some-image",
+							},
+						],
+					},
+				},
+			})
+		);
+
+		const manifest = render(podTemplate);
+
+		expect(manifest).toMatchInlineSnapshot(`
+			"{{- define \\"my.pod\\" }}
+			metadata:
+			  name: {{ .Values.name | quote }}
+			spec:
+			  containers:
+			    -
+			      name: {{ .Values.name | quote }}
+			      image: some-image
+			{{- end }}
+			"
+		`);
+	});
+
+	it("supports include", () => {
+		const podTemplate = template(Pod, {
+			spec: {
+				affinity: template.include<Affinity>({
+					type: Object,
+					name: "my.affinity",
+					context: ".",
+				}),
+				containers: [
+					template.include<Container>({
+						type: Object,
+						name: "my.container",
+					}),
+					{
+						name: "other-container",
+						ports: template.include<Array<ContainerPort>>({
+							type: Array,
+							name: "my.other.ports",
+						}),
+					},
+				],
+			},
+		});
+
+		const manifest = render(podTemplate);
+
+		expect(manifest).toMatchInlineSnapshot(`
+			"apiVersion: v1
+			kind: Pod
+			spec:
+			  affinity:
+			    {{- include \\"my.affinity\\" . | nindent 4 }}
+			  containers:
+			    -
+			      {{- include \\"my.container\\" | nindent 6 }}
+			    -
+			      name: other-container
+			      ports:
+			        {{- include \\"my.other.ports\\" | nindent 8 }}
 			"
 		`);
 	});

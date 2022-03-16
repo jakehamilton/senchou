@@ -56,11 +56,11 @@ export const isMutatingWebhookConfiguration = (
 export const MutatingWebhookConfiguration = (
 	props: MutatingWebhookConfigurationProps = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "admissionregistration.k8s.io/v1" as const,
 		kind: "MutatingWebhookConfiguration" as const,
 		...serializeMutatingWebhookConfigurationProps(props),
-	};
+	});
 };
 
 export type SerializedMutatingWebhookConfigurationList = {
@@ -85,11 +85,11 @@ export const isMutatingWebhookConfigurationList = (
 export const MutatingWebhookConfigurationList = (
 	props: MutatingWebhookConfigurationListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "admissionregistration.k8s.io/v1" as const,
 		kind: "MutatingWebhookConfigurationList" as const,
 		...serializeMutatingWebhookConfigurationListProps(props),
-	};
+	});
 };
 
 export type SerializedValidatingWebhookConfiguration = {
@@ -114,11 +114,11 @@ export const isValidatingWebhookConfiguration = (
 export const ValidatingWebhookConfiguration = (
 	props: ValidatingWebhookConfigurationProps = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "admissionregistration.k8s.io/v1" as const,
 		kind: "ValidatingWebhookConfiguration" as const,
 		...serializeValidatingWebhookConfigurationProps(props),
-	};
+	});
 };
 
 export type SerializedValidatingWebhookConfigurationList = {
@@ -143,11 +143,11 @@ export const isValidatingWebhookConfigurationList = (
 export const ValidatingWebhookConfigurationList = (
 	props: ValidatingWebhookConfigurationListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "admissionregistration.k8s.io/v1" as const,
 		kind: "ValidatingWebhookConfigurationList" as const,
 		...serializeValidatingWebhookConfigurationListProps(props),
-	};
+	});
 };
 
 export type SerializedStorageVersionV1Alpha1 = {
@@ -171,11 +171,11 @@ export const isStorageVersionV1Alpha1 = (
  * @schema io.k8s.api.apiserverinternal.v1alpha1.StorageVersion
  */
 export const StorageVersionV1Alpha1 = (props: StorageVersionV1Alpha1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "internal.apiserver.k8s.io/v1alpha1" as const,
 		kind: "StorageVersion" as const,
 		...serializeStorageVersionV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedStorageVersionListV1Alpha1 = {
@@ -200,11 +200,11 @@ export const isStorageVersionListV1Alpha1 = (
 export const StorageVersionListV1Alpha1 = (
 	props: StorageVersionListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "internal.apiserver.k8s.io/v1alpha1" as const,
 		kind: "StorageVersionList" as const,
 		...serializeStorageVersionListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedControllerRevision = {
@@ -227,11 +227,11 @@ export const isControllerRevision = (
  * @schema io.k8s.api.apps.v1.ControllerRevision
  */
 export const ControllerRevision = (props: ControllerRevisionProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "ControllerRevision" as const,
 		...serializeControllerRevisionProps(props),
-	};
+	});
 };
 
 export type SerializedControllerRevisionList = {
@@ -254,11 +254,11 @@ export const isControllerRevisionList = (
  * @schema io.k8s.api.apps.v1.ControllerRevisionList
  */
 export const ControllerRevisionList = (props: ControllerRevisionListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "ControllerRevisionList" as const,
 		...serializeControllerRevisionListProps(props),
-	};
+	});
 };
 
 export type SerializedDaemonSet = {
@@ -279,11 +279,11 @@ export const isDaemonSet = (input: any): input is SerializedDaemonSet => {
  * @schema io.k8s.api.apps.v1.DaemonSet
  */
 export const DaemonSet = (props: DaemonSetProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "DaemonSet" as const,
 		...serializeDaemonSetProps(props),
-	};
+	});
 };
 
 export type SerializedDaemonSetList = {
@@ -306,11 +306,11 @@ export const isDaemonSetList = (
  * @schema io.k8s.api.apps.v1.DaemonSetList
  */
 export const DaemonSetList = (props: DaemonSetListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "DaemonSetList" as const,
 		...serializeDaemonSetListProps(props),
-	};
+	});
 };
 
 export type SerializedDeployment = {
@@ -331,11 +331,11 @@ export const isDeployment = (input: any): input is SerializedDeployment => {
  * @schema io.k8s.api.apps.v1.Deployment
  */
 export const Deployment = (props: DeploymentProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "Deployment" as const,
 		...serializeDeploymentProps(props),
-	};
+	});
 };
 
 export type SerializedDeploymentList = {
@@ -358,11 +358,11 @@ export const isDeploymentList = (
  * @schema io.k8s.api.apps.v1.DeploymentList
  */
 export const DeploymentList = (props: DeploymentListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "DeploymentList" as const,
 		...serializeDeploymentListProps(props),
-	};
+	});
 };
 
 export type SerializedReplicaSet = {
@@ -383,11 +383,11 @@ export const isReplicaSet = (input: any): input is SerializedReplicaSet => {
  * @schema io.k8s.api.apps.v1.ReplicaSet
  */
 export const ReplicaSet = (props: ReplicaSetProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "ReplicaSet" as const,
 		...serializeReplicaSetProps(props),
-	};
+	});
 };
 
 export type SerializedReplicaSetList = {
@@ -410,11 +410,11 @@ export const isReplicaSetList = (
  * @schema io.k8s.api.apps.v1.ReplicaSetList
  */
 export const ReplicaSetList = (props: ReplicaSetListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "ReplicaSetList" as const,
 		...serializeReplicaSetListProps(props),
-	};
+	});
 };
 
 export type SerializedStatefulSet = {
@@ -438,11 +438,11 @@ The StatefulSet guarantees that a given network identity will always map to the 
  * @schema io.k8s.api.apps.v1.StatefulSet
  */
 export const StatefulSet = (props: StatefulSetProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "StatefulSet" as const,
 		...serializeStatefulSetProps(props),
-	};
+	});
 };
 
 export type SerializedStatefulSetList = {
@@ -465,11 +465,11 @@ export const isStatefulSetList = (
  * @schema io.k8s.api.apps.v1.StatefulSetList
  */
 export const StatefulSetList = (props: StatefulSetListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apps/v1" as const,
 		kind: "StatefulSetList" as const,
 		...serializeStatefulSetListProps(props),
-	};
+	});
 };
 
 export type SerializedTokenRequest = {
@@ -490,11 +490,11 @@ export const isTokenRequest = (input: any): input is SerializedTokenRequest => {
  * @schema io.k8s.api.authentication.v1.TokenRequest
  */
 export const TokenRequest = (props: TokenRequestProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "authentication.k8s.io/v1" as const,
 		kind: "TokenRequest" as const,
 		...serializeTokenRequestProps(props),
-	};
+	});
 };
 
 export type SerializedTokenReview = {
@@ -515,11 +515,11 @@ export const isTokenReview = (input: any): input is SerializedTokenReview => {
  * @schema io.k8s.api.authentication.v1.TokenReview
  */
 export const TokenReview = (props: TokenReviewProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "authentication.k8s.io/v1" as const,
 		kind: "TokenReview" as const,
 		...serializeTokenReviewProps(props),
-	};
+	});
 };
 
 export type SerializedLocalSubjectAccessReview = {
@@ -544,11 +544,11 @@ export const isLocalSubjectAccessReview = (
 export const LocalSubjectAccessReview = (
 	props: LocalSubjectAccessReviewProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "authorization.k8s.io/v1" as const,
 		kind: "LocalSubjectAccessReview" as const,
 		...serializeLocalSubjectAccessReviewProps(props),
-	};
+	});
 };
 
 export type SerializedSelfSubjectAccessReview = {
@@ -573,11 +573,11 @@ export const isSelfSubjectAccessReview = (
 export const SelfSubjectAccessReview = (
 	props: SelfSubjectAccessReviewProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "authorization.k8s.io/v1" as const,
 		kind: "SelfSubjectAccessReview" as const,
 		...serializeSelfSubjectAccessReviewProps(props),
-	};
+	});
 };
 
 export type SerializedSelfSubjectRulesReview = {
@@ -600,11 +600,11 @@ export const isSelfSubjectRulesReview = (
  * @schema io.k8s.api.authorization.v1.SelfSubjectRulesReview
  */
 export const SelfSubjectRulesReview = (props: SelfSubjectRulesReviewProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "authorization.k8s.io/v1" as const,
 		kind: "SelfSubjectRulesReview" as const,
 		...serializeSelfSubjectRulesReviewProps(props),
-	};
+	});
 };
 
 export type SerializedSubjectAccessReview = {
@@ -627,11 +627,11 @@ export const isSubjectAccessReview = (
  * @schema io.k8s.api.authorization.v1.SubjectAccessReview
  */
 export const SubjectAccessReview = (props: SubjectAccessReviewProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "authorization.k8s.io/v1" as const,
 		kind: "SubjectAccessReview" as const,
 		...serializeSubjectAccessReviewProps(props),
-	};
+	});
 };
 
 export type SerializedHorizontalPodAutoscaler = {
@@ -656,11 +656,11 @@ export const isHorizontalPodAutoscaler = (
 export const HorizontalPodAutoscaler = (
 	props: HorizontalPodAutoscalerProps = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "autoscaling/v1" as const,
 		kind: "HorizontalPodAutoscaler" as const,
 		...serializeHorizontalPodAutoscalerProps(props),
-	};
+	});
 };
 
 export type SerializedHorizontalPodAutoscalerList = {
@@ -685,11 +685,11 @@ export const isHorizontalPodAutoscalerList = (
 export const HorizontalPodAutoscalerList = (
 	props: HorizontalPodAutoscalerListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "autoscaling/v1" as const,
 		kind: "HorizontalPodAutoscalerList" as const,
 		...serializeHorizontalPodAutoscalerListProps(props),
-	};
+	});
 };
 
 export type SerializedScale = {
@@ -710,11 +710,11 @@ export const isScale = (input: any): input is SerializedScale => {
  * @schema io.k8s.api.autoscaling.v1.Scale
  */
 export const Scale = (props: ScaleProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "autoscaling/v1" as const,
 		kind: "Scale" as const,
 		...serializeScaleProps(props),
-	};
+	});
 };
 
 export type SerializedHorizontalPodAutoscalerV2Beta1 = {
@@ -739,11 +739,11 @@ export const isHorizontalPodAutoscalerV2Beta1 = (
 export const HorizontalPodAutoscalerV2Beta1 = (
 	props: HorizontalPodAutoscalerV2Beta1Props = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "autoscaling/v2beta1" as const,
 		kind: "HorizontalPodAutoscaler" as const,
 		...serializeHorizontalPodAutoscalerV2Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedHorizontalPodAutoscalerListV2Beta1 = {
@@ -768,11 +768,11 @@ export const isHorizontalPodAutoscalerListV2Beta1 = (
 export const HorizontalPodAutoscalerListV2Beta1 = (
 	props: HorizontalPodAutoscalerListV2Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "autoscaling/v2beta1" as const,
 		kind: "HorizontalPodAutoscalerList" as const,
 		...serializeHorizontalPodAutoscalerListV2Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedHorizontalPodAutoscalerV2Beta2 = {
@@ -797,11 +797,11 @@ export const isHorizontalPodAutoscalerV2Beta2 = (
 export const HorizontalPodAutoscalerV2Beta2 = (
 	props: HorizontalPodAutoscalerV2Beta2Props = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "autoscaling/v2beta2" as const,
 		kind: "HorizontalPodAutoscaler" as const,
 		...serializeHorizontalPodAutoscalerV2Beta2Props(props),
-	};
+	});
 };
 
 export type SerializedHorizontalPodAutoscalerListV2Beta2 = {
@@ -826,11 +826,11 @@ export const isHorizontalPodAutoscalerListV2Beta2 = (
 export const HorizontalPodAutoscalerListV2Beta2 = (
 	props: HorizontalPodAutoscalerListV2Beta2Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "autoscaling/v2beta2" as const,
 		kind: "HorizontalPodAutoscalerList" as const,
 		...serializeHorizontalPodAutoscalerListV2Beta2Props(props),
-	};
+	});
 };
 
 export type SerializedCronJob = {
@@ -851,11 +851,11 @@ export const isCronJob = (input: any): input is SerializedCronJob => {
  * @schema io.k8s.api.batch.v1.CronJob
  */
 export const CronJob = (props: CronJobProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "batch/v1" as const,
 		kind: "CronJob" as const,
 		...serializeCronJobProps(props),
-	};
+	});
 };
 
 export type SerializedCronJobList = {
@@ -876,11 +876,11 @@ export const isCronJobList = (input: any): input is SerializedCronJobList => {
  * @schema io.k8s.api.batch.v1.CronJobList
  */
 export const CronJobList = (props: CronJobListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "batch/v1" as const,
 		kind: "CronJobList" as const,
 		...serializeCronJobListProps(props),
-	};
+	});
 };
 
 export type SerializedJob = {
@@ -901,11 +901,11 @@ export const isJob = (input: any): input is SerializedJob => {
  * @schema io.k8s.api.batch.v1.Job
  */
 export const Job = (props: JobProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "batch/v1" as const,
 		kind: "Job" as const,
 		...serializeJobProps(props),
-	};
+	});
 };
 
 export type SerializedJobList = {
@@ -926,11 +926,11 @@ export const isJobList = (input: any): input is SerializedJobList => {
  * @schema io.k8s.api.batch.v1.JobList
  */
 export const JobList = (props: JobListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "batch/v1" as const,
 		kind: "JobList" as const,
 		...serializeJobListProps(props),
-	};
+	});
 };
 
 export type SerializedCronJobV1Beta1 = {
@@ -953,11 +953,11 @@ export const isCronJobV1Beta1 = (
  * @schema io.k8s.api.batch.v1beta1.CronJob
  */
 export const CronJobV1Beta1 = (props: CronJobV1Beta1Props = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "batch/v1beta1" as const,
 		kind: "CronJob" as const,
 		...serializeCronJobV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedCronJobListV1Beta1 = {
@@ -980,11 +980,11 @@ export const isCronJobListV1Beta1 = (
  * @schema io.k8s.api.batch.v1beta1.CronJobList
  */
 export const CronJobListV1Beta1 = (props: CronJobListV1Beta1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "batch/v1beta1" as const,
 		kind: "CronJobList" as const,
 		...serializeCronJobListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedCertificateSigningRequest = {
@@ -1015,11 +1015,11 @@ This API can be used to request client certificates to authenticate to kube-apis
 export const CertificateSigningRequest = (
 	props: CertificateSigningRequestProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "certificates.k8s.io/v1" as const,
 		kind: "CertificateSigningRequest" as const,
 		...serializeCertificateSigningRequestProps(props),
-	};
+	});
 };
 
 export type SerializedCertificateSigningRequestList = {
@@ -1044,11 +1044,11 @@ export const isCertificateSigningRequestList = (
 export const CertificateSigningRequestList = (
 	props: CertificateSigningRequestListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "certificates.k8s.io/v1" as const,
 		kind: "CertificateSigningRequestList" as const,
 		...serializeCertificateSigningRequestListProps(props),
-	};
+	});
 };
 
 export type SerializedLease = {
@@ -1069,11 +1069,11 @@ export const isLease = (input: any): input is SerializedLease => {
  * @schema io.k8s.api.coordination.v1.Lease
  */
 export const Lease = (props: LeaseProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "coordination.k8s.io/v1" as const,
 		kind: "Lease" as const,
 		...serializeLeaseProps(props),
-	};
+	});
 };
 
 export type SerializedLeaseList = {
@@ -1094,11 +1094,11 @@ export const isLeaseList = (input: any): input is SerializedLeaseList => {
  * @schema io.k8s.api.coordination.v1.LeaseList
  */
 export const LeaseList = (props: LeaseListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "coordination.k8s.io/v1" as const,
 		kind: "LeaseList" as const,
 		...serializeLeaseListProps(props),
-	};
+	});
 };
 
 export type SerializedBinding = {
@@ -1119,11 +1119,11 @@ export const isBinding = (input: any): input is SerializedBinding => {
  * @schema io.k8s.api.core.v1.Binding
  */
 export const Binding = (props: BindingProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Binding" as const,
 		...serializeBindingProps(props),
-	};
+	});
 };
 
 export type SerializedComponentStatus = {
@@ -1146,11 +1146,11 @@ export const isComponentStatus = (
  * @schema io.k8s.api.core.v1.ComponentStatus
  */
 export const ComponentStatus = (props: ComponentStatusProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ComponentStatus" as const,
 		...serializeComponentStatusProps(props),
-	};
+	});
 };
 
 export type SerializedComponentStatusList = {
@@ -1173,11 +1173,11 @@ export const isComponentStatusList = (
  * @schema io.k8s.api.core.v1.ComponentStatusList
  */
 export const ComponentStatusList = (props: ComponentStatusListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ComponentStatusList" as const,
 		...serializeComponentStatusListProps(props),
-	};
+	});
 };
 
 export type SerializedConfigMap = {
@@ -1198,11 +1198,11 @@ export const isConfigMap = (input: any): input is SerializedConfigMap => {
  * @schema io.k8s.api.core.v1.ConfigMap
  */
 export const ConfigMap = (props: ConfigMapProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ConfigMap" as const,
 		...serializeConfigMapProps(props),
-	};
+	});
 };
 
 export type SerializedConfigMapList = {
@@ -1225,11 +1225,11 @@ export const isConfigMapList = (
  * @schema io.k8s.api.core.v1.ConfigMapList
  */
 export const ConfigMapList = (props: ConfigMapListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ConfigMapList" as const,
 		...serializeConfigMapListProps(props),
-	};
+	});
 };
 
 export type SerializedEndpoints = {
@@ -1261,11 +1261,11 @@ export const isEndpoints = (input: any): input is SerializedEndpoints => {
  * @schema io.k8s.api.core.v1.Endpoints
  */
 export const Endpoints = (props: EndpointsProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Endpoints" as const,
 		...serializeEndpointsProps(props),
-	};
+	});
 };
 
 export type SerializedEndpointsList = {
@@ -1288,11 +1288,11 @@ export const isEndpointsList = (
  * @schema io.k8s.api.core.v1.EndpointsList
  */
 export const EndpointsList = (props: EndpointsListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "EndpointsList" as const,
 		...serializeEndpointsListProps(props),
-	};
+	});
 };
 
 export type SerializedEvent = {
@@ -1313,11 +1313,11 @@ export const isEvent = (input: any): input is SerializedEvent => {
  * @schema io.k8s.api.events.v1.Event
  */
 export const Event = (props: EventProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "events.k8s.io/v1" as const,
 		kind: "Event" as const,
 		...serializeEventProps(props),
-	};
+	});
 };
 
 export type SerializedEventList = {
@@ -1338,11 +1338,11 @@ export const isEventList = (input: any): input is SerializedEventList => {
  * @schema io.k8s.api.events.v1.EventList
  */
 export const EventList = (props: EventListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "events.k8s.io/v1" as const,
 		kind: "EventList" as const,
 		...serializeEventListProps(props),
-	};
+	});
 };
 
 export type SerializedLimitRange = {
@@ -1363,11 +1363,11 @@ export const isLimitRange = (input: any): input is SerializedLimitRange => {
  * @schema io.k8s.api.core.v1.LimitRange
  */
 export const LimitRange = (props: LimitRangeProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "LimitRange" as const,
 		...serializeLimitRangeProps(props),
-	};
+	});
 };
 
 export type SerializedLimitRangeList = {
@@ -1390,11 +1390,11 @@ export const isLimitRangeList = (
  * @schema io.k8s.api.core.v1.LimitRangeList
  */
 export const LimitRangeList = (props: LimitRangeListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "LimitRangeList" as const,
 		...serializeLimitRangeListProps(props),
-	};
+	});
 };
 
 export type SerializedNamespace = {
@@ -1415,11 +1415,11 @@ export const isNamespace = (input: any): input is SerializedNamespace => {
  * @schema io.k8s.api.core.v1.Namespace
  */
 export const Namespace = (props: NamespaceProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Namespace" as const,
 		...serializeNamespaceProps(props),
-	};
+	});
 };
 
 export type SerializedNamespaceList = {
@@ -1442,11 +1442,11 @@ export const isNamespaceList = (
  * @schema io.k8s.api.core.v1.NamespaceList
  */
 export const NamespaceList = (props: NamespaceListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "NamespaceList" as const,
 		...serializeNamespaceListProps(props),
-	};
+	});
 };
 
 export type SerializedNode = {
@@ -1467,11 +1467,11 @@ export const isNode = (input: any): input is SerializedNode => {
  * @schema io.k8s.api.core.v1.Node
  */
 export const Node = (props: NodeProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Node" as const,
 		...serializeNodeProps(props),
-	};
+	});
 };
 
 export type SerializedNodeList = {
@@ -1492,11 +1492,11 @@ export const isNodeList = (input: any): input is SerializedNodeList => {
  * @schema io.k8s.api.core.v1.NodeList
  */
 export const NodeList = (props: NodeListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "NodeList" as const,
 		...serializeNodeListProps(props),
-	};
+	});
 };
 
 export type SerializedPersistentVolume = {
@@ -1519,11 +1519,11 @@ export const isPersistentVolume = (
  * @schema io.k8s.api.core.v1.PersistentVolume
  */
 export const PersistentVolume = (props: PersistentVolumeProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "PersistentVolume" as const,
 		...serializePersistentVolumeProps(props),
-	};
+	});
 };
 
 export type SerializedPersistentVolumeClaim = {
@@ -1548,11 +1548,11 @@ export const isPersistentVolumeClaim = (
 export const PersistentVolumeClaim = (
 	props: PersistentVolumeClaimProps = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "PersistentVolumeClaim" as const,
 		...serializePersistentVolumeClaimProps(props),
-	};
+	});
 };
 
 export type SerializedPersistentVolumeClaimList = {
@@ -1577,11 +1577,11 @@ export const isPersistentVolumeClaimList = (
 export const PersistentVolumeClaimList = (
 	props: PersistentVolumeClaimListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "PersistentVolumeClaimList" as const,
 		...serializePersistentVolumeClaimListProps(props),
-	};
+	});
 };
 
 export type SerializedPersistentVolumeList = {
@@ -1604,11 +1604,11 @@ export const isPersistentVolumeList = (
  * @schema io.k8s.api.core.v1.PersistentVolumeList
  */
 export const PersistentVolumeList = (props: PersistentVolumeListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "PersistentVolumeList" as const,
 		...serializePersistentVolumeListProps(props),
-	};
+	});
 };
 
 export type SerializedPod = {
@@ -1629,11 +1629,11 @@ export const isPod = (input: any): input is SerializedPod => {
  * @schema io.k8s.api.core.v1.Pod
  */
 export const Pod = (props: PodProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Pod" as const,
 		...serializePodProps(props),
-	};
+	});
 };
 
 export type SerializedPodList = {
@@ -1654,11 +1654,11 @@ export const isPodList = (input: any): input is SerializedPodList => {
  * @schema io.k8s.api.core.v1.PodList
  */
 export const PodList = (props: PodListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "PodList" as const,
 		...serializePodListProps(props),
-	};
+	});
 };
 
 export type SerializedPodTemplate = {
@@ -1679,11 +1679,11 @@ export const isPodTemplate = (input: any): input is SerializedPodTemplate => {
  * @schema io.k8s.api.core.v1.PodTemplate
  */
 export const PodTemplate = (props: PodTemplateProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "PodTemplate" as const,
 		...serializePodTemplateProps(props),
-	};
+	});
 };
 
 export type SerializedPodTemplateList = {
@@ -1706,11 +1706,11 @@ export const isPodTemplateList = (
  * @schema io.k8s.api.core.v1.PodTemplateList
  */
 export const PodTemplateList = (props: PodTemplateListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "PodTemplateList" as const,
 		...serializePodTemplateListProps(props),
-	};
+	});
 };
 
 export type SerializedReplicationController = {
@@ -1735,11 +1735,11 @@ export const isReplicationController = (
 export const ReplicationController = (
 	props: ReplicationControllerProps = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ReplicationController" as const,
 		...serializeReplicationControllerProps(props),
-	};
+	});
 };
 
 export type SerializedReplicationControllerList = {
@@ -1764,11 +1764,11 @@ export const isReplicationControllerList = (
 export const ReplicationControllerList = (
 	props: ReplicationControllerListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ReplicationControllerList" as const,
 		...serializeReplicationControllerListProps(props),
-	};
+	});
 };
 
 export type SerializedResourceQuota = {
@@ -1791,11 +1791,11 @@ export const isResourceQuota = (
  * @schema io.k8s.api.core.v1.ResourceQuota
  */
 export const ResourceQuota = (props: ResourceQuotaProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ResourceQuota" as const,
 		...serializeResourceQuotaProps(props),
-	};
+	});
 };
 
 export type SerializedResourceQuotaList = {
@@ -1818,11 +1818,11 @@ export const isResourceQuotaList = (
  * @schema io.k8s.api.core.v1.ResourceQuotaList
  */
 export const ResourceQuotaList = (props: ResourceQuotaListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ResourceQuotaList" as const,
 		...serializeResourceQuotaListProps(props),
-	};
+	});
 };
 
 export type SerializedSecret = {
@@ -1843,11 +1843,11 @@ export const isSecret = (input: any): input is SerializedSecret => {
  * @schema io.k8s.api.core.v1.Secret
  */
 export const Secret = (props: SecretProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Secret" as const,
 		...serializeSecretProps(props),
-	};
+	});
 };
 
 export type SerializedSecretList = {
@@ -1868,11 +1868,11 @@ export const isSecretList = (input: any): input is SerializedSecretList => {
  * @schema io.k8s.api.core.v1.SecretList
  */
 export const SecretList = (props: SecretListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "SecretList" as const,
 		...serializeSecretListProps(props),
-	};
+	});
 };
 
 export type SerializedService = {
@@ -1893,11 +1893,11 @@ export const isService = (input: any): input is SerializedService => {
  * @schema io.k8s.api.core.v1.Service
  */
 export const Service = (props: ServiceProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Service" as const,
 		...serializeServiceProps(props),
-	};
+	});
 };
 
 export type SerializedServiceAccount = {
@@ -1920,11 +1920,11 @@ export const isServiceAccount = (
  * @schema io.k8s.api.core.v1.ServiceAccount
  */
 export const ServiceAccount = (props: ServiceAccountProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ServiceAccount" as const,
 		...serializeServiceAccountProps(props),
-	};
+	});
 };
 
 export type SerializedServiceAccountList = {
@@ -1947,11 +1947,11 @@ export const isServiceAccountList = (
  * @schema io.k8s.api.core.v1.ServiceAccountList
  */
 export const ServiceAccountList = (props: ServiceAccountListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ServiceAccountList" as const,
 		...serializeServiceAccountListProps(props),
-	};
+	});
 };
 
 export type SerializedServiceList = {
@@ -1972,11 +1972,11 @@ export const isServiceList = (input: any): input is SerializedServiceList => {
  * @schema io.k8s.api.core.v1.ServiceList
  */
 export const ServiceList = (props: ServiceListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "ServiceList" as const,
 		...serializeServiceListProps(props),
-	};
+	});
 };
 
 export type SerializedEndpointSlice = {
@@ -1999,11 +1999,11 @@ export const isEndpointSlice = (
  * @schema io.k8s.api.discovery.v1.EndpointSlice
  */
 export const EndpointSlice = (props: EndpointSliceProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "discovery.k8s.io/v1" as const,
 		kind: "EndpointSlice" as const,
 		...serializeEndpointSliceProps(props),
-	};
+	});
 };
 
 export type SerializedEndpointSliceList = {
@@ -2026,11 +2026,11 @@ export const isEndpointSliceList = (
  * @schema io.k8s.api.discovery.v1.EndpointSliceList
  */
 export const EndpointSliceList = (props: EndpointSliceListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "discovery.k8s.io/v1" as const,
 		kind: "EndpointSliceList" as const,
 		...serializeEndpointSliceListProps(props),
-	};
+	});
 };
 
 export type SerializedEndpointSliceV1Beta1 = {
@@ -2053,11 +2053,11 @@ export const isEndpointSliceV1Beta1 = (
  * @schema io.k8s.api.discovery.v1beta1.EndpointSlice
  */
 export const EndpointSliceV1Beta1 = (props: EndpointSliceV1Beta1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "discovery.k8s.io/v1beta1" as const,
 		kind: "EndpointSlice" as const,
 		...serializeEndpointSliceV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedEndpointSliceListV1Beta1 = {
@@ -2082,11 +2082,11 @@ export const isEndpointSliceListV1Beta1 = (
 export const EndpointSliceListV1Beta1 = (
 	props: EndpointSliceListV1Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "discovery.k8s.io/v1beta1" as const,
 		kind: "EndpointSliceList" as const,
 		...serializeEndpointSliceListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedEventV1Beta1 = {
@@ -2107,11 +2107,11 @@ export const isEventV1Beta1 = (input: any): input is SerializedEventV1Beta1 => {
  * @schema io.k8s.api.events.v1beta1.Event
  */
 export const EventV1Beta1 = (props: EventV1Beta1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "events.k8s.io/v1beta1" as const,
 		kind: "Event" as const,
 		...serializeEventV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedEventListV1Beta1 = {
@@ -2134,11 +2134,11 @@ export const isEventListV1Beta1 = (
  * @schema io.k8s.api.events.v1beta1.EventList
  */
 export const EventListV1Beta1 = (props: EventListV1Beta1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "events.k8s.io/v1beta1" as const,
 		kind: "EventList" as const,
 		...serializeEventListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedFlowSchemaV1Beta1 = {
@@ -2161,11 +2161,11 @@ export const isFlowSchemaV1Beta1 = (
  * @schema io.k8s.api.flowcontrol.v1beta1.FlowSchema
  */
 export const FlowSchemaV1Beta1 = (props: FlowSchemaV1Beta1Props = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "flowcontrol.apiserver.k8s.io/v1beta1" as const,
 		kind: "FlowSchema" as const,
 		...serializeFlowSchemaV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedFlowSchemaListV1Beta1 = {
@@ -2188,11 +2188,11 @@ export const isFlowSchemaListV1Beta1 = (
  * @schema io.k8s.api.flowcontrol.v1beta1.FlowSchemaList
  */
 export const FlowSchemaListV1Beta1 = (props: FlowSchemaListV1Beta1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "flowcontrol.apiserver.k8s.io/v1beta1" as const,
 		kind: "FlowSchemaList" as const,
 		...serializeFlowSchemaListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedPriorityLevelConfigurationV1Beta1 = {
@@ -2217,11 +2217,11 @@ export const isPriorityLevelConfigurationV1Beta1 = (
 export const PriorityLevelConfigurationV1Beta1 = (
 	props: PriorityLevelConfigurationV1Beta1Props = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "flowcontrol.apiserver.k8s.io/v1beta1" as const,
 		kind: "PriorityLevelConfiguration" as const,
 		...serializePriorityLevelConfigurationV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedPriorityLevelConfigurationListV1Beta1 = {
@@ -2246,11 +2246,11 @@ export const isPriorityLevelConfigurationListV1Beta1 = (
 export const PriorityLevelConfigurationListV1Beta1 = (
 	props: PriorityLevelConfigurationListV1Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "flowcontrol.apiserver.k8s.io/v1beta1" as const,
 		kind: "PriorityLevelConfigurationList" as const,
 		...serializePriorityLevelConfigurationListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedIngress = {
@@ -2271,11 +2271,11 @@ export const isIngress = (input: any): input is SerializedIngress => {
  * @schema io.k8s.api.networking.v1.Ingress
  */
 export const Ingress = (props: IngressProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "networking.k8s.io/v1" as const,
 		kind: "Ingress" as const,
 		...serializeIngressProps(props),
-	};
+	});
 };
 
 export type SerializedIngressClass = {
@@ -2296,11 +2296,11 @@ export const isIngressClass = (input: any): input is SerializedIngressClass => {
  * @schema io.k8s.api.networking.v1.IngressClass
  */
 export const IngressClass = (props: IngressClassProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "networking.k8s.io/v1" as const,
 		kind: "IngressClass" as const,
 		...serializeIngressClassProps(props),
-	};
+	});
 };
 
 export type SerializedIngressClassList = {
@@ -2323,11 +2323,11 @@ export const isIngressClassList = (
  * @schema io.k8s.api.networking.v1.IngressClassList
  */
 export const IngressClassList = (props: IngressClassListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "networking.k8s.io/v1" as const,
 		kind: "IngressClassList" as const,
 		...serializeIngressClassListProps(props),
-	};
+	});
 };
 
 export type SerializedIngressList = {
@@ -2348,11 +2348,11 @@ export const isIngressList = (input: any): input is SerializedIngressList => {
  * @schema io.k8s.api.networking.v1.IngressList
  */
 export const IngressList = (props: IngressListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "networking.k8s.io/v1" as const,
 		kind: "IngressList" as const,
 		...serializeIngressListProps(props),
-	};
+	});
 };
 
 export type SerializedNetworkPolicy = {
@@ -2375,11 +2375,11 @@ export const isNetworkPolicy = (
  * @schema io.k8s.api.networking.v1.NetworkPolicy
  */
 export const NetworkPolicy = (props: NetworkPolicyProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "networking.k8s.io/v1" as const,
 		kind: "NetworkPolicy" as const,
 		...serializeNetworkPolicyProps(props),
-	};
+	});
 };
 
 export type SerializedNetworkPolicyList = {
@@ -2402,11 +2402,11 @@ export const isNetworkPolicyList = (
  * @schema io.k8s.api.networking.v1.NetworkPolicyList
  */
 export const NetworkPolicyList = (props: NetworkPolicyListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "networking.k8s.io/v1" as const,
 		kind: "NetworkPolicyList" as const,
 		...serializeNetworkPolicyListProps(props),
-	};
+	});
 };
 
 export type SerializedRuntimeClass = {
@@ -2427,11 +2427,11 @@ export const isRuntimeClass = (input: any): input is SerializedRuntimeClass => {
  * @schema io.k8s.api.node.v1.RuntimeClass
  */
 export const RuntimeClass = (props: RuntimeClassProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "node.k8s.io/v1" as const,
 		kind: "RuntimeClass" as const,
 		...serializeRuntimeClassProps(props),
-	};
+	});
 };
 
 export type SerializedRuntimeClassList = {
@@ -2454,11 +2454,11 @@ export const isRuntimeClassList = (
  * @schema io.k8s.api.node.v1.RuntimeClassList
  */
 export const RuntimeClassList = (props: RuntimeClassListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "node.k8s.io/v1" as const,
 		kind: "RuntimeClassList" as const,
 		...serializeRuntimeClassListProps(props),
-	};
+	});
 };
 
 export type SerializedRuntimeClassV1Alpha1 = {
@@ -2481,11 +2481,11 @@ export const isRuntimeClassV1Alpha1 = (
  * @schema io.k8s.api.node.v1alpha1.RuntimeClass
  */
 export const RuntimeClassV1Alpha1 = (props: RuntimeClassV1Alpha1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "node.k8s.io/v1alpha1" as const,
 		kind: "RuntimeClass" as const,
 		...serializeRuntimeClassV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedRuntimeClassListV1Alpha1 = {
@@ -2510,11 +2510,11 @@ export const isRuntimeClassListV1Alpha1 = (
 export const RuntimeClassListV1Alpha1 = (
 	props: RuntimeClassListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "node.k8s.io/v1alpha1" as const,
 		kind: "RuntimeClassList" as const,
 		...serializeRuntimeClassListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedRuntimeClassV1Beta1 = {
@@ -2537,11 +2537,11 @@ export const isRuntimeClassV1Beta1 = (
  * @schema io.k8s.api.node.v1beta1.RuntimeClass
  */
 export const RuntimeClassV1Beta1 = (props: RuntimeClassV1Beta1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "node.k8s.io/v1beta1" as const,
 		kind: "RuntimeClass" as const,
 		...serializeRuntimeClassV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedRuntimeClassListV1Beta1 = {
@@ -2566,11 +2566,11 @@ export const isRuntimeClassListV1Beta1 = (
 export const RuntimeClassListV1Beta1 = (
 	props: RuntimeClassListV1Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "node.k8s.io/v1beta1" as const,
 		kind: "RuntimeClassList" as const,
 		...serializeRuntimeClassListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedEviction = {
@@ -2591,11 +2591,11 @@ export const isEviction = (input: any): input is SerializedEviction => {
  * @schema io.k8s.api.policy.v1.Eviction
  */
 export const Eviction = (props: EvictionProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "policy/v1" as const,
 		kind: "Eviction" as const,
 		...serializeEvictionProps(props),
-	};
+	});
 };
 
 export type SerializedPodDisruptionBudget = {
@@ -2618,11 +2618,11 @@ export const isPodDisruptionBudget = (
  * @schema io.k8s.api.policy.v1.PodDisruptionBudget
  */
 export const PodDisruptionBudget = (props: PodDisruptionBudgetProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "policy/v1" as const,
 		kind: "PodDisruptionBudget" as const,
 		...serializePodDisruptionBudgetProps(props),
-	};
+	});
 };
 
 export type SerializedPodDisruptionBudgetList = {
@@ -2647,11 +2647,11 @@ export const isPodDisruptionBudgetList = (
 export const PodDisruptionBudgetList = (
 	props: PodDisruptionBudgetListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "policy/v1" as const,
 		kind: "PodDisruptionBudgetList" as const,
 		...serializePodDisruptionBudgetListProps(props),
-	};
+	});
 };
 
 export type SerializedPodDisruptionBudgetV1Beta1 = {
@@ -2676,11 +2676,11 @@ export const isPodDisruptionBudgetV1Beta1 = (
 export const PodDisruptionBudgetV1Beta1 = (
 	props: PodDisruptionBudgetV1Beta1Props = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "policy/v1beta1" as const,
 		kind: "PodDisruptionBudget" as const,
 		...serializePodDisruptionBudgetV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedPodDisruptionBudgetListV1Beta1 = {
@@ -2705,11 +2705,11 @@ export const isPodDisruptionBudgetListV1Beta1 = (
 export const PodDisruptionBudgetListV1Beta1 = (
 	props: PodDisruptionBudgetListV1Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "policy/v1beta1" as const,
 		kind: "PodDisruptionBudgetList" as const,
 		...serializePodDisruptionBudgetListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedPodSecurityPolicyV1Beta1 = {
@@ -2734,11 +2734,11 @@ export const isPodSecurityPolicyV1Beta1 = (
 export const PodSecurityPolicyV1Beta1 = (
 	props: PodSecurityPolicyV1Beta1Props = {}
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "policy/v1beta1" as const,
 		kind: "PodSecurityPolicy" as const,
 		...serializePodSecurityPolicyV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedPodSecurityPolicyListV1Beta1 = {
@@ -2763,11 +2763,11 @@ export const isPodSecurityPolicyListV1Beta1 = (
 export const PodSecurityPolicyListV1Beta1 = (
 	props: PodSecurityPolicyListV1Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "policy/v1beta1" as const,
 		kind: "PodSecurityPolicyList" as const,
 		...serializePodSecurityPolicyListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedClusterRole = {
@@ -2788,11 +2788,11 @@ export const isClusterRole = (input: any): input is SerializedClusterRole => {
  * @schema io.k8s.api.rbac.v1.ClusterRole
  */
 export const ClusterRole = (props: ClusterRoleProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "ClusterRole" as const,
 		...serializeClusterRoleProps(props),
-	};
+	});
 };
 
 export type SerializedClusterRoleBinding = {
@@ -2815,11 +2815,11 @@ export const isClusterRoleBinding = (
  * @schema io.k8s.api.rbac.v1.ClusterRoleBinding
  */
 export const ClusterRoleBinding = (props: ClusterRoleBindingProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "ClusterRoleBinding" as const,
 		...serializeClusterRoleBindingProps(props),
-	};
+	});
 };
 
 export type SerializedClusterRoleBindingList = {
@@ -2842,11 +2842,11 @@ export const isClusterRoleBindingList = (
  * @schema io.k8s.api.rbac.v1.ClusterRoleBindingList
  */
 export const ClusterRoleBindingList = (props: ClusterRoleBindingListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "ClusterRoleBindingList" as const,
 		...serializeClusterRoleBindingListProps(props),
-	};
+	});
 };
 
 export type SerializedClusterRoleList = {
@@ -2869,11 +2869,11 @@ export const isClusterRoleList = (
  * @schema io.k8s.api.rbac.v1.ClusterRoleList
  */
 export const ClusterRoleList = (props: ClusterRoleListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "ClusterRoleList" as const,
 		...serializeClusterRoleListProps(props),
-	};
+	});
 };
 
 export type SerializedRole = {
@@ -2894,11 +2894,11 @@ export const isRole = (input: any): input is SerializedRole => {
  * @schema io.k8s.api.rbac.v1.Role
  */
 export const Role = (props: RoleProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "Role" as const,
 		...serializeRoleProps(props),
-	};
+	});
 };
 
 export type SerializedRoleBinding = {
@@ -2919,11 +2919,11 @@ export const isRoleBinding = (input: any): input is SerializedRoleBinding => {
  * @schema io.k8s.api.rbac.v1.RoleBinding
  */
 export const RoleBinding = (props: RoleBindingProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "RoleBinding" as const,
 		...serializeRoleBindingProps(props),
-	};
+	});
 };
 
 export type SerializedRoleBindingList = {
@@ -2946,11 +2946,11 @@ export const isRoleBindingList = (
  * @schema io.k8s.api.rbac.v1.RoleBindingList
  */
 export const RoleBindingList = (props: RoleBindingListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "RoleBindingList" as const,
 		...serializeRoleBindingListProps(props),
-	};
+	});
 };
 
 export type SerializedRoleList = {
@@ -2971,11 +2971,11 @@ export const isRoleList = (input: any): input is SerializedRoleList => {
  * @schema io.k8s.api.rbac.v1.RoleList
  */
 export const RoleList = (props: RoleListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1" as const,
 		kind: "RoleList" as const,
 		...serializeRoleListProps(props),
-	};
+	});
 };
 
 export type SerializedClusterRoleV1Alpha1 = {
@@ -2998,11 +2998,11 @@ export const isClusterRoleV1Alpha1 = (
  * @schema io.k8s.api.rbac.v1alpha1.ClusterRole
  */
 export const ClusterRoleV1Alpha1 = (props: ClusterRoleV1Alpha1Props = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "ClusterRole" as const,
 		...serializeClusterRoleV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedClusterRoleBindingV1Alpha1 = {
@@ -3027,11 +3027,11 @@ export const isClusterRoleBindingV1Alpha1 = (
 export const ClusterRoleBindingV1Alpha1 = (
 	props: ClusterRoleBindingV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "ClusterRoleBinding" as const,
 		...serializeClusterRoleBindingV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedClusterRoleBindingListV1Alpha1 = {
@@ -3056,11 +3056,11 @@ export const isClusterRoleBindingListV1Alpha1 = (
 export const ClusterRoleBindingListV1Alpha1 = (
 	props: ClusterRoleBindingListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "ClusterRoleBindingList" as const,
 		...serializeClusterRoleBindingListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedClusterRoleListV1Alpha1 = {
@@ -3085,11 +3085,11 @@ export const isClusterRoleListV1Alpha1 = (
 export const ClusterRoleListV1Alpha1 = (
 	props: ClusterRoleListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "ClusterRoleList" as const,
 		...serializeClusterRoleListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedRoleV1Alpha1 = {
@@ -3110,11 +3110,11 @@ export const isRoleV1Alpha1 = (input: any): input is SerializedRoleV1Alpha1 => {
  * @schema io.k8s.api.rbac.v1alpha1.Role
  */
 export const RoleV1Alpha1 = (props: RoleV1Alpha1Props = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "Role" as const,
 		...serializeRoleV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedRoleBindingV1Alpha1 = {
@@ -3137,11 +3137,11 @@ export const isRoleBindingV1Alpha1 = (
  * @schema io.k8s.api.rbac.v1alpha1.RoleBinding
  */
 export const RoleBindingV1Alpha1 = (props: RoleBindingV1Alpha1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "RoleBinding" as const,
 		...serializeRoleBindingV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedRoleBindingListV1Alpha1 = {
@@ -3166,11 +3166,11 @@ export const isRoleBindingListV1Alpha1 = (
 export const RoleBindingListV1Alpha1 = (
 	props: RoleBindingListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "RoleBindingList" as const,
 		...serializeRoleBindingListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedRoleListV1Alpha1 = {
@@ -3193,11 +3193,11 @@ export const isRoleListV1Alpha1 = (
  * @schema io.k8s.api.rbac.v1alpha1.RoleList
  */
 export const RoleListV1Alpha1 = (props: RoleListV1Alpha1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "rbac.authorization.k8s.io/v1alpha1" as const,
 		kind: "RoleList" as const,
 		...serializeRoleListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedPriorityClass = {
@@ -3220,11 +3220,11 @@ export const isPriorityClass = (
  * @schema io.k8s.api.scheduling.v1.PriorityClass
  */
 export const PriorityClass = (props: PriorityClassProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "scheduling.k8s.io/v1" as const,
 		kind: "PriorityClass" as const,
 		...serializePriorityClassProps(props),
-	};
+	});
 };
 
 export type SerializedPriorityClassList = {
@@ -3247,11 +3247,11 @@ export const isPriorityClassList = (
  * @schema io.k8s.api.scheduling.v1.PriorityClassList
  */
 export const PriorityClassList = (props: PriorityClassListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "scheduling.k8s.io/v1" as const,
 		kind: "PriorityClassList" as const,
 		...serializePriorityClassListProps(props),
-	};
+	});
 };
 
 export type SerializedPriorityClassV1Alpha1 = {
@@ -3274,11 +3274,11 @@ export const isPriorityClassV1Alpha1 = (
  * @schema io.k8s.api.scheduling.v1alpha1.PriorityClass
  */
 export const PriorityClassV1Alpha1 = (props: PriorityClassV1Alpha1Props) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "scheduling.k8s.io/v1alpha1" as const,
 		kind: "PriorityClass" as const,
 		...serializePriorityClassV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedPriorityClassListV1Alpha1 = {
@@ -3303,11 +3303,11 @@ export const isPriorityClassListV1Alpha1 = (
 export const PriorityClassListV1Alpha1 = (
 	props: PriorityClassListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "scheduling.k8s.io/v1alpha1" as const,
 		kind: "PriorityClassList" as const,
 		...serializePriorityClassListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedCSIDriver = {
@@ -3328,11 +3328,11 @@ export const isCSIDriver = (input: any): input is SerializedCSIDriver => {
  * @schema io.k8s.api.storage.v1.CSIDriver
  */
 export const CSIDriver = (props: CSIDriverProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "CSIDriver" as const,
 		...serializeCSIDriverProps(props),
-	};
+	});
 };
 
 export type SerializedCSIDriverList = {
@@ -3355,11 +3355,11 @@ export const isCSIDriverList = (
  * @schema io.k8s.api.storage.v1.CSIDriverList
  */
 export const CSIDriverList = (props: CSIDriverListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "CSIDriverList" as const,
 		...serializeCSIDriverListProps(props),
-	};
+	});
 };
 
 export type SerializedCSINode = {
@@ -3380,11 +3380,11 @@ export const isCSINode = (input: any): input is SerializedCSINode => {
  * @schema io.k8s.api.storage.v1.CSINode
  */
 export const CSINode = (props: CSINodeProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "CSINode" as const,
 		...serializeCSINodeProps(props),
-	};
+	});
 };
 
 export type SerializedCSINodeList = {
@@ -3405,11 +3405,11 @@ export const isCSINodeList = (input: any): input is SerializedCSINodeList => {
  * @schema io.k8s.api.storage.v1.CSINodeList
  */
 export const CSINodeList = (props: CSINodeListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "CSINodeList" as const,
 		...serializeCSINodeListProps(props),
-	};
+	});
 };
 
 export type SerializedStorageClass = {
@@ -3432,11 +3432,11 @@ StorageClasses are non-namespaced; the name of the storage class according to et
  * @schema io.k8s.api.storage.v1.StorageClass
  */
 export const StorageClass = (props: StorageClassProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "StorageClass" as const,
 		...serializeStorageClassProps(props),
-	};
+	});
 };
 
 export type SerializedStorageClassList = {
@@ -3459,11 +3459,11 @@ export const isStorageClassList = (
  * @schema io.k8s.api.storage.v1.StorageClassList
  */
 export const StorageClassList = (props: StorageClassListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "StorageClassList" as const,
 		...serializeStorageClassListProps(props),
-	};
+	});
 };
 
 export type SerializedVolumeAttachment = {
@@ -3488,11 +3488,11 @@ VolumeAttachment objects are non-namespaced.
  * @schema io.k8s.api.storage.v1.VolumeAttachment
  */
 export const VolumeAttachment = (props: VolumeAttachmentProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "VolumeAttachment" as const,
 		...serializeVolumeAttachmentProps(props),
-	};
+	});
 };
 
 export type SerializedVolumeAttachmentList = {
@@ -3515,11 +3515,11 @@ export const isVolumeAttachmentList = (
  * @schema io.k8s.api.storage.v1.VolumeAttachmentList
  */
 export const VolumeAttachmentList = (props: VolumeAttachmentListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1" as const,
 		kind: "VolumeAttachmentList" as const,
 		...serializeVolumeAttachmentListProps(props),
-	};
+	});
 };
 
 export type SerializedCSIStorageCapacityV1Alpha1 = {
@@ -3552,11 +3552,11 @@ They are consumed by the kube-scheduler if the CSIStorageCapacity beta feature g
 export const CSIStorageCapacityV1Alpha1 = (
 	props: CSIStorageCapacityV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1alpha1" as const,
 		kind: "CSIStorageCapacity" as const,
 		...serializeCSIStorageCapacityV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedCSIStorageCapacityListV1Alpha1 = {
@@ -3581,11 +3581,11 @@ export const isCSIStorageCapacityListV1Alpha1 = (
 export const CSIStorageCapacityListV1Alpha1 = (
 	props: CSIStorageCapacityListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1alpha1" as const,
 		kind: "CSIStorageCapacityList" as const,
 		...serializeCSIStorageCapacityListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedVolumeAttachmentV1Alpha1 = {
@@ -3612,11 +3612,11 @@ VolumeAttachment objects are non-namespaced.
 export const VolumeAttachmentV1Alpha1 = (
 	props: VolumeAttachmentV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1alpha1" as const,
 		kind: "VolumeAttachment" as const,
 		...serializeVolumeAttachmentV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedVolumeAttachmentListV1Alpha1 = {
@@ -3641,11 +3641,11 @@ export const isVolumeAttachmentListV1Alpha1 = (
 export const VolumeAttachmentListV1Alpha1 = (
 	props: VolumeAttachmentListV1Alpha1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1alpha1" as const,
 		kind: "VolumeAttachmentList" as const,
 		...serializeVolumeAttachmentListV1Alpha1Props(props),
-	};
+	});
 };
 
 export type SerializedCSIStorageCapacityV1Beta1 = {
@@ -3678,11 +3678,11 @@ They are consumed by the kube-scheduler if the CSIStorageCapacity beta feature g
 export const CSIStorageCapacityV1Beta1 = (
 	props: CSIStorageCapacityV1Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1beta1" as const,
 		kind: "CSIStorageCapacity" as const,
 		...serializeCSIStorageCapacityV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedCSIStorageCapacityListV1Beta1 = {
@@ -3707,11 +3707,11 @@ export const isCSIStorageCapacityListV1Beta1 = (
 export const CSIStorageCapacityListV1Beta1 = (
 	props: CSIStorageCapacityListV1Beta1Props
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "storage.k8s.io/v1beta1" as const,
 		kind: "CSIStorageCapacityList" as const,
 		...serializeCSIStorageCapacityListV1Beta1Props(props),
-	};
+	});
 };
 
 export type SerializedCustomResourceDefinition = {
@@ -3736,11 +3736,11 @@ export const isCustomResourceDefinition = (
 export const CustomResourceDefinition = (
 	props: CustomResourceDefinitionProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apiextensions.k8s.io/v1" as const,
 		kind: "CustomResourceDefinition" as const,
 		...serializeCustomResourceDefinitionProps(props),
-	};
+	});
 };
 
 export type SerializedCustomResourceDefinitionList = {
@@ -3765,11 +3765,11 @@ export const isCustomResourceDefinitionList = (
 export const CustomResourceDefinitionList = (
 	props: CustomResourceDefinitionListProps
 ) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apiextensions.k8s.io/v1" as const,
 		kind: "CustomResourceDefinitionList" as const,
 		...serializeCustomResourceDefinitionListProps(props),
-	};
+	});
 };
 
 export type SerializedStatus = {
@@ -3790,11 +3790,11 @@ export const isStatus = (input: any): input is SerializedStatus => {
  * @schema io.k8s.apimachinery.pkg.apis.meta.v1.Status
  */
 export const Status = (props: StatusProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "v1" as const,
 		kind: "Status" as const,
 		...serializeStatusProps(props),
-	};
+	});
 };
 
 export type SerializedAPIService = {
@@ -3815,11 +3815,11 @@ export const isAPIService = (input: any): input is SerializedAPIService => {
  * @schema io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIService
  */
 export const APIService = (props: APIServiceProps = {}) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apiregistration.k8s.io/v1" as const,
 		kind: "APIService" as const,
 		...serializeAPIServiceProps(props),
-	};
+	});
 };
 
 export type SerializedAPIServiceList = {
@@ -3842,11 +3842,11 @@ export const isAPIServiceList = (
  * @schema io.k8s.kube-aggregator.pkg.apis.apiregistration.v1.APIServiceList
  */
 export const APIServiceList = (props: APIServiceListProps) => {
-	return {
+	return senchou.wrapTemplate(props, {
 		apiVersion: "apiregistration.k8s.io/v1" as const,
 		kind: "APIServiceList" as const,
 		...serializeAPIServiceListProps(props),
-	};
+	});
 };
 
 export type MutatingWebhookConfigurationProps = {
