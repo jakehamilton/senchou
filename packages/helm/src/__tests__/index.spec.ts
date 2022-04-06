@@ -334,4 +334,120 @@ describe("Helm", () => {
 			"
 		`);
 	});
+
+	it("supports the basic demo", () => {
+		const podTemplate = template(Pod, {
+			metadata: {
+				name: template.string(".Values.customName", {
+					default: "default-name",
+				}),
+				labels: template.object<Record<string, string>>(
+					".Values.customLabels"
+				),
+				annotations: template.object<Record<string, string>>(
+					".Values.customAnnotations",
+					{
+						"my-permanent-annotation": "always-included",
+					}
+				),
+			},
+			spec: {
+				containers: template.array<Container>(".Values.containers", [
+					{
+						name: "always-included",
+						image: template.string(".Values.image", {
+							default: "my-default-image:latest",
+						}),
+						ports: [
+							{
+								name: "https",
+								containerPort:
+									template.number(".Values.httpsPort"),
+							},
+							template.if<ContainerPort>({
+								type: Object,
+								condition: ".Values.enableGRPC",
+								body: {
+									name: "grpc",
+									containerPort: 5000,
+								},
+								else: {
+									name: "http",
+									containerPort: 80,
+								},
+							}),
+						],
+					},
+					template.if<Container>({
+						type: Object,
+						condition: ".Values.versionA",
+						body: {
+							name: "version-a",
+							image: "version-a-image",
+						},
+						else: template.if<Container>({
+							type: Object,
+							condition: ".Values.versionB",
+							body: {
+								name: "version-b",
+								image: "version-b-image",
+							},
+							else: {
+								name: "version-c",
+								image: "version-c-image",
+							},
+						}),
+					}),
+				]),
+			},
+		});
+
+		const manifest = render(podTemplate);
+
+		expect(manifest).toMatchInlineSnapshot(`
+			"apiVersion: v1
+			kind: Pod
+			metadata:
+			  annotations:
+			    my-permanent-annotation: always-included
+			    {{- with .Values.customAnnotations }}
+			    {{- toYaml . | nindent 4 }}
+			    {{- end }}
+			  labels:
+			    {{- with .Values.customLabels }}
+			    {{- toYaml . | nindent 4 }}
+			    {{- end }}
+			  name: {{ default \\"default-name\\" .Values.customName | quote }}
+			spec:
+			  containers:
+			    -
+			      name: always-included
+			      image: {{ default \\"my-default-image:latest\\" .Values.image | quote }}
+			      ports:
+			        -
+			          name: https
+			          containerPort: {{ .Values.httpsPort }}
+			        -
+			          {{- if .Values.enableGRPC }}
+			          name: grpc
+			          containerPort: 5000
+			          {{- else }}
+			          name: http
+			          containerPort: 80
+			          {{- end }}
+			    -
+			      {{- if .Values.versionA }}
+			      name: version-a
+			      image: version-a-image
+			      {{- else if .Values.versionB }}
+			      name: version-b
+			      image: version-b-image
+			      {{- else }}
+			      name: version-c
+			      image: version-c-image
+			      {{- end }}
+			    {{- toYaml .Values.containers | nindent 4 }}
+			"
+		`);
+	});
 });
