@@ -1,6 +1,6 @@
 {
     "name": "@senchou/helm",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Generate Helm charts.",
     "main": "dist/helm.cjs.js",
     "types": "dist/index.d.ts",
