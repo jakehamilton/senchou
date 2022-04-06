@@ -1,5 +1,24 @@
 # Change Log
 
+## 1.2.0
+
+### Features
+
+- add define and include for templates
+
+- initial helm template support
+
+
+### Fixes
+
+- support templated primitives
+
+
+### Chores
+
+- _(release)_: publish
+
+
 ## 1.1.1
 
 ### Fixes

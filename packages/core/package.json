@@ -1,6 +1,6 @@
 {
     "name": "@senchou/core",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "Generate TypeScript for Kubernetes resources.",
     "main": "dist/core.cjs.js",
     "types": "dist/index.d.ts",
