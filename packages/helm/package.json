@@ -1,8 +1,8 @@
 {
-    "name": "@senchou/core",
-    "version": "1.1.1",
-    "description": "Generate TypeScript for Kubernetes resources.",
-    "main": "dist/core.cjs.js",
+    "name": "@senchou/helm",
+    "version": "1.0.0",
+    "description": "Generate Helm charts.",
+    "main": "dist/helm.cjs.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "clean": "rimraf ./dist",
@@ -28,18 +28,21 @@
         "CHANGELOG.md"
     ],
     "exports": {
-        "import": "./dist/core.es.js",
-        "require": "./dist/core.cjs.js",
-        "node": "./dist/core.cjs.js"
+        "import": "./dist/helm.es.js",
+        "require": "./dist/helm.cjs.js",
+        "node": "./dist/helm.cjs.js"
     },
     "dependencies": {
         "@types/json-schema": "^7.0.9",
-        "@littlethings/coder": "^1.0.1",
+        "@littlethings/coder": "^1.1.0",
         "@littlethings/log": "^2.5.0",
         "@littlethings/schemer": "^1.4.0",
         "node-fetch": "^2.6.1",
         "js-yaml": "^4.1.0",
-        "json-schema": "^0.4.0"
+        "json-schema": "^0.4.0",
+        "lodash": "^4.17.21",
+        "@types/lodash": "^4.14.178",
+        "vitest": "^0.6.1"
     },
     "devDependencies": {
         "@types/node": "^17.0.14",

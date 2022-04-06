@@ -14,7 +14,9 @@
       outputsBuilder = channels:
         let
           pkgs = channels.nixpkgs;
-          inherit (pkgs) lib python39 python39Packages gnugrep findutils;
+          inherit (pkgs)
+            lib python39 python39Packages gnugrep findutils nodejs-17_x helm
+            kubectl;
           inherit (python39Packages) buildPythonPackage fetchPypi;
 
           # A dependency of `openapi2jsonschema`
@@ -62,7 +64,15 @@
           };
         in {
           devShell = pkgs.mkShell {
-            buildInputs = [ python39 openapi2jsonschema gnugrep findutils ];
+            buildInputs = [
+              python39
+              openapi2jsonschema
+              gnugrep
+              findutils
+              nodejs-17_x
+              helm
+              kubectl
+            ];
           };
         };
     };

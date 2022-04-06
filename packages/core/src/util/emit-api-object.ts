@@ -69,7 +69,6 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 				},
 			},
 		});
-		// typeGenerator.emitCustomType("ApiObjectMetadata", () => {});
 	}
 
 	schemer.emit(name, (coder) => {
@@ -154,13 +153,13 @@ const emitApiObject = (apiObject: APIObject, schemer: Schemer) => {
 				`export const ${name} = (props: ${propsTypeName.type}${defaultProps}) =>`
 			);
 
-			coder.line("return {");
+			coder.openBlock("return senchou.wrapTemplate(props,");
 			coder.indent();
 			coder.line(`apiVersion: "${apiVersion}" as const,`);
 			coder.line(`kind: "${apiObject.kind}" as const,`);
 			coder.line(`...serialize${propsTypeName.type}(props),`);
 			coder.dedent();
-			coder.line("};");
+			coder.closeBlock(");");
 
 			coder.closeBlock();
 		};

@@ -6,6 +6,11 @@ import Schemer, { normalize } from "@littlethings/schemer";
 import getTypeName from "../util/get-type-name";
 import emitApiObject from "../util/emit-api-object";
 
+import prelude from "../util/prelude";
+
+import * as serializers from "../util/serializers";
+import * as generators from "../util/generators";
+
 const DEFAULT_KUBERNETES_VERSION = "1.22.0";
 
 const KUBERNETES_REGEX = /^(?:@(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+))?/;
@@ -54,6 +59,10 @@ const source = {
 			schemas: schema.definitions,
 			serializers: {
 				name: getTypeName,
+				...serializers,
+			},
+			generators: {
+				...generators,
 			},
 		});
 
@@ -68,7 +77,7 @@ const source = {
 			emitApiObject(apiObject, schemer);
 		}
 
-		return schemer.render();
+		return prelude() + schemer.render();
 	},
 };
 
