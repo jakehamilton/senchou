@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.2.1
+
+### Fixes
+
+- add prelude to crds and support non-safe characters in enums
+
+
 ## 1.2.0
 
 ### Features
