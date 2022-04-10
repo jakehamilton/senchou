@@ -2,6 +2,7 @@ import Schemer from "@littlethings/schemer";
 
 import emitApiObject from "../util/emit-api-object";
 import { CustomResourceDefinition } from "../util/crd";
+import prelude from "../util/prelude";
 
 const source = {
 	generate: (
@@ -43,7 +44,7 @@ const source = {
 			);
 		}
 
-		return schemer.render();
+		return prelude() + schemer.render();
 	},
 };
 
