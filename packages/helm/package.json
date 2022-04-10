@@ -41,10 +41,10 @@
         "js-yaml": "^4.1.0",
         "json-schema": "^0.4.0",
         "lodash": "^4.17.21",
-        "@types/lodash": "^4.14.178",
-        "vitest": "^0.6.1"
+        "@types/lodash": "^4.14.178"
     },
     "devDependencies": {
+        "vitest": "^0.6.1",
         "@types/node": "^17.0.14",
         "@types/js-yaml": "^4.0.5",
         "@types/node-fetch": "^2.5.12",
