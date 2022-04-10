@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.1.3
+
+### Fixes
+
+- escape quotes in patterns
+
+
 ## 1.1.2
 
 ### Chores
