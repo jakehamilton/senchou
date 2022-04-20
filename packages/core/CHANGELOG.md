@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.2.3
+
+### Chores
+
+- update package metadata
+
+
 ## 1.2.2
 
 ### Fixes

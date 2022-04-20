@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.0.5
+
+### Chores
+
+- update package metadata
+
+
 ## 1.0.4
 
 ### Fixes
