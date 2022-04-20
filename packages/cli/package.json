@@ -44,5 +44,13 @@
         "kleur": "^4.1.4",
         "mkdirp": "^1.0.4",
         "@types/mkdirp": "^1.0.2"
+    },
+    "homepage": "https://github.com/jakehamilton/senchou",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jakehamilton/senchou.git"
+    },
+    "bugs": {
+        "url": "https://github.com/jakehamilton/senchou/issues"
     }
 }
