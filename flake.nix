@@ -15,8 +15,16 @@
         let
           pkgs = channels.nixpkgs;
           inherit (pkgs)
-            lib python39 python39Packages gnugrep findutils nodejs-17_x helm
-            kubectl;
+            lib
+            python39
+            python39Packages
+            gnugrep
+            findutils
+            nodejs-17_x
+            helm
+            kubectl
+            jq;
+
           inherit (python39Packages) buildPythonPackage fetchPypi;
 
           # A dependency of `openapi2jsonschema`
@@ -42,14 +50,13 @@
               sha256 = "049q3z63anjn6vzgshbfnzcf9pb6y942vabq938zvi3fnm8lips9";
             };
 
-            propagatedBuildInputs = with python39Packages;
-              (builtins.trace (pyyaml.version)) [
-                poetry
-                colorama
-                pyyaml
-                jsonref
-                click
-              ];
+            propagatedBuildInputs = with python39Packages; [
+              poetry
+              colorama
+              pyyaml
+              jsonref
+              click
+            ];
 
             meta = with lib; {
               description =
@@ -62,7 +69,8 @@
               maintainer = [ ];
             };
           };
-        in {
+        in
+        {
           devShell = pkgs.mkShell {
             buildInputs = [
               python39
@@ -72,6 +80,7 @@
               nodejs-17_x
               helm
               kubectl
+              jq
             ];
           };
         };

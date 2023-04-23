@@ -17,6 +17,13 @@ popd &>/dev/null
 schemasdir=$toolsdir/../schemas
 target=$schemasdir/${version}
 
+if [[ -f "${target}/_definitions.json" ]]; then
+	echo "Schema for version \"${version}\" already exists."
+	exit 0
+else
+	echo "Fetching schema for version \"${version}\"."
+fi
+
 pushd $schemasdir &>/dev/null
   mkdir -p $target
   pushd $target &>/dev/null
@@ -24,5 +31,3 @@ pushd $schemasdir &>/dev/null
     ls | grep -v _definitions.json | xargs rm
   popd &>/dev/null
 popd &>/dev/null
-
-echo $toolsdir
